@@ -3,14 +3,18 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+// RXJS
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+// CORE
+import { IProfile, IToken } from '@core/interfaces';
+
+// ENVIRONMENT
 import { environment } from '@environments/environment';
-import { IToken } from '@core/interfaces';
 
 @Injectable()
-export class AuthService {
+export class UserAuthService {
 
     private _gitUrl = 'https://github.com/login';
 
@@ -20,7 +24,7 @@ export class AuthService {
         private router: Router) {
     }
 
-    public redirectToGitHub(login: string) {
+    public authentication(login: string): void {
         const queryParams = {
             client_id: environment.clientId,
             redirect_uri: environment.redirectUri,
@@ -39,16 +43,23 @@ export class AuthService {
             Accept: 'application/json'
         };
 
-        const params = {
+        const body = {
             client_id: environment.clientId,
             client_secret: environment.clientSecret,
             code,
             redirect_uri: environment.redirectUri
         };
 
-        return this.http.post<IToken>('/login/oauth/access_token', params, {headers})
+        return this.http.post<IToken>('/login/oauth/access_token', body, {headers})
             .pipe(
                 map((response: any) => response)
             );
+    }
+
+    public getAuthenticatedUser(token: string): Observable<IProfile> {
+        const headers = {
+            Authorization: `token ${token}`
+        };
+        return this.http.get<IProfile>('https://api.github.com/user', {headers});
     }
 }

@@ -2,13 +2,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+// APP MODULES
+import * as appModules from './';
 
 // CURRENT
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-// APP MODULES
-import * as appModules from './';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import * as appModules from './';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        HttpClientModule,
         AppRoutingModule,
         appModules.AuthModule,
         appModules.CoreModule,

@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 // MATERIAL
 import {
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule
 } from '@angular/material';
 
 const MODULES = [
     MatInputModule,
     MatSelectModule,
+    MatButtonModule
 ];
 
 @NgModule({

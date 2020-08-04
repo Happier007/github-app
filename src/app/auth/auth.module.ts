@@ -1,13 +1,18 @@
 // ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // MATERIAL
-import { MaterialModule} from '../material/material.module';
+import { MaterialModule } from '../material/material.module';
+
+// AUTH
+import { UserAuthService } from '@auth/services';
 
 // CURRENT
 import { LoginComponent } from './components';
-import { AuthService } from './services';
+import { AuthRoutingModule } from './auth-routing.module';
+
 
 @NgModule({
     declarations: [
@@ -15,10 +20,15 @@ import { AuthService } from './services';
     ],
     imports: [
         CommonModule,
-        MaterialModule
+        ReactiveFormsModule,
+        MaterialModule,
+        AuthRoutingModule,
+    ],
+    exports: [
+        LoginComponent
     ],
     providers: [
-        AuthService
+        UserAuthService
     ]
 })
 export class AuthModule {

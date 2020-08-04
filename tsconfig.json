@@ -4,6 +4,12 @@
     "baseUrl": "./",
     "paths": {
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
+      "@core/models": ["src/app/core/models/index.ts"],
+
+      "@auth/services": ["src/app/auth/services/index.ts"],
+
+      "@main/services": ["src/app/main/services/index.ts"],
+
       "@environments/*": ["src/environments/*"]
     },
     "outDir": "./dist/out-tsc",
