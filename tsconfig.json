@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
+
       "@environments/*": ["src/environments/*"]
     },
     "outDir": "./dist/out-tsc",

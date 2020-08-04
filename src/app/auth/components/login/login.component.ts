@@ -1,3 +1,4 @@
+// ANGULAR
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,5 +13,4 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
     }
-
 }

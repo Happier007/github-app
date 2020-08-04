@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // MATERIAL
-import { MaterialModule} from '../material/material.module';
+import { MaterialModule } from '../material';
 
 // CURRENT
 import { LoginComponent } from './components';
-import { AuthService } from './services';
+import { UserAuthService } from './services';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,7 @@ import { AuthService } from './services';
         MaterialModule
     ],
     providers: [
-        AuthService
+        UserAuthService
     ]
 })
 export class AuthModule {

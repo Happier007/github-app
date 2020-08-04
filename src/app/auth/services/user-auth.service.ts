@@ -3,21 +3,25 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+// RXJS
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '@environments/environment';
+// CORE
 import { IToken } from '@core/interfaces';
 
+// ENVIRONMENT
+import { environment } from '@environments/environment';
+
 @Injectable()
-export class AuthService {
+export class UserAuthService {
 
     private _gitUrl = 'https://github.com/login';
 
     constructor(
-        private http: HttpClient,
-        private route: ActivatedRoute,
-        private router: Router) {
+        private _http: HttpClient,
+        private _route: ActivatedRoute,
+        private _router: Router) {
     }
 
     public redirectToGitHub(login: string) {
@@ -27,7 +31,7 @@ export class AuthService {
             login
         };
 
-        const urlTree = this.router.createUrlTree(['oauth/authorize/'], {
+        const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
             queryParams
         });
 
@@ -39,14 +43,14 @@ export class AuthService {
             Accept: 'application/json'
         };
 
-        const params = {
+        const bodyParams = {
             client_id: environment.clientId,
             client_secret: environment.clientSecret,
             code,
             redirect_uri: environment.redirectUri
         };
 
-        return this.http.post<IToken>('/login/oauth/access_token', params, {headers})
+        return this._http.post<IToken>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
                 map((response: any) => response)
             );
