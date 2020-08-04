@@ -1,17 +1,18 @@
+// ANGULAR
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IToken } from '../core/interfaces/token.interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
+import { environment } from '@environments/environment';
+import { IToken } from '@core/interfaces';
+
+@Injectable()
 export class AuthService {
 
-    private gitUrl = 'https://github.com/login';
+    private _gitUrl = 'https://github.com/login';
 
     constructor(
         private http: HttpClient,
@@ -30,7 +31,7 @@ export class AuthService {
             queryParams
         });
 
-        location.href = `${this.gitUrl}/${urlTree.toString()}`;
+        location.href = `${this._gitUrl}/${urlTree.toString()}`;
     }
 
     public getToken(code: string): Observable<IToken> {

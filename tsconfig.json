@@ -3,9 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@material/*": [
-        "src/app/modules/material/*"
-      ]
+      "@core/interfaces": ["src/app/core/interfaces/index.ts"],
+      "@material/*": ["src/app/material/*"],
+      "@environments/*": ["src/environments/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

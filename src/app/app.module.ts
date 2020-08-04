@@ -1,27 +1,31 @@
+// ANGULAR
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import * as appModules from './modules';
+// CURRENT
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+// APP MODULES
+import * as appModules from './';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+    declarations: [
+        AppComponent,
+    ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
         BrowserAnimationsModule,
+        AppRoutingModule,
         appModules.AuthModule,
         appModules.CoreModule,
         appModules.MainModule,
         appModules.MaterialModule,
         appModules.SharedModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
