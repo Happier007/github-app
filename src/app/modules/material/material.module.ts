@@ -1,6 +1,14 @@
 import { NgModule } from '@angular/core';
+import {
+    MatSelectModule,
+    MatInputModule
+} from '@angular/material';
 
-const MODULES = [];
+const MODULES = [
+    MatInputModule,
+    MatSelectModule,
+];
+
 @NgModule({
     declarations: [],
     imports: [
