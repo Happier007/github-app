@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { IToken } from '../core/interfaces/token.interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({

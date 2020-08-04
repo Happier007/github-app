@@ -3,17 +3,24 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import * as appModules from './modules';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        appModules.AuthModule,
+        appModules.CoreModule,
+        appModules.MainModule,
+        appModules.MaterialModule,
+        appModules.SharedModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
