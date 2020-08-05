@@ -1,6 +1,8 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+// CORE
 import { IProfile } from '@core/interfaces';
 
 @Component({
