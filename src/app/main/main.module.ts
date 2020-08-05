@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 // MATERIAL
 import { MaterialModule } from '../material';
 
-// MAIN
+// CURRENT
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 

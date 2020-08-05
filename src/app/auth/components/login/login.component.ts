@@ -13,23 +13,20 @@ import { IProfile, IToken } from '@core/interfaces';
 // AUTH
 import { UserAuthService } from '@auth/services';
 
-// MAIN
-import { SearchUserService } from '@main/services';
-
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
     public username = new FormControl('', Validators.required);
 
     private _destroy$ = new Subject<void>();
 
     constructor(private _route: ActivatedRoute,
                 private _router: Router,
-                private _userAuthService: UserAuthService,
-                private _searchUserService: SearchUserService) {
+                private _userAuthService: UserAuthService) {
     }
 
     public ngOnInit(): void {

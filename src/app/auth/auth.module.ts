@@ -6,10 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 // MATERIAL
 import { MaterialModule } from '../material';
 
-// AUTH
-import { UserAuthService } from '@auth/services';
-
 // CURRENT
+import { UserAuthService } from '@auth/services';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components';
 

@@ -1,6 +1,7 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IProfile } from '@core/interfaces';
 
 @Component({
     selector: 'app-main',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-    public user = false;
+    public user: IProfile;
 
     constructor(private _router: Router) {
     }
