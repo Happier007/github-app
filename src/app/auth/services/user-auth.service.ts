@@ -19,9 +19,8 @@ export class UserAuthService {
     private _gitUrl = 'https://github.com/login';
 
     constructor(
-        private http: HttpClient,
-        private route: ActivatedRoute,
-        private router: Router) {
+        private _http: HttpClient,
+        private _router: Router) {
     }
 
     public authentication(login: string): void {
@@ -31,7 +30,7 @@ export class UserAuthService {
             login
         };
 
-        const urlTree = this.router.createUrlTree(['oauth/authorize/'], {
+        const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
             queryParams
         });
 
@@ -43,14 +42,14 @@ export class UserAuthService {
             Accept: 'application/json'
         };
 
-        const body = {
+        const bodyParams = {
             client_id: environment.clientId,
             client_secret: environment.clientSecret,
             code,
             redirect_uri: environment.redirectUri
         };
 
-        return this.http.post<IToken>('/login/oauth/access_token', body, {headers})
+        return this._http.post<IToken>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
                 map((response: any) => response)
             );
@@ -60,6 +59,6 @@ export class UserAuthService {
         const headers = {
             Authorization: `token ${token}`
         };
-        return this.http.get<IProfile>('https://api.github.com/user', {headers});
+        return this._http.get<IProfile>('https://api.github.com/user', {headers});
     }
 }
