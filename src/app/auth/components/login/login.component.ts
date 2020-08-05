@@ -60,8 +60,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 )
                 .subscribe(
                     (resUser: IProfile) => {
-                        this._searchUserService.saveUserToLocalStorage(token, resUser.login);
-                        this._router.navigate(['/search']);
+                        localStorage.setItem('user', JSON.stringify(resUser));
+                        // this._router.navigate(['/search']);
+                        this._router.navigate(['/']);
                     },
                     error => {
                         console.log(error);

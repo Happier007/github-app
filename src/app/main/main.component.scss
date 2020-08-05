@@ -1,0 +1,29 @@
+mat-toolbar {
+    font-size: 14px;
+    line-height: 1.5;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            color: #9e9e9e;
+        }
+    }
+
+    .spacer {
+        flex: 1 1 auto;
+    }
+
+    .login-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+            width: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    }
+}

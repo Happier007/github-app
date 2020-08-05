@@ -19,12 +19,10 @@ import { AppComponent } from './app.component';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        AppRoutingModule,
-        appModules.AuthModule,
         appModules.CoreModule,
-        appModules.MainModule,
         appModules.MaterialModule,
-        appModules.SharedModule
+        appModules.SharedModule,
+        AppRoutingModule
     ],
     providers: [],
     bootstrap: [AppComponent]

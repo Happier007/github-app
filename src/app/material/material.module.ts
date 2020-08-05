@@ -5,13 +5,21 @@ import { NgModule } from '@angular/core';
 import {
     MatSelectModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatLineModule,
+    MatMenuModule
 } from '@angular/material';
 
 const MODULES = [
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatLineModule,
+    MatMenuModule,
 ];
 
 @NgModule({

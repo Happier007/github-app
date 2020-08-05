@@ -5,6 +5,7 @@
     "paths": {
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
       "@core/models": ["src/app/core/models/index.ts"],
+      "@core/guards": ["src/app/core/guards/index.ts"],
 
       "@auth/services": ["src/app/auth/services/index.ts"],
 
