@@ -48,17 +48,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            let token;
             this._userAuthService.getToken(code)
                 .pipe(
-                    tap((resToken: IToken) => token = resToken.access_token),
                     switchMap((resToken: IToken) => this._userAuthService.getAuthenticatedUser(resToken.access_token)),
                     takeUntil(this._destroy$)
                 )
                 .subscribe(
                     (resUser: IProfile) => {
                         localStorage.setItem('user', JSON.stringify(resUser));
-                        // this._router.navigate(['/search']);
                         this._router.navigate(['/']);
                     },
                     error => {
