@@ -8,15 +8,31 @@ import { MaterialModule } from '../material';
 // CURRENT
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
+import {
+    GistsListComponent,
+    GistDetailComponent
+} from './components/gists';
+import { GitApiService } from '@main/services';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
     declarations: [
-        MainComponent
+        MainComponent,
+        GistsListComponent,
+        GistDetailComponent
     ],
     imports: [
         CommonModule,
         MaterialModule,
         MainRoutingModule,
+        MatTabsModule,
+        MatBadgeModule,
+        MatPaginatorModule,
+    ],
+    providers: [
+        GitApiService
     ]
 })
 export class MainModule {

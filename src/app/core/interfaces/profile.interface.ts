@@ -1,4 +1,4 @@
-import { IPlan } from './plan.interfaces';
+import { IPlan } from './plan.interface';
 
 export interface IProfile {
     avatar_url: string;

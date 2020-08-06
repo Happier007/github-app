@@ -9,7 +9,6 @@ const routes: Routes = [
     {
         path: '',
         loadChildren: './main/main.module#MainModule',
-        pathMatch: 'full',
         canActivate: [AuthGuard]
     },
     {

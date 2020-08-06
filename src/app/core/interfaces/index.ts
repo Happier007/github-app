@@ -1,3 +1,8 @@
-export * from './token.interfaces';
-export * from './profile.interfaces';
-export * from './user.interfaces';
+export * from './token.interface';
+export * from './profile.interface';
+export * from './user.interface';
+export * from './files.interface';
+export * from './owner.interface';
+export * from './gist.interface';
+export * from './queryParams.interface';
+

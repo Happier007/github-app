@@ -1,11 +1,7 @@
 <mat-toolbar color="primary">
-
-    <div>
-        <a class="logo" matLine routerLink="/search">Git Service</a>
-    </div>
-
+    <a class="logo" matLine [routerLink]="['/']">Github App</a>
+    <a class="logo" matLine [routerLink]="['/','gists']">Gists</a>
     <span class="spacer"></span>
-
     <div *ngIf="user">
         <div class="login-info">
 
@@ -29,7 +25,6 @@
 
         </div>
     </div>
-
 </mat-toolbar>
 
 <router-outlet></router-outlet>

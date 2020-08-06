@@ -11,6 +11,7 @@ import {
     MatLineModule,
     MatMenuModule
 } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
 
 const MODULES = [
     MatInputModule,
@@ -20,6 +21,7 @@ const MODULES = [
     MatIconModule,
     MatLineModule,
     MatMenuModule,
+    MatListModule
 ];
 
 @NgModule({

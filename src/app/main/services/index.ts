@@ -1,1 +1,1 @@
-export * from './search-api.service';
+export * from './git-api.service';

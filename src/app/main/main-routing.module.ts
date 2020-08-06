@@ -4,10 +4,25 @@ import { Routes, RouterModule } from '@angular/router';
 
 // CURRENT
 import { MainComponent } from './main.component';
+import {
+    GistsListComponent,
+    GistDetailComponent
+} from './components/gists';
 
 const routes: Routes = [
     {
-        path: '', component: MainComponent
+        path: '',
+        component: MainComponent,
+        children: [
+            {
+                path: 'gists',
+                component: GistsListComponent
+            },
+            {
+                path: 'gist/:id',
+                component: GistDetailComponent
+            },
+        ]
     },
 ];
 
