@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        appModules.AuthModule,
         appModules.CoreModule,
         appModules.MaterialModule,
         appModules.SharedModule,

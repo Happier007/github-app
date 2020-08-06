@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { IProfile, IToken } from '@core/interfaces';
 
 // AUTH
-import { UserAuthService } from '@auth/services';
+import { UserAuthService } from '../../services';
 
 @Component({
     selector: 'app-login',
@@ -68,4 +68,3 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 }
-

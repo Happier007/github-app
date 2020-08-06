@@ -1,14 +1,15 @@
 // ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 
 // MATERIAL
 import { MaterialModule } from '../material';
 
+// SHARED
+import { SharedModule } from '../shared';
+
 // CURRENT
-import { UserAuthService } from '@auth/services';
-import { AuthRoutingModule } from './auth-routing.module';
+import { UserAuthService } from './services';
 import { LoginComponent } from './components';
 
 @NgModule({
@@ -17,12 +18,8 @@ import { LoginComponent } from './components';
     ],
     imports: [
         CommonModule,
-        ReactiveFormsModule,
         MaterialModule,
-        AuthRoutingModule,
-    ],
-    exports: [
-        LoginComponent
+        SharedModule,
     ],
     providers: [
         UserAuthService
