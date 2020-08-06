@@ -11,19 +11,29 @@ import { LoginComponent } from './auth/components';
 const routes: Routes = [
     {
         path: '',
-        loadChildren: './main/main.module#MainModule',
-        pathMatch: 'full',
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        loadChildren: './main/main.module#MainModule'
     },
     {
-        path: 'login',
+        path: 'auth',
         component: LoginComponent
+    },
+    {
+        path: '**',
+        redirectTo: ''
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    imports: [
+        RouterModule.forRoot(routes)
+    ],
+    exports: [
+        RouterModule
+    ],
+    providers: [
+        AuthGuard
+    ]
 })
 export class AppRoutingModule {
 }

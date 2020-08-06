@@ -23,6 +23,6 @@ export class MainComponent implements OnInit {
 
     public logout(): void {
         localStorage.removeItem('user');
-        this._router.navigate(['/', 'login']);
+        this._router.navigate(['/', 'auth']);
     }
 }
