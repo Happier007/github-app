@@ -2,28 +2,18 @@ mat-toolbar {
     font-size: 14px;
     line-height: 1.5;
 
-    a {
+    .logo {
         color: #fff;
         text-decoration: none;
-
-        &:hover {
-            color: #9e9e9e;
-        }
     }
 
-    .spacer {
-        flex: 1 1 auto;
+    .logo:hover {
+        color: #9e9e9e;
     }
 
-    .login-info {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        img {
-            width: 30px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+    .ava {
+        width: 30px;
+        border-radius: 50%;
+        margin-right: 5px;
     }
 }

@@ -19,7 +19,7 @@ import { LoginComponent } from './components';
     imports: [
         CommonModule,
         MaterialModule,
-        SharedModule,
+        SharedModule
     ],
     providers: [
         UserAuthService

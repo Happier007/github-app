@@ -1,35 +1,36 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
 
-    <div>
-        <a class="logo" matLine routerLink="/search">Git Service</a>
-    </div>
-
-    <span class="spacer"></span>
+    <a class="logo" matLine routerLink="/search">Git Service</a>
 
     <div *ngIf="user">
-        <div class="login-info">
+
+        <div fxLayout="row" fxLayoutAlign="center center">
 
             <button mat-button [matMenuTriggerFor]="loginMenu">
-                <img src="{{user.avatar_url}}" alt="">{{user.login}}
+                <img class="ava" src="{{user.avatar_url}}" alt="">{{user.login}}
             </button>
 
             <mat-menu #loginMenu="matMenu">
+
                 <button [routerLink]="['/', 'profile']"
                         mat-menu-item>
                     <mat-icon>settings</mat-icon>
                     <span>Settings</span>
                 </button>
 
-                <button mat-menu-item
-                        (click)="logout()">
+                <button (click)="logout()"
+                        mat-menu-item>
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Logout</span>
                 </button>
+
             </mat-menu>
 
         </div>
+
     </div>
 
 </mat-toolbar>
 
 <router-outlet></router-outlet>
+

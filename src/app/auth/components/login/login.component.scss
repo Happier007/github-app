@@ -1,32 +1,10 @@
-.form-container {
-    width: 340px;
-    margin: 0 auto;
+.auth {
+    margin-top: 5%;
 
-    .auth-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 10%;
-
-        img {
-            width: 48px;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: -.5px;
-        }
-
-        .auth-form-body {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #d8dee2;
-            border-radius: 5px;
-            padding: 25px;
-        }
+    .header-image {
+        height: 48px;
+        width: 48px;
+        background-image: url('../../../../assets/github-logo.png');
+        background-size: cover;
     }
 }
-

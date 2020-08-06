@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 // MATERIAL
 import { MaterialModule } from '../material';
 
+// SHARED
+import { SharedModule } from '../shared';
+
 // CURRENT
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -16,6 +19,7 @@ import { MainRoutingModule } from './main-routing.module';
     imports: [
         CommonModule,
         MaterialModule,
+        SharedModule,
         MainRoutingModule,
     ]
 })

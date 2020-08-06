@@ -4,7 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // RXJS
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // CORE
