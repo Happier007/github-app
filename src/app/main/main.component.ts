@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // CORE
-import { IProfile } from '@core/interfaces';
+import { ProfileModel } from '@core/models';
 
 @Component({
     selector: 'app-main',
@@ -12,7 +12,7 @@ import { IProfile } from '@core/interfaces';
 })
 export class MainComponent implements OnInit {
 
-    public user: IProfile;
+    public user: ProfileModel;
 
     constructor(private _router: Router) {
     }

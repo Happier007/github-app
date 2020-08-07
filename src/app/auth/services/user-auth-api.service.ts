@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // CORE
-import { IProfile, IToken } from '@core/interfaces';
+import { ProfileModel, TokenModel } from '@core/models';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -37,7 +37,7 @@ export class UserAuthApiService {
         location.href = `${this._gitUrl}/${urlTree.toString()}`;
     }
 
-    public getToken(code: string): Observable<IToken> {
+    public getToken(code: string): Observable<TokenModel> {
         const headers = {
             Accept: 'application/json'
         };
@@ -49,16 +49,16 @@ export class UserAuthApiService {
             redirect_uri: environment.redirectUri
         };
 
-        return this._http.post<IToken>('/login/oauth/access_token', bodyParams, {headers})
+        return this._http.post<TokenModel>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
                 map((response: any) => response)
             );
     }
 
-    public getAuthenticatedUser(token: string): Observable<IProfile> {
+    public getAuthenticatedUser(token: string): Observable<ProfileModel> {
         const headers = {
             Authorization: `token ${token}`
         };
-        return this._http.get<IProfile>('https://api.github.com/user', {headers});
+        return this._http.get<ProfileModel>('https://api.github.com/user', {headers});
     }
 }
