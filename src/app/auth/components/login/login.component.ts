@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 )
                 .subscribe(
                     (resUser: ProfileModel) => {
-                        localStorage.setItem('user', JSON.stringify(resUser));
+                        localStorage.setItem('profile', JSON.stringify(resUser));
                         this._router.navigate(['/']);
                     },
                     error => {

@@ -12,17 +12,17 @@ import { ProfileModel } from '@core/models';
 })
 export class MainComponent implements OnInit {
 
-    public user: ProfileModel;
+    public profile: ProfileModel;
 
     constructor(private _router: Router) {
     }
 
     public ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem('user'));
+        this.profile = JSON.parse(localStorage.getItem('profile'));
     }
 
     public logout(): void {
-        localStorage.removeItem('user');
+        localStorage.removeItem('profile');
         this._router.navigate(['/', 'auth']);
     }
 }

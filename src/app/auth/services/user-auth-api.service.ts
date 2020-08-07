@@ -17,6 +17,7 @@ import { environment } from '@environments/environment';
 export class UserAuthApiService {
 
     private _gitUrl = 'https://github.com/login';
+    private _gitApiUrl = 'https://api.github.com';
 
     constructor(
         private _http: HttpClient,
@@ -59,6 +60,6 @@ export class UserAuthApiService {
         const headers = {
             Authorization: `token ${token}`
         };
-        return this._http.get<ProfileModel>('https://api.github.com/user', {headers});
+        return this._http.get<ProfileModel>(`${this._gitApiUrl}/user`, {headers});
     }
 }
