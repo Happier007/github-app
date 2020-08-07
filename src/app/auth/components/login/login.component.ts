@@ -13,6 +13,9 @@ import { UserModel, TokenModel } from '@core/models';
 // AUTH
 import { UserAuthApiService } from '../../services';
 
+// ENVIRONMENT
+import { environment } from '@environments/environment';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -40,7 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public login(): void {
         if (this.username.valid) {
-            this._userAuthService.authentication(this.username.value);
+            const queryParams = {
+                client_id: environment.clientId,
+                redirect_uri: environment.redirectUri,
+                login: this.username.value
+            };
+            this._userAuthService.authentication(queryParams);
         }
     }
 
@@ -48,7 +56,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            this._userAuthService.getToken(code)
+            const params = {
+                client_id: environment.clientId,
+                client_secret: environment.clientSecret,
+                code,
+                redirect_uri: environment.redirectUri
+            };
+            this._userAuthService.getToken(params)
                 .pipe(
                     switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
                     takeUntil(this._destroy$)

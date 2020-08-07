@@ -10,9 +10,6 @@ import { map } from 'rxjs/operators';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 
-// ENVIRONMENT
-import { environment } from '@environments/environment';
-
 @Injectable()
 export class UserAuthApiService {
 
@@ -24,12 +21,7 @@ export class UserAuthApiService {
         private _router: Router) {
     }
 
-    public authentication(login: string): void {
-        const queryParams = {
-            client_id: environment.clientId,
-            redirect_uri: environment.redirectUri,
-            login
-        };
+    public authentication(queryParams: any): void {
 
         const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
             queryParams
@@ -38,16 +30,9 @@ export class UserAuthApiService {
         location.href = `${this._gitUrl}/${urlTree.toString()}`;
     }
 
-    public getToken(code: string): Observable<TokenModel> {
+    public getToken(bodyParams: any): Observable<TokenModel> {
         const headers = {
             Accept: 'application/json'
-        };
-
-        const bodyParams = {
-            client_id: environment.clientId,
-            client_secret: environment.clientSecret,
-            code,
-            redirect_uri: environment.redirectUri
         };
 
         return this._http.post<TokenModel>('/login/oauth/access_token', bodyParams, {headers})
