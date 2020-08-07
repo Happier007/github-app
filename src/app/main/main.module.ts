@@ -14,13 +14,13 @@ import { MainRoutingModule } from './main-routing.module';
 
 @NgModule({
     declarations: [
-        MainComponent
+        MainComponent,
     ],
     imports: [
         CommonModule,
         MaterialModule,
         SharedModule,
-        MainRoutingModule,
+        MainRoutingModule
     ]
 })
 export class MainModule {

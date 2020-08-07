@@ -22,7 +22,7 @@ export class UserAuthApiService {
         private _router: Router) {
     }
 
-    public authentication(queryParams: IClient): void {
+    public authentication(queryParams: any): void {
         const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
             queryParams
         });
@@ -30,14 +30,18 @@ export class UserAuthApiService {
         location.href = `${environment.gitUrl}/login/${urlTree.toString()}`;
     }
 
-    public getToken(bodyParams: IClient): Observable<TokenModel> {
+    public getToken(bodyParams: any): Observable<TokenModel> {
         const headers = {
             Accept: 'application/json'
         };
 
         return this._http.post<TokenModel>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
-                map((token: TokenModel) => new TokenModel(token))
+                map((token: TokenModel) => {
+                    if (token) {
+                        return new TokenModel(token);
+                    }
+                })
             );
     }
 
@@ -48,7 +52,11 @@ export class UserAuthApiService {
 
         return this._http.get<UserModel>(`${environment.gitApiUrl}/user`, {headers})
             .pipe(
-                map((user: UserModel) => new UserModel(user))
+                map((user: UserModel) => {
+                    if (user) {
+                        return new UserModel(user);
+                    }
+                })
             );
     }
 }

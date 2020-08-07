@@ -26,6 +26,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public username = new FormControl('', Validators.required);
 
+    private _clientParams: IClient = {
+        client_id: environment.clientId,
+        redirect_uri: environment.redirectUri,
+    };
+
     private _destroy$ = new Subject<void>();
 
     constructor(private _route: ActivatedRoute,
@@ -44,11 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public login(): void {
         if (this.username.valid) {
-            const queryParams: IClient = {
-                client_id: environment.clientId,
-                redirect_uri: environment.redirectUri,
-                login: this.username.value
-            };
+            let queryParams = Object.assign(this._clientParams);
+            queryParams.login = this.username.value;
             this._userAuthService.authentication(queryParams);
         }
     }
@@ -57,12 +59,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            const bodyParams: IClient = {
-                client_id: environment.clientId,
-                redirect_uri: environment.redirectUri,
-                client_secret: environment.clientSecret,
-                code
-            };
+            let bodyParams = Object.assign(this._clientParams);
+            bodyParams.client_secret = environment.clientSecret;
+            bodyParams.code = code;
             this._userAuthService.getToken(bodyParams)
                 .pipe(
                     switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
@@ -76,6 +75,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                         error: (error) => {
                             console.log(error);
+                        },
+
+                        complete: () => {
                         }
                     }
                 );
