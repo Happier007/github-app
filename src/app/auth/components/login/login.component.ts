@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public login(): void {
-        if (!this.username.invalid) {
+        if (this.username.valid) {
             this._userAuthService.authentication(this.username.value);
         }
     }
