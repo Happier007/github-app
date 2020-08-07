@@ -14,7 +14,7 @@ import { IProfile, IToken } from '@core/interfaces';
 import { environment } from '@environments/environment';
 
 @Injectable()
-export class UserAuthService {
+export class UserAuthApiService {
 
     private _gitUrl = 'https://github.com/login';
 

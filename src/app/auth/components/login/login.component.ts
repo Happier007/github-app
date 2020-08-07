@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { IProfile, IToken } from '@core/interfaces';
 
 // AUTH
-import { UserAuthService } from '../../services';
+import { UserAuthApiService } from '../../services';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(private _route: ActivatedRoute,
                 private _router: Router,
-                private _userAuthService: UserAuthService) {
+                private _userAuthService: UserAuthApiService) {
     }
 
     public ngOnInit(): void {

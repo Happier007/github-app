@@ -9,7 +9,7 @@ import { MaterialModule } from '../material';
 import { SharedModule } from '../shared';
 
 // CURRENT
-import { UserAuthService } from './services';
+import { UserAuthApiService } from './services';
 import { LoginComponent } from './components';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { LoginComponent } from './components';
         SharedModule
     ],
     providers: [
-        UserAuthService
+        UserAuthApiService
     ]
 })
 export class AuthModule {
