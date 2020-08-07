@@ -14,7 +14,8 @@ export class MainComponent implements OnInit {
 
     public user: UserModel;
 
-    constructor(private _router: Router) {
+    constructor(
+        private _router: Router) {
     }
 
     public ngOnInit(): void {
