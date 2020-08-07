@@ -9,35 +9,35 @@ import { map } from 'rxjs/operators';
 
 // CORE
 import { UserModel, TokenModel } from '@core/models';
+import { IClient } from '@core/interfaces';
+
+// ENVIRONMENT
+import { environment } from '@environments/environment';
 
 @Injectable()
 export class UserAuthApiService {
-
-    private _gitUrl = 'https://github.com/login';
-    private _gitApiUrl = 'https://api.github.com';
 
     constructor(
         private _http: HttpClient,
         private _router: Router) {
     }
 
-    public authentication(queryParams: any): void {
-
+    public authentication(queryParams: IClient): void {
         const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
             queryParams
         });
 
-        location.href = `${this._gitUrl}/${urlTree.toString()}`;
+        location.href = `${environment.gitUrl}/login/${urlTree.toString()}`;
     }
 
-    public getToken(bodyParams: any): Observable<TokenModel> {
+    public getToken(bodyParams: IClient): Observable<TokenModel> {
         const headers = {
             Accept: 'application/json'
         };
 
         return this._http.post<TokenModel>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
-                map((response: any) => response)
+                map((token: TokenModel) => new TokenModel(token))
             );
     }
 
@@ -45,6 +45,11 @@ export class UserAuthApiService {
         const headers = {
             Authorization: `token ${token}`
         };
-        return this._http.get<UserModel>(`${this._gitApiUrl}/user`, {headers});
+
+        return this._http.get<UserModel>(`${environment.gitApiUrl}/user`, {headers})
+            .pipe(
+                map((user: UserModel) => new UserModel(user))
+            );
     }
 }
+

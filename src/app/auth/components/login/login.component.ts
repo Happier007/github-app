@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 
 // CORE
 import { UserModel, TokenModel } from '@core/models';
+import { IClient } from '@core/interfaces';
 
 // AUTH
 import { UserAuthApiService } from '../../services';
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public login(): void {
         if (this.username.valid) {
-            const queryParams = {
+            const queryParams: IClient = {
                 client_id: environment.clientId,
                 redirect_uri: environment.redirectUri,
                 login: this.username.value
@@ -56,13 +57,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            const params = {
+            const bodyParams: IClient = {
                 client_id: environment.clientId,
+                redirect_uri: environment.redirectUri,
                 client_secret: environment.clientSecret,
-                code,
-                redirect_uri: environment.redirectUri
+                code
             };
-            this._userAuthService.getToken(params)
+            this._userAuthService.getToken(bodyParams)
                 .pipe(
                     switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
                     takeUntil(this._destroy$)
@@ -72,6 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                             localStorage.setItem('user', JSON.stringify(user));
                             this._router.navigate(['/']);
                         },
+
                         error: (error) => {
                             console.log(error);
                         }
