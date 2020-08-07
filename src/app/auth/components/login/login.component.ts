@@ -8,7 +8,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // CORE
-import { ProfileModel, TokenModel } from '@core/models';
+import { UserModel, TokenModel } from '@core/models';
 
 // AUTH
 import { UserAuthApiService } from '../../services';
@@ -50,16 +50,17 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (code) {
             this._userAuthService.getToken(code)
                 .pipe(
-                    switchMap((resToken: TokenModel) => this._userAuthService.getAuthenticatedUser(resToken.access_token)),
+                    switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
                     takeUntil(this._destroy$)
                 )
-                .subscribe(
-                    (resUser: ProfileModel) => {
-                        localStorage.setItem('profile', JSON.stringify(resUser));
-                        this._router.navigate(['/']);
-                    },
-                    error => {
-                        console.log(error);
+                .subscribe({
+                        next: (user: UserModel) => {
+                            localStorage.setItem('user', JSON.stringify(user));
+                            this._router.navigate(['/']);
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
                     }
                 );
         }

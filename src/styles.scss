@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
+@import "./styles/variables.scss";
 
 @include mat-core();
 $github-app-primary: mat-palette($mat-blue-grey, 900, A100, 50, 800);

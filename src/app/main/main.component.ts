@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // CORE
-import { ProfileModel } from '@core/models';
+import { UserModel } from '@core/models';
 
 @Component({
     selector: 'app-main',
@@ -12,17 +12,17 @@ import { ProfileModel } from '@core/models';
 })
 export class MainComponent implements OnInit {
 
-    public profile: ProfileModel;
+    public user: UserModel;
 
     constructor(private _router: Router) {
     }
 
     public ngOnInit(): void {
-        this.profile = JSON.parse(localStorage.getItem('profile'));
+        this.user = JSON.parse(localStorage.getItem('user'));
     }
 
     public logout(): void {
-        localStorage.removeItem('profile');
+        localStorage.removeItem('user');
         this._router.navigate(['/', 'auth']);
     }
 }

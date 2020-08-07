@@ -1,13 +1,14 @@
 <mat-toolbar color="primary" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
 
-    <a class="logo" matLine routerLink="/search">Git Service</a>
+    <a class="logo" matLine [routerLink]="['/','search']">Git Service</a>
 
-    <div *ngIf="profile">
+    <div *ngIf="user">
 
         <div fxLayout="row" fxLayoutAlign="center center">
 
             <button mat-button [matMenuTriggerFor]="loginMenu">
-                <img class="ava" src="{{profile.avatar_url}}" alt="">{{profile.login}}
+                <img class="ava" [src]="user.avatar_url" alt="">
+                {{user.login}}
             </button>
 
             <mat-menu #loginMenu="matMenu">

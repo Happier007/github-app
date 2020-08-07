@@ -1,6 +1,6 @@
 import { PlanModel } from './plan.model';
 
-export class ProfileModel {
+export class UserModel {
     public avatar_url: string;
     public bio: string;
     public blog: string;

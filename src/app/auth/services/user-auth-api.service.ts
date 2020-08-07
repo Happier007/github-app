@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // CORE
-import { ProfileModel, TokenModel } from '@core/models';
+import { UserModel, TokenModel } from '@core/models';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -56,10 +56,10 @@ export class UserAuthApiService {
             );
     }
 
-    public getAuthenticatedUser(token: string): Observable<ProfileModel> {
+    public getAuthenticatedUser(token: string): Observable<UserModel> {
         const headers = {
             Authorization: `token ${token}`
         };
-        return this._http.get<ProfileModel>(`${this._gitApiUrl}/user`, {headers});
+        return this._http.get<UserModel>(`${this._gitApiUrl}/user`, {headers});
     }
 }
