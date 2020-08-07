@@ -9,10 +9,10 @@ import { map } from 'rxjs/operators';
 
 // CORE
 import { UserModel, TokenModel } from '@core/models';
+import { IClient } from '@core/interfaces';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
-import { IClient } from '@core/interfaces';
 
 @Injectable()
 export class UserAuthApiService {
