@@ -49,9 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public login(): void {
         if (this.username.valid) {
-            let queryParams = Object.assign(this._clientParams);
-            queryParams.login = this.username.value;
-            this._userAuthService.authentication(queryParams);
+            this._clientParams.login = this.username.value;
+            this._userAuthService.authentication(this._clientParams);
         }
     }
 
@@ -59,10 +58,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            let bodyParams = Object.assign(this._clientParams);
-            bodyParams.client_secret = environment.clientSecret;
-            bodyParams.code = code;
-            this._userAuthService.getToken(bodyParams)
+            this._clientParams.client_secret = environment.clientSecret;
+            this._clientParams.code = code;
+            this._userAuthService.getToken(this._clientParams)
                 .pipe(
                     switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
                     takeUntil(this._destroy$)

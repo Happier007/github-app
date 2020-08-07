@@ -13,7 +13,6 @@ import { UserModel } from '@core/models';
 export class MainComponent implements OnInit {
 
     public user: UserModel;
-    public loading: false;
 
     constructor(private _router: Router) {
     }

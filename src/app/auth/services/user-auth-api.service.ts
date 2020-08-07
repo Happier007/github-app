@@ -37,11 +37,7 @@ export class UserAuthApiService {
 
         return this._http.post<TokenModel>('/login/oauth/access_token', bodyParams, {headers})
             .pipe(
-                map((token: TokenModel) => {
-                    if (token) {
-                        return new TokenModel(token);
-                    }
-                })
+                map((token: TokenModel) => token && new TokenModel(token))
             );
     }
 
@@ -52,11 +48,7 @@ export class UserAuthApiService {
 
         return this._http.get<UserModel>(`${environment.gitApiUrl}/user`, {headers})
             .pipe(
-                map((user: UserModel) => {
-                    if (user) {
-                        return new UserModel(user);
-                    }
-                })
+                map((user: UserModel) => user && new UserModel(user))
             );
     }
 }
