@@ -28,11 +28,7 @@ export class UserAuthApiService {
      * @return void
      **/
     public authentication(queryParams: IClient): void {
-        const urlTree = this._router.createUrlTree(['oauth/authorize/'], {
-            queryParams
-        });
-
-        location.href = `${environment.gitUrl}/login/${urlTree.toString()}`;
+        window.location.href = `${environment.gitUrl}/login/oauth/authorize?client_id=${queryParams.clientId}&redirect_uri=${queryParams.redirectUri}&login=${queryParams.login}`;
     }
 
     /**

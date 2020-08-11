@@ -1,3 +1,10 @@
+<section>
+    <mat-progress-bar
+            *ngIf="(isLoading | async)"
+            class="mat-progress-bar"
+            mode="indeterminate"
+            color="warn"></mat-progress-bar>
+</section>
 
 <mat-toolbar color="primary" fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
 
@@ -8,7 +15,7 @@
         <div fxLayout="row" fxLayoutAlign="center center">
 
             <button mat-button [matMenuTriggerFor]="loginMenu">
-                <img class="ava" [src]="user.avatar_url" alt="">
+                <img class="ava" [src]="user.avatarUrl" alt="">
                 {{user.login}}
             </button>
 

@@ -2,10 +2,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 // APP MODULES
 import * as appModules from './';
+
+// CORE
+import { ChangeCaseInterseptor } from './core/interceptors/change-case.interseptor';
+import { LoaderInterseptor } from './core/interceptors/loader.interseptor';
 
 // CURRENT
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +29,18 @@ import { AppComponent } from './app.component';
         appModules.SharedModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ChangeCaseInterseptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterseptor,
+            multi: true,
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
