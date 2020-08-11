@@ -1,6 +1,12 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "variable-name": [
+      true,
+      "allow-leading-underscore",
+      "allow-pascal-case",
+      "check-format"
+    ],
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {

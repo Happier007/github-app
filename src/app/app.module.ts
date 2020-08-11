@@ -10,10 +10,12 @@ import * as appModules from './';
 // CORE
 import { ChangeCaseInterseptor } from './core/interceptors/change-case.interseptor';
 import { LoaderInterseptor } from './core/interceptors/loader.interseptor';
+import { ShowErrorsInterseptor } from './core/interceptors/show-errors.interseptor';
 
 // CURRENT
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 
 @NgModule({
     declarations: [
@@ -38,6 +40,11 @@ import { AppComponent } from './app.component';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: LoaderInterseptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ShowErrorsInterseptor,
             multi: true,
         }
     ],
