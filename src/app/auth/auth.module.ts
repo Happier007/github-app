@@ -5,9 +5,12 @@ import { CommonModule } from '@angular/common';
 // MATERIAL
 import { MaterialModule } from '../material';
 
+// SHARED
+import { SharedModule } from '../shared';
+
 // CURRENT
+import { UserAuthApiService } from './services';
 import { LoginComponent } from './components';
-import { UserAuthService } from './services';
 
 @NgModule({
     declarations: [
@@ -15,10 +18,11 @@ import { UserAuthService } from './services';
     ],
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        SharedModule
     ],
     providers: [
-        UserAuthService
+        UserAuthApiService
     ]
 })
 export class AuthModule {

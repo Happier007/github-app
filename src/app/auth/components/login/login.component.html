@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="auth" fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+
+    <div fxFlex="20" fxLayout="column" fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <div mat-card-avatar class="header-image"></div>
+            <mat-card-title>Sign in to GitHub</mat-card-title>
+        </div>
+
+        <mat-card>
+
+            <div class="form">
+
+                <div fxLayout="column" fxFlex="100" fxLayoutGap="20px">
+
+                    <mat-form-field>
+                        <mat-label>Username</mat-label>
+                        <input matInput [formControl]="username">
+                    </mat-form-field>
+
+                    <button mat-raised-button
+                            color="accent"
+                            type="button"
+                            (click)="login()"
+                            [disabled]="username.invalid">Sign in
+                    </button>
+
+                </div>
+
+            </div>
+
+        </mat-card>
+    </div>
+
+</div>
+

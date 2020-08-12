@@ -4,12 +4,26 @@ import { NgModule } from '@angular/core';
 // MATERIAL
 import {
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatLineModule,
+    MatMenuModule,
+    MatCardModule,
+    MatProgressBarModule
 } from '@angular/material';
 
 const MODULES = [
     MatInputModule,
     MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatLineModule,
+    MatMenuModule,
+    MatCardModule,
+    MatProgressBarModule
 ];
 
 @NgModule({
