@@ -4,6 +4,9 @@
     "baseUrl": "./",
     "paths": {
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
+      "@core/models": ["src/app/core/models/index.ts"],
+      "@core/guards": ["src/app/core/guards/index.ts"],
+      "@core/interfaces": ["src/app/core/interfaces/index.ts"],
 
       "@environments/*": ["src/environments/*"]
     },

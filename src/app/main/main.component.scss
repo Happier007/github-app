@@ -1,0 +1,19 @@
+mat-toolbar {
+    font-size: 14px;
+    line-height: 1.5;
+
+    .logo {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .logo:hover {
+        color: #9e9e9e;
+    }
+
+    .ava {
+        width: 30px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+}

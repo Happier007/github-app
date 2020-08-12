@@ -1,1 +1,1 @@
-export * from './token.interfaces';
+export * from './client.interface';
