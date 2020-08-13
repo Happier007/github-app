@@ -19,6 +19,7 @@ export class ShowErrorsInterseptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(
                 catchError((error: HttpErrorResponse) => {
+                    console.log(error);
                     this._notificationService.showError(error.message);
                     return throwError(error);
                 })

@@ -7,6 +7,7 @@
       "@core/models": ["src/app/core/models/index.ts"],
       "@core/guards": ["src/app/core/guards/index.ts"],
       "@core/services": ["src/app/core/services/index.ts"],
+      "@core/utils": ["src/app/core/utils/index.ts"],
 
       "@shared/services": ["src/app/shared/services/index.ts"],
 

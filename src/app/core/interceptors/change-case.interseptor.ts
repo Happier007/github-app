@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+// CURRENT
+import { CAMEL_CASE, SNAKE_CASE } from '@core/utils';
+
 @Injectable()
 export class ChangeCaseInterseptor implements HttpInterceptor {
 
@@ -30,12 +33,12 @@ export class ChangeCaseInterseptor implements HttpInterceptor {
             );
     }
 
-    private _changeKeys(obj, isResponse): object {
+    private _changeKeys(obj: object | any[], isResponse: boolean): object {
         for (let key in obj) {
 
             if (typeof obj[key] === 'object') {
                 if (Array.isArray(obj[key])) {
-                    obj[key].map(v => this._changeKeys(v, isResponse));
+                    obj[key].map( k => this._changeKeys(k, isResponse));
                 } else {
                     this._changeKeys(obj[key], isResponse);
                 }
@@ -44,9 +47,9 @@ export class ChangeCaseInterseptor implements HttpInterceptor {
             let modifiedKey = '';
 
             if (isResponse) {
-                modifiedKey = key.replace(/_([a-z])/g, g => g[1].toUpperCase());
+                modifiedKey = key.replace(CAMEL_CASE, replacement => replacement[1].toUpperCase());
             } else {
-                modifiedKey = key.replace(/([A-Z])/g, g => '_' + g[0].toLowerCase());
+                modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
             }
 
             if (modifiedKey !== key) {
@@ -54,6 +57,7 @@ export class ChangeCaseInterseptor implements HttpInterceptor {
                 delete obj[key];
             }
         }
+
         return obj;
     }
 }
