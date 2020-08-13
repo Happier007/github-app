@@ -23,8 +23,7 @@ export class MainComponent implements OnInit {
 
     constructor(
         private _router: Router,
-        private _loaderService: LoaderService,) {
-    }
+        private _loaderService: LoaderService) {}
 
     public ngOnInit(): void {
         this.user = JSON.parse(localStorage.getItem('user'));

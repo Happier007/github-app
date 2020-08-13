@@ -9,13 +9,10 @@ import { catchError } from 'rxjs/operators';
 // CORE
 import { NotificationService } from '@core/services';
 
-
 @Injectable()
 export class ShowErrorsInterseptor implements HttpInterceptor {
 
-    constructor(
-        private _notificationService: NotificationService) {
-    }
+    constructor(private _notificationService: NotificationService) {}
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

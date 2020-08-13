@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CoreModule } from '../core';
+
 // MATERIAL
 import { MaterialModule } from '../material';
 
@@ -9,7 +11,6 @@ import { MaterialModule } from '../material';
 import { SharedModule } from '../shared';
 
 // CURRENT
-import { UserAuthApiService } from './services';
 import { LoginComponent } from './components';
 
 @NgModule({
@@ -18,12 +19,10 @@ import { LoginComponent } from './components';
     ],
     imports: [
         CommonModule,
+        CoreModule,
         MaterialModule,
         SharedModule
     ],
-    providers: [
-        UserAuthApiService
-    ]
 })
 export class AuthModule {
 }

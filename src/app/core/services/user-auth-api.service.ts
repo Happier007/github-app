@@ -19,8 +19,8 @@ export class UserAuthApiService {
 
     constructor(
         private _http: HttpClient,
-        private _router: Router) {
-    }
+        private _router: Router
+    ) {}
 
     /**
      * Request a user's GitHub identity - https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/

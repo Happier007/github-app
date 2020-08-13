@@ -14,9 +14,7 @@ export class LoaderInterseptor implements HttpInterceptor {
 
     private _requestCounter = 0;
 
-    constructor(
-        private _loaderService: LoaderService) {
-    }
+    constructor(private _loaderService: LoaderService) {}
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

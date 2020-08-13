@@ -10,9 +10,7 @@ import { Subject } from 'rxjs';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 import { IClient } from '@core/interfaces';
-
-// AUTH
-import { UserAuthApiService } from '../../services';
+import { UserAuthApiService } from '@core/services';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -36,8 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _userAuthService: UserAuthApiService) {
-    }
+        private _userAuthService: UserAuthApiService
+    ) {}
 
     public ngOnInit(): void {
         this._authenticateUser();

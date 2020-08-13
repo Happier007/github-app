@@ -30,7 +30,7 @@ export class ChangeCaseInterseptor implements HttpInterceptor {
             );
     }
 
-    private _changeKeys(obj, isResponse): void {
+    private _changeKeys(obj, isResponse): object {
         for (let key in obj) {
 
             if (typeof obj[key] === 'object') {
