@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// CORE
 import { CoreModule } from '../core';
 
 // MATERIAL

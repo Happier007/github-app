@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // CURRENT
 import { UserAuthApiService } from '@core/services';
-import { INTERCEPTORS } from './interceptors';
+import { INTERCEPTORS } from './interseptors';
 
 @NgModule({
     declarations: [],

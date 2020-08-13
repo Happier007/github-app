@@ -8,8 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 // CORE
 import { UserModel } from '@core/models';
 
-// SHARED
-import { LoaderService } from '@shared/services';
+// CURRENT
+import { LoaderService } from './services';
 
 @Component({
     selector: 'app-main',

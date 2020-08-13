@@ -14,6 +14,7 @@ import { SharedModule } from '../shared';
 // CURRENT
 import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
+import { LoaderService } from './services';
 
 @NgModule({
     declarations: [

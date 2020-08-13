@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _userAuthService: UserAuthApiService
-    ) {}
+        private _userAuthService: UserAuthApiService) {}
 
     public ngOnInit(): void {
         this._authenticateUser();

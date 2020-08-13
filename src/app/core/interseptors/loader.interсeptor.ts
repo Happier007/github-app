@@ -6,15 +6,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-// SHARED
-import { LoaderService } from '@shared/services';
+// Main
+import { LoaderService } from '../../main/services';
 
 @Injectable()
-export class LoaderInterseptor implements HttpInterceptor {
+export class LoaderInterceptor implements HttpInterceptor {
 
     private _requestCounter = 0;
 
-    constructor(private _loaderService: LoaderService) {}
+    constructor(private _loaderService: LoaderService) {
+    }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
