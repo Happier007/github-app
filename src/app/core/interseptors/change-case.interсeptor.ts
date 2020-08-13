@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 // RXJS
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { camelToSnake, snakeToCamel } from '../helpers/convert-cases.helper';
+
+// CORE
+import { camelToSnake, snakeToCamel } from '@core/helpers';
 
 
 @Injectable()
@@ -26,11 +28,9 @@ export class ChangeCaseInterceptor implements HttpInterceptor {
 
                         const camelCaseBody = snakeToCamel(event.body);
 
-                        const modifyResponse = event.clone({
+                        return event.clone({
                             body: camelCaseBody
                         });
-
-                        return modifyResponse;
                     }
                 })
             );

@@ -1,4 +1,7 @@
+// ANGULAR
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+// CORE
 import { ChangeCaseInterceptor } from './change-case.interсeptor';
 import { LoaderInterceptor } from './loader.interсeptor';
 import { NotificationInterceptor } from './notification.interсeptor';
