@@ -5,23 +5,15 @@ import { Routes, RouterModule } from '@angular/router';
 // CORE
 import { AuthGuard } from '@core/guards';
 
-// AUTH
-import { LoginComponent } from './auth/components';
-
 const routes: Routes = [
     {
         path: '',
-        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
                 loadChildren: './main/main.module#MainModule'
             },
         ]
-    },
-    {
-        path: 'auth',
-        component: LoginComponent
     },
     {
         path: '**',
