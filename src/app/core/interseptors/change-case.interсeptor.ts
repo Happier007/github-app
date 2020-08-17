@@ -15,21 +15,19 @@ export class ChangeCaseInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const snakeCaseBody = camelToSnake(req.body);
+        debugger
 
-        const modifyRequest = req.clone({
-            body: snakeCaseBody
-        });
+        const modifyRequest = camelToSnake(req);
 
         return next.handle(modifyRequest)
             .pipe(
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
 
-                        const camelCaseBody = snakeToCamel(event.body);
+                        const camelCaseResponse = snakeToCamel(event.body);
 
                         return event.clone({
-                            body: camelCaseBody
+                            body: camelCaseResponse
                         });
                     }
                 })

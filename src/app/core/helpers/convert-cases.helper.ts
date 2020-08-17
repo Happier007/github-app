@@ -1,5 +1,6 @@
 // CORE
 import { CAMEL_CASE, SNAKE_CASE } from '@core/utils';
+import { HttpParams, HttpRequest } from '@angular/common/http';
 
 export function snakeToCamel(response: object | any[]): object | null {
 
@@ -29,30 +30,79 @@ export function snakeToCamel(response: object | any[]): object | null {
     return response;
 }
 
-export function camelToSnake(request: object | any[]): object | null {
+export function camelToSnake(request: HttpRequest<any>): HttpRequest<any> | null {
 
     if (request !== null) {
 
-        const responseKeys = Object.keys(request);
+        let modifyRequest = request;
 
-        responseKeys.forEach((key: string) => {
+        switch (request.method) {
+            case 'POST': {
 
-            if (typeof request[key] === 'object') {
-                if (Array.isArray(request[key])) {
-                    request[key].map(k => camelToSnake(k));
-                } else {
-                    camelToSnake(request[key]);
-                }
+                modifyRequest = request.clone({
+                    body: camelToSnakeForPOST(request.body)
+                });
+
+                break;
             }
 
-            const modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
+            case 'GET': {
 
-            if (modifiedKey !== key) {
-                request[modifiedKey] = request[key];
-                delete request[key];
+                modifyRequest = request.clone({
+                    params: camelToSnakeForGET(request.params)
+                });
+
+                break;
             }
-        });
+        }
+        return modifyRequest;
     }
 
     return request;
+}
+
+
+function camelToSnakeForGET(urlParams: HttpParams): HttpParams | null {
+
+    if (urlParams !== null) {
+
+        let params = new HttpParams();
+
+        const urlParamsKeys = urlParams.keys();
+
+        urlParamsKeys.forEach((key: string) => {
+            const modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
+            params = params.append(modifiedKey, urlParams.get(key));
+        });
+
+        return params;
+
+    }
+
+    return urlParams;
+}
+
+function camelToSnakeForPOST(bodyParams: object): object | null {
+
+    const bodyParamsKeys = Object.keys(bodyParams);
+
+    bodyParamsKeys.forEach((key: string) => {
+
+        if (typeof bodyParams[key] === 'object') {
+            if (Array.isArray(bodyParams[key])) {
+                bodyParams[key].map(k => camelToSnakeForPOST(k));
+            } else {
+                camelToSnakeForPOST(bodyParams[key]);
+            }
+        }
+
+        const modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
+
+        if (modifiedKey !== key) {
+            bodyParams[modifiedKey] = bodyParams[key];
+            delete bodyParams[key];
+        }
+    });
+
+    return bodyParams;
 }

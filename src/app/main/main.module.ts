@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // CORE
 import { CoreModule } from '../core';
+import { GitApiService } from '@core/services';
 
 // MATERIAL
 import { MaterialModule } from '../material';
@@ -18,6 +19,7 @@ import { AuthModule } from '../auth';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import * as mainComponents from './components';
+
 
 @NgModule({
     declarations: [
@@ -34,8 +36,11 @@ import * as mainComponents from './components';
         MaterialModule,
         SharedModule,
         AuthModule,
-        MainRoutingModule
+        MainRoutingModule,
     ],
+    providers: [
+        GitApiService
+    ]
 })
 export class MainModule {
 }
