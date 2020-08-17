@@ -10,9 +10,7 @@ import { Subject } from 'rxjs';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 import { IClient } from '@core/interfaces';
-
-// AUTH
-import { UserAuthApiService } from '../../services';
+import { UserAuthApiService } from '@core/services';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -27,8 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     public username = new FormControl('', Validators.required);
 
     private _clientParams: IClient = {
-        client_id: environment.clientId,
-        redirect_uri: environment.redirectUri,
+        clientId: environment.clientId,
+        redirectUri: environment.redirectUri,
     };
 
     private _destroyed$ = new Subject<void>();
@@ -36,8 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _userAuthService: UserAuthApiService) {
-    }
+        private _userAuthService: UserAuthApiService) {}
 
     public ngOnInit(): void {
         this._authenticateUser();
@@ -60,12 +57,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
-            this._clientParams.client_secret = environment.clientSecret;
+            this._clientParams.clientSecret = environment.clientSecret;
             this._clientParams.code = code;
 
             this._userAuthService.getToken(this._clientParams)
                 .pipe(
-                    switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.access_token)),
+                    switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.accessToken)),
                     takeUntil(this._destroyed$)
                 )
                 .subscribe({

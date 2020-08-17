@@ -1,7 +1,7 @@
 export interface IClient {
-    client_id: string;
-    redirect_uri: string;
-    client_secret?: string;
+    clientId: string;
+    redirectUri: string;
+    clientSecret?: string;
     code?: string;
     login?: string;
 }

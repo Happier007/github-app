@@ -2,8 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// RXJS
+import { BehaviorSubject } from 'rxjs';
+
 // CORE
 import { UserModel } from '@core/models';
+
+// CURRENT
+import { LoaderService } from './services';
 
 @Component({
     selector: 'app-main',
@@ -13,10 +19,11 @@ import { UserModel } from '@core/models';
 export class MainComponent implements OnInit {
 
     public user: UserModel;
+    public isLoading: BehaviorSubject<boolean> = this._loaderService.isLoading;
 
     constructor(
-        private _router: Router) {
-    }
+        private _router: Router,
+        private _loaderService: LoaderService) {}
 
     public ngOnInit(): void {
         this.user = JSON.parse(localStorage.getItem('user'));

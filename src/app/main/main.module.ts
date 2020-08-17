@@ -2,6 +2,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// CORE
+import { CoreModule } from '../core';
+
 // MATERIAL
 import { MaterialModule } from '../material';
 
@@ -18,10 +21,11 @@ import { MainRoutingModule } from './main-routing.module';
     ],
     imports: [
         CommonModule,
+        CoreModule,
         MaterialModule,
         SharedModule,
         MainRoutingModule
-    ]
+    ],
 })
 export class MainModule {
 }

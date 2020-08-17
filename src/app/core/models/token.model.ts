@@ -1,11 +1,11 @@
 export class TokenModel {
-    public access_token: string;
+    public accessToken: string;
     public scope: string;
-    public token_type: string;
+    public tokenType: string;
 
     constructor(data: any = {}) {
-        this.access_token = data.access_token || void 0;
+        this.accessToken = data.accessToken || void 0;
         this.scope = data.scope || void 0;
-        this.token_type = data.token_type || void 0;
+        this.tokenType = data.tokenType || void 0;
     }
 }
