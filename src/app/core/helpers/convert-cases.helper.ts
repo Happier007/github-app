@@ -1,3 +1,4 @@
+// CORE
 import { CAMEL_CASE, SNAKE_CASE } from '@core/utils';
 
 export function snakeToCamel(response: object | any[]): object | null {

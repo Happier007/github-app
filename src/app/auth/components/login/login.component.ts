@@ -4,7 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // RXJS
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // CORE
@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _userAuthService: UserAuthApiService) {}
+        private _userAuthApiService: UserAuthApiService) {
+    }
 
     public ngOnInit(): void {
         this._authenticateUser();
@@ -49,25 +50,31 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.username.valid) {
             this._clientParams.login = this.username.value;
 
-            this._userAuthService.authentication(this._clientParams);
+            this._userAuthApiService.authentication(this._clientParams);
         }
     }
 
     private _authenticateUser(): void {
+
         const code = this._route.snapshot.queryParamMap.get('code');
 
         if (code) {
             this._clientParams.clientSecret = environment.clientSecret;
             this._clientParams.code = code;
 
-            this._userAuthService.getToken(this._clientParams)
+            let accessToken = '';
+
+            this._userAuthApiService.getToken(this._clientParams)
                 .pipe(
-                    switchMap((token: TokenModel) => this._userAuthService.getAuthenticatedUser(token.accessToken)),
+                    tap((token: TokenModel) => accessToken = token.accessToken),
+                    switchMap((token: TokenModel) => this._userAuthApiService.fetchAuthenticatedUser(token.accessToken)),
                     takeUntil(this._destroyed$)
                 )
                 .subscribe({
                         next: (user: UserModel) => {
-                            localStorage.setItem('user', JSON.stringify(user));
+                            localStorage.setItem('access-token', accessToken);
+                            this._userAuthApiService.saveAuthenticatedUser(user);
+
                             this._router.navigate(['/']);
                         },
                         error: (error) => {
