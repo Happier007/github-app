@@ -1,4 +1,11 @@
-<app-nav-bar></app-nav-bar>
+<mat-progress-bar
+        *ngIf="isLoading$ | async"
+        class="mat-progress-bar"
+        mode="indeterminate"
+        color="warn">
+</mat-progress-bar>
+
+<app-nav-bar [user$]=user$></app-nav-bar>
 
 <router-outlet></router-outlet>
 

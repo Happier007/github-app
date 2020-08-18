@@ -13,6 +13,7 @@ import {
 } from '@core/services';
 
 import { UserModel } from '@core/models';
+import { LoaderService } from '@shared/services';
 
 @Component({
   selector: 'app-main',
@@ -21,10 +22,14 @@ import { UserModel } from '@core/models';
 })
 export class MainComponent implements OnInit {
 
+  public user$: Subject<UserModel> = this._userService.authorizedUser$;
+  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
+
   private _destroyed$ = new Subject<void>();
 
   constructor(
     private _router: Router,
+    private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {
   }

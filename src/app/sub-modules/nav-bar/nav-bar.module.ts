@@ -26,5 +26,10 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     NavBarComponent
   ]
 })
+
+/**
+ This module was made an example of a reusable module that does not depend on other modules
+ and can be imported anywhere in the application
+ **/
 export class NavBarModule {
 }

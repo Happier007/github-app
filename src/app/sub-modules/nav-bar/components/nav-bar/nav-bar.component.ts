@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -9,9 +9,6 @@ import { Subject } from 'rxjs';
 import { UserService } from '@core/services';
 import { UserModel } from '@core/models';
 
-// CURRENT
-import { LoaderService } from '@shared/services';
-
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -19,12 +16,10 @@ import { LoaderService } from '@shared/services';
 })
 export class NavBarComponent {
 
-  public user$: Subject<UserModel> = this._userService.authorizedUser$;
-  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
+  @Input() user$: Subject<UserModel>;
 
   constructor(
     private _router: Router,
-    private _loaderService: LoaderService,
     private _userService: UserService) {
   }
 

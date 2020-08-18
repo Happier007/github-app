@@ -18,6 +18,7 @@ import {
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
+import { LoaderService } from '@shared/services';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ import { environment } from '@environments/environment';
 export class LoginComponent implements OnInit, OnDestroy {
 
   public username = new FormControl('', Validators.required);
+  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
 
   private _clientParams: IClient = {
     clientId: environment.clientId,
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
+    private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {
   }
