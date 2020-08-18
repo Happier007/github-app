@@ -1,11 +1,20 @@
+// ANGULAR
 import { Injectable } from '@angular/core';
+
+// RXJS
 import { Subject } from 'rxjs';
+
+// CORE
 import { UserModel } from '@core/models';
 
 @Injectable()
 export class UserService {
 
-  public authorizedUser$ = new Subject<any>();
+  private authorizedUser$ = new Subject<UserModel>();
+
+  public get authorizedUser(): Subject<UserModel> {
+    return this.authorizedUser$;
+  }
 
   public saveAuthenticatedUser(user: UserModel): void {
     this.authorizedUser$.next(user);

@@ -24,7 +24,7 @@ import { LoaderService } from './services';
 })
 export class MainComponent implements OnInit {
 
-  public user$: Subject<UserModel> = this._userService.authorizedUser$;
+  public user$: Subject<UserModel> = this._userService.authorizedUser;
   public isLoading: boolean;
 
   private _destroyed$ = new Subject<void>();
@@ -80,7 +80,7 @@ export class MainComponent implements OnInit {
     .pipe(
       takeUntil(this._destroyed$)
     )
-    .subscribe(loadStatus => {
+    .subscribe((loadStatus: boolean) => {
       this.isLoading = loadStatus;
       this._cd.detectChanges();
     });
