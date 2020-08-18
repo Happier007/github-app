@@ -9,22 +9,24 @@ import { MaterialModule } from '../material';
 
 // FLEX-LAYOUT
 import { FlexModule } from '@angular/flex-layout';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
+// SUB-MODULES
+import { NavBarModule } from '../sub-modules';
 
 @NgModule({
-  declarations: [NavBarComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FlexModule,
-    MaterialModule,
     RouterModule,
+    MaterialModule,
+    FlexModule,
+    NavBarModule
   ],
   exports: [
     ReactiveFormsModule,
     FlexModule,
-    NavBarComponent
+    NavBarModule
   ]
 })
 export class SharedModule {
