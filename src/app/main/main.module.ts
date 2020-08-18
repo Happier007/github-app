@@ -20,22 +20,22 @@ import { MainComponent } from './main.component';
 import * as mainComponents from './components';
 
 @NgModule({
-    declarations: [
-        MainComponent,
-        mainComponents.GistsListComponent,
-        mainComponents.GistDetailComponent,
-        mainComponents.UsersListComponent,
-        mainComponents.ReposListComponent,
-        mainComponents.ProfileComponent,
-    ],
-    imports: [
-        CommonModule,
-        CoreModule,
-        MaterialModule,
-        SharedModule,
-        AuthModule,
-        MainRoutingModule
-    ],
+  declarations: [
+    MainComponent,
+    mainComponents.GistsListComponent,
+    mainComponents.GistDetailComponent,
+    mainComponents.UsersListComponent,
+    mainComponents.ReposListComponent,
+    mainComponents.ProfileComponent,
+  ],
+  imports: [
+    CommonModule,
+    CoreModule,
+    MaterialModule,
+    SharedModule,
+    AuthModule,
+    MainRoutingModule
+  ],
 })
 export class MainModule {
 }

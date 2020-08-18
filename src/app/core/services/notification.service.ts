@@ -7,16 +7,17 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 @Injectable({providedIn: 'root'})
 export class NotificationService {
 
-    private _defaultConfig = new MatSnackBarConfig();
+  private _defaultConfig = new MatSnackBarConfig();
 
-    constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) {
+  }
 
-    public showMessage(message: string, type: string): void {
-        this._defaultConfig.duration = 2000;
-        this._defaultConfig.horizontalPosition = 'right';
-        this._defaultConfig.verticalPosition = 'top';
-        this._defaultConfig.panelClass = type;
+  public showMessage(message: string, type: string): void {
+    this._defaultConfig.duration = 2000;
+    this._defaultConfig.horizontalPosition = 'right';
+    this._defaultConfig.verticalPosition = 'top';
+    this._defaultConfig.panelClass = type;
 
-        this.snackBar.open(message, '', this._defaultConfig);
-    }
+    this.snackBar.open(message, '', this._defaultConfig);
+  }
 }

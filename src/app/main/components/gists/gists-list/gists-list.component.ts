@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GistsListComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

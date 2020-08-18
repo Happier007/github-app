@@ -12,18 +12,18 @@ import { LoaderService } from '../../main/services';
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
 
-    constructor(private _loaderService: LoaderService) {
-    }
+  constructor(private _loaderService: LoaderService) {
+  }
 
-    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        Promise.resolve(null).then(() => this._loaderService.show());
+    Promise.resolve(null).then(() => this._loaderService.show());
 
-        return next.handle(req)
-            .pipe(
-                finalize(() => {
-                    this._loaderService.hide();
-                })
-            );
-    }
+    return next.handle(req)
+    .pipe(
+      finalize(() => {
+        this._loaderService.hide();
+      })
+    );
+  }
 }
