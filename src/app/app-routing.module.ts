@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 // CORE
 import { AuthGuard } from '@core/guards';
+import { LoginComponent } from './auth/components';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
         loadChildren: './main/main.module#MainModule'
       },
     ]
+  },
+  {
+    path: 'auth',
+    component: LoginComponent
   },
   {
     path: '**',

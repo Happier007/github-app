@@ -1,5 +1,5 @@
 // ANGULAR
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -14,9 +14,6 @@ import {
 
 import { UserModel } from '@core/models';
 
-// CURRENT
-import { LoaderService } from './services';
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -24,31 +21,16 @@ import { LoaderService } from './services';
 })
 export class MainComponent implements OnInit {
 
-  public user$: Subject<UserModel> = this._userService.authorizedUser$;
-  public isLoading: boolean;
-
   private _destroyed$ = new Subject<void>();
 
   constructor(
     private _router: Router,
-    private _cd: ChangeDetectorRef,
-    private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {
   }
 
   public ngOnInit(): void {
-    this._loadProgress();
-
     this._authenticateUser();
-  }
-
-  public logout(): void {
-    localStorage.removeItem('access-token');
-
-    this._userService.removeAuthenticatedUser();
-
-    this._router.navigate(['/', 'auth']);
   }
 
   private _authenticateUser(): void {
@@ -73,16 +55,5 @@ export class MainComponent implements OnInit {
         }
       );
     }
-  }
-
-  private _loadProgress(): void {
-    this._loaderService.isLoading
-    .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(loadStatus => {
-      this.isLoading = loadStatus;
-      this._cd.detectChanges();
-    });
   }
 }

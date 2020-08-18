@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
     appModules.CoreModule,
     appModules.MaterialModule,
     appModules.SharedModule,
+    appModules.AuthModule,
     AppRoutingModule
   ],
   bootstrap: [AppComponent]
