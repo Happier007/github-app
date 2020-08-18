@@ -1,26 +1,21 @@
 // ANGULAR
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 // RXJS
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 // CORE
-import {
-  UserAuthApiService,
-  UserService
-} from '@core/services';
+import { UserAuthApiService, UserService } from '@core/services';
 
 import { UserModel } from '@core/models';
-
 // CURRENT
 import { LoaderService } from './services';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
 
