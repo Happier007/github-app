@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -7,7 +7,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // CORE
-import { UserAuthApiService } from '@core/services';
+import {
+  UserAuthApiService,
+  UserService
+} from '@core/services';
+
 import { UserModel } from '@core/models';
 
 // CURRENT
@@ -20,25 +24,29 @@ import { LoaderService } from './services';
 })
 export class MainComponent implements OnInit {
 
-  public user$: Subject<UserModel> = this._userAuthApiService.authorizedUser$;
-  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
+  public user$: Subject<UserModel> = this._userService.authorizedUser$;
+  public isLoading: boolean;
 
   private _destroyed$ = new Subject<void>();
 
   constructor(
     private _router: Router,
+    private _cd: ChangeDetectorRef,
     private _loaderService: LoaderService,
-    private _userAuthApiService: UserAuthApiService) {
+    private _userAuthApiService: UserAuthApiService,
+    private _userService: UserService) {
   }
 
   public ngOnInit(): void {
+    this._loadProgress();
+
     this._authenticateUser();
   }
 
   public logout(): void {
     localStorage.removeItem('access-token');
 
-    this._userAuthApiService.removeAuthenticatedUser();
+    this._userService.removeAuthenticatedUser();
 
     this._router.navigate(['/', 'auth']);
   }
@@ -55,15 +63,26 @@ export class MainComponent implements OnInit {
       )
       .subscribe({
           next: (user: UserModel) => {
-            this._userAuthApiService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user);
           },
           error: () => {
-            this._userAuthApiService.removeAuthenticatedUser();
+            this._userService.removeAuthenticatedUser();
           },
           complete: () => {
           }
         }
       );
     }
+  }
+
+  private _loadProgress(): void {
+    this._loaderService.isLoading
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe(loadStatus => {
+      this.isLoading = loadStatus;
+      this._cd.detectChanges();
+    });
   }
 }

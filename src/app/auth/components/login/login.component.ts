@@ -10,7 +10,11 @@ import { Subject } from 'rxjs';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 import { IClient } from '@core/interfaces';
-import { UserAuthApiService } from '@core/services';
+
+import {
+  UserAuthApiService,
+  UserService
+} from '@core/services';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -34,7 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _userAuthApiService: UserAuthApiService) {
+    private _userAuthApiService: UserAuthApiService,
+    private _userService: UserService) {
   }
 
   public ngOnInit(): void {
@@ -73,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe({
           next: (user: UserModel) => {
             localStorage.setItem('access-token', accessToken);
-            this._userAuthApiService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user);
 
             this._router.navigate(['/']);
           },
