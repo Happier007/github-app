@@ -5,16 +5,16 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private _router: Router) {}
+  constructor(private _router: Router) {}
 
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        const isAuthorized = localStorage.getItem('access-token');
+    const isAuthorized = localStorage.getItem('access-token');
 
-        if (!isAuthorized) {
-            this._router.navigate(['/', 'auth']);
-        }
-
-        return !!isAuthorized;
+    if (!isAuthorized) {
+      this._router.navigate(['/', 'auth']);
     }
+
+    return !!isAuthorized;
+  }
 }

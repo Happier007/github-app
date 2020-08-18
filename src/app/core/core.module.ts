@@ -7,14 +7,14 @@ import { UserAuthApiService } from '@core/services';
 import { INTERCEPTORS } from './interseptors';
 
 @NgModule({
-    declarations: [],
-    imports: [
-        CommonModule
-    ],
-    providers: [
-        UserAuthApiService,
-        INTERCEPTORS
-    ]
+  declarations: [],
+  imports: [
+    CommonModule
+  ],
+  providers: [
+    UserAuthApiService,
+    INTERCEPTORS
+  ]
 })
 export class CoreModule {
 }

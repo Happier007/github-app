@@ -13,24 +13,24 @@ import { camelToSnake, snakeToCamel } from '@core/helpers';
 @Injectable()
 export class ChangeCaseInterceptor implements HttpInterceptor {
 
-    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        debugger
+    debugger
 
-        const modifyRequest = camelToSnake(req);
+    const modifyRequest = camelToSnake(req);
 
-        return next.handle(modifyRequest)
-            .pipe(
-                map((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
+    return next.handle(modifyRequest)
+    .pipe(
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
 
-                        const camelCaseResponse = snakeToCamel(event.body);
+          const camelCaseResponse = snakeToCamel(event.body);
 
-                        return event.clone({
-                            body: camelCaseResponse
-                        });
-                    }
-                })
-            );
-    }
+          return event.clone({
+            body: camelCaseResponse
+          });
+        }
+      })
+    );
+  }
 }

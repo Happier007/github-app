@@ -7,73 +7,73 @@
 
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
 
-    <div fxLayout="row" fxLayoutGap="50px">
+  <div fxLayout="row" fxLayoutGap="50px">
+    <a class="bar-item" matLine
+       [routerLink]="['/','search']">
+      Git Service
+    </a>
+
+    <div>
+      <div fxLayoutGap="10px">
+
         <a class="bar-item" matLine
-           [routerLink]="['/','search']">
-            Git Service
+           [routerLinkActive]="'active'"
+           [routerLink]="['/', 'repos']">
+          Repositories
         </a>
 
-        <div>
-            <div fxLayoutGap="10px">
+        <a class="bar-item" matLine
+           [routerLinkActive]="'active'"
+           [routerLink]="['/', 'users']">
+          Users
+        </a>
 
-                <a class="bar-item" matLine
-                   [routerLinkActive]="'active'"
-                   [routerLink]="['/', 'repos']">
-                    Repositories
-                </a>
+        <a class="bar-item" matLine
+           [routerLinkActive]="'active'"
+           [routerLink]="['/', 'gists']">
+          Gists
+        </a>
 
-                <a class="bar-item" matLine
-                   [routerLinkActive]="'active'"
-                   [routerLink]="['/', 'users']">
-                    Users
-                </a>
-
-                <a class="bar-item" matLine
-                   [routerLinkActive]="'active'"
-                   [routerLink]="['/', 'gists']">
-                    Gists
-                </a>
-
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <div *ngIf="(user$ | async) as user; else noAuthenticatedUser">
+  <div *ngIf="(user$ | async) as user; else noAuthenticatedUser">
 
-        <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="center center">
 
-            <button [matMenuTriggerFor]="loginMenu" mat-button>
-                <img class="ava" [src]="user.avatarUrl" alt="">
-                {{user.login}}
-            </button>
+      <button [matMenuTriggerFor]="loginMenu" mat-button>
+        <img class="ava" [src]="user.avatarUrl" alt="">
+        {{user.login}}
+      </button>
 
-            <mat-menu #loginMenu="matMenu">
+      <mat-menu #loginMenu="matMenu">
 
-                <button [routerLink]="['/', 'profile']"
-                        mat-menu-item>
-                    <mat-icon>settings</mat-icon>
-                    <span>Settings</span>
-                </button>
-
-                <button (click)="logout()"
-                        mat-menu-item>
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Logout</span>
-                </button>
-
-            </mat-menu>
-
-        </div>
-
-    </div>
-
-    <ng-template #noAuthenticatedUser>
-
-        <button [routerLink]="['/', 'auth']" mat-button>
-            Login
+        <button [routerLink]="['/', 'profile']"
+                mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
         </button>
 
-    </ng-template>
+        <button (click)="logout()"
+                mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+
+      </mat-menu>
+
+    </div>
+
+  </div>
+
+  <ng-template #noAuthenticatedUser>
+
+    <button [routerLink]="['/', 'auth']" mat-button>
+      Login
+    </button>
+
+  </ng-template>
 
 </mat-toolbar>
 

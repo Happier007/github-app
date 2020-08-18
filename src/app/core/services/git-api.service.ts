@@ -8,10 +8,10 @@ import { environment } from '@environments/environment';
 @Injectable()
 export class GitApiService {
 
-    constructor(private _http: HttpClient) {
-    }
+  constructor(private _http: HttpClient) {
+  }
 
-    public getGists(urlParams: QueryParamsModel): Observable<IGist[]> {
-        return this._http.get<IGist[]>(`${environment.gitApiUrl}/gists/public`, {params: urlParams as any});
-    }
+  public getGists(urlParams: QueryParamsModel): Observable<IGist[]> {
+    return this._http.get<IGist[]>(`${environment.gitApiUrl}/gists/public`, {params: urlParams as any});
+  }
 }

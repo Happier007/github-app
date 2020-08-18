@@ -15,15 +15,15 @@ import { SharedModule } from '../shared';
 import { LoginComponent } from './components';
 
 @NgModule({
-    declarations: [
-        LoginComponent
-    ],
-    imports: [
-        CommonModule,
-        CoreModule,
-        MaterialModule,
-        SharedModule
-    ],
+  declarations: [
+    LoginComponent
+  ],
+  imports: [
+    CommonModule,
+    CoreModule,
+    MaterialModule,
+    SharedModule
+  ],
 })
 export class AuthModule {
 }

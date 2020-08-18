@@ -7,16 +7,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
-    declarations: [],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FlexModule
-    ],
-    exports: [
-        ReactiveFormsModule,
-        FlexModule
-    ]
+  declarations: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FlexModule
+  ],
+  exports: [
+    ReactiveFormsModule,
+    FlexModule
+  ]
 })
 export class SharedModule {
 }

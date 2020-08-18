@@ -11,48 +11,48 @@ import { LoginComponent } from '../auth/components';
 // CURRENT
 import { MainComponent } from './main.component';
 import {
-    GistDetailComponent,
-    GistsListComponent, ProfileComponent,
-    ReposListComponent, UsersListComponent
+  GistDetailComponent,
+  GistsListComponent, ProfileComponent,
+  ReposListComponent, UsersListComponent
 } from './components';
 
 const routes: Routes = [
-    {
-        path: '', component: MainComponent,
-        children: [
-            {
-                path: 'repos',
-                component: ReposListComponent
-            },
-            {
-                path: 'users',
-                component: UsersListComponent
-            },
-            {
-                path: 'gists',
-                component: GistsListComponent
-            },
-            {
-                path: 'gist/:id',
-                component: GistDetailComponent
-            },
-            {
-                path: 'profile',
-                component: ProfileComponent,
-                canActivate: [AuthGuard],
-            },
-            {
-                path: 'auth',
-                component: LoginComponent
-            }
+  {
+    path: '', component: MainComponent,
+    children: [
+      {
+        path: 'repos',
+        component: ReposListComponent
+      },
+      {
+        path: 'users',
+        component: UsersListComponent
+      },
+      {
+        path: 'gists',
+        component: GistsListComponent
+      },
+      {
+        path: 'gist/:id',
+        component: GistDetailComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'auth',
+        component: LoginComponent
+      }
 
-        ]
-    },
+    ]
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class MainRoutingModule {
 }

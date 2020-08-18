@@ -6,31 +6,31 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '@core/guards';
 
 const routes: Routes = [
-    {
+  {
+    path: '',
+    children: [
+      {
         path: '',
-        children: [
-            {
-                path: '',
-                loadChildren: './main/main.module#MainModule'
-            },
-        ]
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
+        loadChildren: './main/main.module#MainModule'
+      },
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(routes)
-    ],
-    exports: [
-        RouterModule
-    ],
-    providers: [
-        AuthGuard
-    ]
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
+  exports: [
+    RouterModule
+  ],
+  providers: [
+    AuthGuard
+  ]
 })
 export class AppRoutingModule {
 }
