@@ -13,5 +13,4 @@ export class ReposListComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
