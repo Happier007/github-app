@@ -13,6 +13,8 @@ import {
 } from '@core/services';
 
 import { UserModel } from '@core/models';
+
+// SHARED
 import { LoaderService } from '@shared/services';
 
 @Component({
@@ -30,7 +32,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(
     private _router: Router,
-    private _cd: ChangeDetectorRef,
+    private _cdRef: ChangeDetectorRef,
     private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {
@@ -80,7 +82,7 @@ export class MainComponent implements OnInit, OnDestroy {
     )
     .subscribe((user: UserModel) => {
       this.user = user;
-      this._cd.detectChanges();
+      this._cdRef.detectChanges();
     });
   }
 
@@ -91,7 +93,7 @@ export class MainComponent implements OnInit, OnDestroy {
     )
     .subscribe((loadStatus: boolean) => {
       this.isLoading = loadStatus;
-      this._cd.detectChanges();
+      this._cdRef.detectChanges();
     });
   }
 }

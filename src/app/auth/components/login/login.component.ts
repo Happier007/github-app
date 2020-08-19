@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _cd: ChangeDetectorRef,
+    private _cdRef: ChangeDetectorRef,
     private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {}
@@ -85,8 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
       .subscribe({
           next: (user: UserModel) => {
-            localStorage.setItem('access-token', accessToken);
-            this._userService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user, accessToken);
 
             this._router.navigate(['/']);
           },
@@ -105,7 +104,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     )
     .subscribe((loadStatus: boolean) => {
       this.isLoading = loadStatus;
-      this._cd.detectChanges();
+      this._cdRef.detectChanges();
     });
   }
 }

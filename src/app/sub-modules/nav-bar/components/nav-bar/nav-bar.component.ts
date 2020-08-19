@@ -13,7 +13,7 @@ import { UserModel } from '@core/models';
 })
 export class NavBarComponent {
 
-  @Input() user: UserModel;
+  @Input() public user: UserModel;
 
   constructor(
     private _router: Router,
@@ -21,8 +21,6 @@ export class NavBarComponent {
   }
 
   public logout(): void {
-    localStorage.removeItem('access-token');
-
     this._userService.removeAuthenticatedUser();
 
     this._router.navigate(['/', 'auth']);
