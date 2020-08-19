@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 // CORE
 import { AuthGuard } from '@core/guards';
+
+// AUTH
 import { LoginComponent } from './auth/components';
 
 const routes: Routes = [
