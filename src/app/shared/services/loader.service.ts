@@ -7,7 +7,11 @@ import { Subject } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class LoaderService {
 
-  public isLoading = new Subject<boolean>();
+  private _isLoading$ = new Subject<boolean>();
+
+  public get isLoading(): Subject<boolean>{
+    return this._isLoading$;
+  }
 
   public show(): void {
     this.isLoading.next(true);

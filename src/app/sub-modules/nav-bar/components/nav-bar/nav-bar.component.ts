@@ -2,9 +2,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-// RXJS
-import { Subject } from 'rxjs';
-
 // CORE
 import { UserService } from '@core/services';
 import { UserModel } from '@core/models';
@@ -16,7 +13,7 @@ import { UserModel } from '@core/models';
 })
 export class NavBarComponent {
 
-  @Input() user$: Subject<UserModel>;
+  @Input() user: UserModel;
 
   constructor(
     private _router: Router,

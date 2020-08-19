@@ -49,14 +49,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
-  public logout(): void {
-    localStorage.removeItem('access-token');
-
-    this._userService.removeAuthenticatedUser();
-
-    this._router.navigate(['/', 'auth']);
-  }
-
   private _authenticateUser(): void {
 
     const accessToken = localStorage.getItem('access-token');

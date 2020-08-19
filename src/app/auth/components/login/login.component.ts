@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,12 +23,13 @@ import { LoaderService } from '@shared/services';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
   public username = new FormControl('', Validators.required);
-  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
+  public isLoading: boolean;
 
   private _clientParams: IClient = {
     clientId: environment.clientId,
@@ -40,13 +41,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
+    private _cd: ChangeDetectorRef,
     private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
-    private _userService: UserService) {
-  }
+    private _userService: UserService) {}
 
   public ngOnInit(): void {
     this._authenticateUser();
+
+    this._loadProgress();
   }
 
   public ngOnDestroy(): void {
@@ -85,13 +88,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             this._router.navigate(['/']);
           },
-          error: (error) => {
-            console.log(error);
-          },
+          error: () => {},
           complete: () => {
           }
         }
       );
     }
+  }
+
+  private _loadProgress(): void {
+    this._loaderService.isLoading
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((loadStatus: boolean) => {
+      this.isLoading = loadStatus;
+      this._cd.detectChanges();
+    });
   }
 }
