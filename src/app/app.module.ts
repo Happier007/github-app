@@ -11,7 +11,6 @@ import * as appModules from './';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +22,7 @@ import { AppComponent } from './app.component';
     appModules.CoreModule,
     appModules.MaterialModule,
     appModules.SharedModule,
+    appModules.AuthModule,
     AppRoutingModule
   ],
   bootstrap: [AppComponent]

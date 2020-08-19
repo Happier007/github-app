@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 // CORE
 import { AuthGuard } from '@core/guards';
 
-// AUTH
-import { LoginComponent } from '../auth/components';
-
 // CURRENT
 import { MainComponent } from './main.component';
 
@@ -42,10 +39,6 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
-      },
-      {
-        path: 'auth',
-        component: LoginComponent
       }
     ]
   },

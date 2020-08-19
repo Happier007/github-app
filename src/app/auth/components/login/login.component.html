@@ -1,4 +1,13 @@
-<div class="auth" fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+<mat-progress-bar
+        *ngIf="isLoading"
+        class="mat-progress-bar"
+        mode="indeterminate"
+        color="warn">
+</mat-progress-bar>
+
+<app-nav-bar></app-nav-bar>
+
+<div class="auth" fxLayout="row" fxLayoutAlign="center center">
 
   <div fxFlex="20" fxLayout="column" fxLayoutGap="20px">
 

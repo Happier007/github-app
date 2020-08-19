@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-// Main
-import { LoaderService } from '../../main/services';
+// SHARED
+import { LoaderService } from '@shared/services';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {

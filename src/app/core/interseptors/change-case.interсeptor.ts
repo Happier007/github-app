@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
 // CORE
 import { camelToSnake, snakeToCamel } from '@core/helpers';
 
-
 @Injectable()
 export class ChangeCaseInterceptor implements HttpInterceptor {
 
