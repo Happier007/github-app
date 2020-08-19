@@ -13,20 +13,19 @@ import { AppComponent } from './app.component';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        appModules.AuthModule,
-        appModules.CoreModule,
-        appModules.MaterialModule,
-        appModules.SharedModule,
-        AppRoutingModule
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    appModules.CoreModule,
+    appModules.MaterialModule,
+    appModules.SharedModule,
+    AppRoutingModule
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
