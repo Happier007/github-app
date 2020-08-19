@@ -44,12 +44,7 @@ export class GistsListComponent implements OnInit {
   public pageEventGists(event: PageEvent): void {
     this.pageParams = new PageParamsModel(event);
 
-    this._router.navigate([], {
-      queryParams: {
-        page: this.pageParams.page,
-        per_page: this.pageParams.perPage,
-      }
-    });
+    this._updateUrlParam(this.pageParams);
 
     this.fetchGists(this.pageParams);
   }
@@ -61,6 +56,10 @@ export class GistsListComponent implements OnInit {
   private _initPageParams(): void {
     this.pageParams = new PageParamsModel((this._route.snapshot.queryParamMap as any).params);
 
+    this._updateUrlParam(this.pageParams);
+  }
+
+  private _updateUrlParam(pageParams: PageParamsModel): void {
     this._router.navigate([], {
       queryParams: {
         page: this.pageParams.page,
