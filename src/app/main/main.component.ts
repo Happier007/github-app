@@ -1,5 +1,5 @@
 // ANGULAR
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -19,9 +19,9 @@ import { LoaderService } from './services';
   styleUrls: ['./main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
-  public user$: Subject<UserModel> = this._userService.authorizedUser;
+  public user: UserModel;
   public isLoading: boolean;
 
   private _destroyed$ = new Subject<void>();
@@ -37,7 +37,14 @@ export class MainComponent implements OnInit {
   public ngOnInit(): void {
     this._loadProgress();
 
+    this._loadUser();
+
     this._authenticateUser();
+  }
+
+  public ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
 
   public logout(): void {
@@ -70,6 +77,17 @@ export class MainComponent implements OnInit {
         }
       );
     }
+  }
+
+  private _loadUser(): void {
+    this._userService.authorizedUser
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((user: UserModel) => {
+      this.user = user;
+      this._cd.detectChanges();
+    });
   }
 
   private _loadProgress(): void {
