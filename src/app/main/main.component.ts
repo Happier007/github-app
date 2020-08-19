@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -18,24 +18,43 @@ import { LoaderService } from '@shared/services';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
-  public user$: Subject<UserModel> = this._userService.authorizedUser$;
-  public isLoading$: Subject<boolean> = this._loaderService.isLoading;
+  public user: UserModel;
+  public isLoading: boolean;
 
   private _destroyed$ = new Subject<void>();
 
   constructor(
     private _router: Router,
+    private _cd: ChangeDetectorRef,
     private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
     private _userService: UserService) {
   }
 
   public ngOnInit(): void {
+    this._loadProgress();
+
+    this._loadUser();
+
     this._authenticateUser();
+  }
+
+  public ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
+
+  public logout(): void {
+    localStorage.removeItem('access-token');
+
+    this._userService.removeAuthenticatedUser();
+
+    this._router.navigate(['/', 'auth']);
   }
 
   private _authenticateUser(): void {
@@ -60,5 +79,27 @@ export class MainComponent implements OnInit {
         }
       );
     }
+  }
+
+  private _loadUser(): void {
+    this._userService.authorizedUser
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((user: UserModel) => {
+      this.user = user;
+      this._cd.detectChanges();
+    });
+  }
+
+  private _loadProgress(): void {
+    this._loaderService.isLoading
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((loadStatus: boolean) => {
+      this.isLoading = loadStatus;
+      this._cd.detectChanges();
+    });
   }
 }

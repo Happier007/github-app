@@ -11,6 +11,6 @@ export class ReposListComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 }

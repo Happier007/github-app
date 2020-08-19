@@ -13,6 +13,7 @@ import { SharedModule } from '../shared';
 
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
+
 import { MainComponent } from './main.component';
 
 import * as mainComponents from './components';

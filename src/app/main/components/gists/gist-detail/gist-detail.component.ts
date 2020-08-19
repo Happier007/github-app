@@ -11,7 +11,7 @@ export class GistDetailComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
