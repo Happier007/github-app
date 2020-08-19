@@ -16,9 +16,11 @@ import {
   UserService
 } from '@core/services';
 
+// SHARED
+import { LoaderService } from '@shared/services';
+
 // ENVIRONMENT
 import { environment } from '@environments/environment';
-import { LoaderService } from '@shared/services';
 
 @Component({
   selector: 'app-login',
