@@ -10,9 +10,6 @@ import { MaterialModule } from '../material';
 // FLEX-LAYOUT
 import { FlexModule } from '@angular/flex-layout';
 
-// SUB-MODULES
-import { NavBarModule } from '../sub-modules';
-
 @NgModule({
   declarations: [],
   imports: [
@@ -20,13 +17,11 @@ import { NavBarModule } from '../sub-modules';
     ReactiveFormsModule,
     RouterModule,
     MaterialModule,
-    FlexModule,
-    NavBarModule
+    FlexModule
   ],
   exports: [
     ReactiveFormsModule,
-    FlexModule,
-    NavBarModule
+    FlexModule
   ]
 })
 export class SharedModule {

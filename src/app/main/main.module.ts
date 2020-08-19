@@ -11,6 +11,9 @@ import { MaterialModule } from '../material';
 // SHARED
 import { SharedModule } from '../shared';
 
+// SUB-MODULES
+import { NavBarModule } from '../sub-modules';
+
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
@@ -31,7 +34,8 @@ import * as mainComponents from './components';
     CoreModule,
     MaterialModule,
     SharedModule,
-    MainRoutingModule
+    MainRoutingModule,
+    NavBarModule
   ],
 })
 export class MainModule {
