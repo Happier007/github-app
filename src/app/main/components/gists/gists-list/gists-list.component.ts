@@ -1,10 +1,18 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+// RXJS
 import { Observable } from 'rxjs';
-import { IGist } from '../../../../core/interfaces/gist.interface';
-import { GitApiService } from '@core/services';
-import { QueryParamsModel } from '../../../../core/models/queryParams.model';
+
+// MATERIAL
 import { PageEvent } from '@angular/material/paginator';
+
+// CORE
+import { GitApiService } from '@core/services';
+import { PageParamsModel } from '@core/models';
+import { IGist } from '../../../../core/interfaces/gist.interface';
+import { COUNT_GISTS } from '@core/utils';
 
 @Component({
   selector: 'app-gists-list',
@@ -14,13 +22,19 @@ import { PageEvent } from '@angular/material/paginator';
 export class GistsListComponent implements OnInit {
 
   public gists$: Observable<IGist[]>;
-  public pageIndexGists: number;
+  public countGists = COUNT_GISTS;
+  public displayedColumns: string[] = ['description', 'login'];
+  public pageParams: PageParamsModel = new PageParamsModel();
 
-  constructor(private _gitApiService: GitApiService) {
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _gitApiService: GitApiService) {
   }
 
   public ngOnInit(): void {
-    this.fetchGists(new QueryParamsModel());
+    this._initPageParams();
+    this.fetchGists(new PageParamsModel());
   }
 
   public fetchGists(pageParams): void {
@@ -28,13 +42,30 @@ export class GistsListComponent implements OnInit {
   }
 
   public pageEventGists(event: PageEvent): void {
+    this.pageParams = new PageParamsModel(event);
 
-    const pageParams: QueryParamsModel = new QueryParamsModel(event);
+    this._router.navigate([], {
+      queryParams: {
+        page: this.pageParams.page,
+        per_page: this.pageParams.perPage,
+      }
+    });
 
-    this.fetchGists(pageParams);
+    this.fetchGists(this.pageParams);
   }
 
-  public trackByFn(index: number): number {
-    return index;
+  public selectRow(row: IGist): void {
+    console.log(row.description);
+  }
+
+  private _initPageParams(): void {
+    this.pageParams = new PageParamsModel((this._route.snapshot.queryParamMap as any).params);
+
+    this._router.navigate([], {
+      queryParams: {
+        page: this.pageParams.page,
+        per_page: this.pageParams.perPage,
+      }
+    });
   }
 }

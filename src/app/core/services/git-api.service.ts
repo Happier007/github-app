@@ -1,17 +1,23 @@
+// ANGULAR
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+// RXJS
 import { Observable } from 'rxjs';
+
+// CORE
 import { IGist } from '../interfaces/gist.interface';
-import { QueryParamsModel } from '../models/queryParams.model';
+import { PageParamsModel } from '@core/models';
+
+// ENVIRONMENT
 import { environment } from '@environments/environment';
 
 @Injectable()
 export class GitApiService {
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private _http: HttpClient) {}
 
-  public getGists(urlParams: QueryParamsModel): Observable<IGist[]> {
+  public getGists(urlParams: PageParamsModel): Observable<IGist[]> {
     return this._http.get<IGist[]>(`${environment.gitApiUrl}/gists/public`, {params: urlParams as any});
   }
 }

@@ -10,6 +10,7 @@ import { LoginComponent } from '../auth/components';
 
 // CURRENT
 import { MainComponent } from './main.component';
+
 import {
   GistDetailComponent,
   GistsListComponent, ProfileComponent,

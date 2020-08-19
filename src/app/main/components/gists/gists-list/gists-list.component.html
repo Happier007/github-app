@@ -1,42 +1,29 @@
 <h1>Public repositories</h1>
 
-<div *ngIf="(gists$| async) as gists">
+<div>
+  <div *ngIf="(gists$| async) as gists" fxLayout="column" fxFlex="100">
+    <mat-table [dataSource]="gists">
 
-  <mat-list>
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.description || '---'}} </mat-cell>
+      </ng-container>
 
-    <a mat-list-item *ngFor="let gist of gists; trackBy: trackByFn" target="_blank">
-      <mat-icon mat-list-icon>folder_special</mat-icon>
-      <h4 mat-line>{{gist.description}}</h4>
-    </a>
+      <ng-container matColumnDef="login">
+        <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.owner.login}} </mat-cell>
+      </ng-container>
 
-  </mat-list>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+    </mat-table>
 
-  <mat-paginator [length]="gists.length"
-                 [pageIndex]="pageIndexGists"
-                 [pageSizeOptions]="[1, 2, 3, 4]"
-                 showFirstLastButtons
-                 (page)="pageEventGists($event)">
-  </mat-paginator>
-
+    <mat-paginator [length]="countGists"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   (page)="pageEventGists($event)">
+    </mat-paginator>
+  </div>
 </div>
-
-<!--<mat-tab-group color="warn"-->
-<!--               backgroundColor="primary">-->
-<!--    <mat-tab>-->
-<!--        <ng-template matTabLabel>-->
-<!--            <span matBadge="{{profile.public_gists}}" matBadgeOverlap="false" matBadgeColor="warn">Gists</span>-->
-<!--        </ng-template>-->
-<!--        <mat-list>-->
-<!--            <a mat-list-item *ngFor="let gist of gists$| async; trackBy: trackByFn"-->
-<!--               [href]=gist.html_url target="_blank">-->
-<!--                <mat-icon mat-list-icon>folder_special</mat-icon>-->
-<!--                <h4 mat-line>{{gist.description}}</h4>-->
-<!--            </a>-->
-
-<!--        </mat-list>-->
-<!--        <mat-paginator [length]="profile.public_gists"-->
-<!--                       [pageIndex]="pageIndexGists"-->
-<!--                       [pageSizeOptions]="[1, 2, 3, 4]"-->
-<!--                       (page)="pageEventGists($event)"></mat-paginator>-->
-<!--    </mat-tab>-->
-<!--</mat-tab-group>-->

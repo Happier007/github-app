@@ -9,3 +9,5 @@ export const MESSAGE_TYPE = {
   info: 'info-snackbar',
 };
 
+export const COUNT_GISTS = 3000;
+

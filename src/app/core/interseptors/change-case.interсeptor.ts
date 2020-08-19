@@ -9,17 +9,14 @@ import { map } from 'rxjs/operators';
 // CORE
 import { camelToSnake, snakeToCamel } from '@core/helpers';
 
-
 @Injectable()
 export class ChangeCaseInterceptor implements HttpInterceptor {
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    debugger
-
     const modifyRequest = camelToSnake(req);
 
-    return next.handle(modifyRequest)
+    return next.handle(modifyRequest as HttpRequest<any>)
     .pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
