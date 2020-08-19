@@ -50,7 +50,7 @@ export class GistsListComponent implements OnInit {
   }
 
   public selectRow(row: IGist): void {
-    console.log(row.description);
+    this._router.navigate(['/gist', row.id]);
   }
 
   private _initPageParams(): void {

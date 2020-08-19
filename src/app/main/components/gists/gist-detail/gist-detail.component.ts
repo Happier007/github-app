@@ -1,5 +1,6 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-gist-detail',
@@ -8,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GistDetailComponent implements OnInit {
 
-  constructor() {}
+  constructor(private _location: Location) {
+  }
 
   ngOnInit() {
   }
 
+  public goBack(): void {
+    this._location.back();
+  }
 }

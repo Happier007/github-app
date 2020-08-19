@@ -19,8 +19,6 @@ import { AuthModule } from '../auth';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import * as mainComponents from './components';
-import { MatTableModule } from '@angular/material/table';
-
 
 @NgModule({
   declarations: [
@@ -38,7 +36,6 @@ import { MatTableModule } from '@angular/material/table';
     SharedModule,
     AuthModule,
     MainRoutingModule,
-    MatTableModule,
   ],
   providers: [
     GitApiService
