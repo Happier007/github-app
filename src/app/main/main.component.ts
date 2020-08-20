@@ -63,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
       )
       .subscribe({
           next: (user: UserModel) => {
-            this._userService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user, accessToken);
           },
           error: () => {
             this._userService.removeAuthenticatedUser();

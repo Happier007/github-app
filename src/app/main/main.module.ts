@@ -19,6 +19,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 
 import * as mainComponents from './components';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import * as mainComponents from './components';
     MaterialModule,
     SharedModule,
     MainRoutingModule,
-    NavBarModule
+    NavBarModule,
+    MatExpansionModule
   ],
 })
 export class MainModule {
