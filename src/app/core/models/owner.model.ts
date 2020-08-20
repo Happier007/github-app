@@ -36,7 +36,7 @@ export class OwnerModel {
     this.eventsUrl = data.eventsUrl || void 0;
     this.receivedEventsUrl = data.receivedEventsUrl || void 0;
     this.type = data.type || void 0;
-    this.siteAdmin = data.siteAdmin || void 0;
+    this.siteAdmin = data.siteAdmin || !!data.siteAdmin;
   }
 
 }

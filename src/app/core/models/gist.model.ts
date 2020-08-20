@@ -27,14 +27,14 @@ export class GistModel {
     this.nodeId = data.nodeId || void 0;
     this.gitPullUrl = data.gitPullUrl || void 0;
     this.htmlUrl = data.htmlUrl || void 0;
-    this.files = data.files || void 0;
+    this.files = data.files && new FileModel(data.files) || void 0;
     this.createdAt = data.createdAt || void 0;
     this.updatedAt = data.updatedAt || void 0;
     this.description = data.description || void 0;
     this.comments = data.comments || void 0;
     this.user = data.user || void 0;
     this.commentsUrl = data.commentsUrl || void 0;
-    this.owner = data.owner || void 0;
-    this.truncated = data.truncated || void 0;
+    this.owner = data.owner && new OwnerModel(data.owner) || void 0;
+    this.truncated = data.truncated || !!data.truncated;
   }
 }
