@@ -34,6 +34,7 @@ export class GistsListComponent implements OnInit {
 
   public ngOnInit(): void {
     this._initPageParams();
+
     this.fetchGists(new PageParamsModel());
   }
 

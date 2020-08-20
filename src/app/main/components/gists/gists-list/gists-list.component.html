@@ -1,29 +1,33 @@
-<h1>Public repositories</h1>
+<div class="m-20">
+  
+  <h3>Public gists</h3>
 
-<div>
-  <div *ngIf="(gists$| async) as gists" fxLayout="column" fxFlex="100">
-    <mat-table [dataSource]="gists">
+  <div>
+    <div *ngIf="(gists$| async) as gists" fxLayout="column" fxFlex="100">
+      <mat-table [dataSource]="gists">
 
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.description || '---'}} </mat-cell>
-      </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.description || '---' | ellipsis: 50}} </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="login">
-        <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.owner.login}} </mat-cell>
-      </ng-container>
+        <!-- Login Column -->
+        <ng-container matColumnDef="login">
+          <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.owner.login}} </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
-    </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      </mat-table>
 
-    <mat-paginator [length]="countGists"
-                   [pageIndex]="pageParams.page"
-                   [pageSize]="pageParams.perPage"
-                   [pageSizeOptions]="[5, 10, 20]"
-                   (page)="pageEventGists($event)">
-    </mat-paginator>
+      <mat-paginator [length]="countGists"
+                     [pageIndex]="pageParams.page"
+                     [pageSize]="pageParams.perPage"
+                     [pageSizeOptions]="[5, 10, 20]"
+                     (page)="pageEventGists($event)">
+      </mat-paginator>
+    </div>
   </div>
 </div>

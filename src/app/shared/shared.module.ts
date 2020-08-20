@@ -6,8 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 // FLEX-LAYOUT
 import { FlexModule } from '@angular/flex-layout';
 
+// SHARED
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
+
 @NgModule({
-  declarations: [],
+  declarations: [EllipsisPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -15,7 +18,8 @@ import { FlexModule } from '@angular/flex-layout';
   ],
   exports: [
     ReactiveFormsModule,
-    FlexModule
+    FlexModule,
+    EllipsisPipe
   ]
 })
 export class SharedModule {

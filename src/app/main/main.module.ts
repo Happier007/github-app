@@ -19,6 +19,7 @@ import { AuthModule } from '../auth';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import * as mainComponents from './components';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import * as mainComponents from './components';
     SharedModule,
     AuthModule,
     MainRoutingModule,
+    MatExpansionModule,
   ],
   providers: [
     GitApiService

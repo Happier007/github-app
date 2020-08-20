@@ -1,6 +1,16 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+// RXJS
+import { Observable } from 'rxjs';
+
+// CORE
+import { GitApiService } from '@core/services';
+
+import { IGist } from '../../../../core/interfaces/gist.interface';
+
 
 @Component({
   selector: 'app-gist-detail',
@@ -9,13 +19,30 @@ import { Location } from '@angular/common';
 })
 export class GistDetailComponent implements OnInit {
 
-  constructor(private _location: Location) {
+  public gist$ = new Observable<IGist>();
+
+  constructor(
+    private _location: Location,
+    private _route: ActivatedRoute,
+    private _gitApiService: GitApiService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    this.fetchGist();
   }
 
   public goBack(): void {
     this._location.back();
+  }
+
+  public trackByFn(index: number): number {
+    return index;
+  }
+
+  private fetchGist(): void {
+    const idGist = this._route.snapshot.paramMap.get('id');
+    if (idGist) {
+      this.gist$ = this._gitApiService.gistById(idGist);
+    }
   }
 }

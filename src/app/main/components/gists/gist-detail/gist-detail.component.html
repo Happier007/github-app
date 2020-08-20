@@ -1,1 +1,37 @@
-<a mat-flat-button (click)="goBack()">go back</a>
+<div class="m-20">
+
+  <div fxLayout="column" fxLayoutGap="15px">
+    <div *ngIf="(gist$ | async) as gist">
+
+      <h3>{{gist.owner.login}} / {{gist.description || '---' | ellipsis: 50 }}</h3>
+
+      <mat-accordion *ngFor="let file of gist.files | keyvalue;trackBy: trackByFn">
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+
+            <mat-panel-title fxLayout="row" fxLayoutGap="10px">
+              <span>{{file.value.filename}}</span>
+              <span *ngIf="file.value.language">({{file.value.language}})</span>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+
+          <pre>
+            <code>{{file.value.content}}</code>
+          </pre>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+
+    <a class="back" (click)="goBack()" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <mat-icon>arrow_back</mat-icon>
+      <span>go home</span>
+    </a>
+
+  </div>
+
+
+</div>
