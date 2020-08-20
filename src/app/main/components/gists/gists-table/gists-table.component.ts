@@ -19,11 +19,11 @@ import {
 
 
 @Component({
-  selector: 'app-gists-list',
-  templateUrl: './gists-list.component.html',
-  styleUrls: ['./gists-list.component.scss']
+  selector: 'app-gists-table',
+  templateUrl: './gists-table.component.html',
+  styleUrls: ['./gists-table.component.scss']
 })
-export class GistsListComponent implements OnInit {
+export class GistsTableComponent implements OnInit {
 
   public gists$: Observable<GistModel[]>;
   public countGists = COUNT_GISTS;
@@ -59,7 +59,9 @@ export class GistsListComponent implements OnInit {
   }
 
   private _initPageParams(): void {
-    this.pageParams = new PageParamsModel((this._route.snapshot.queryParamMap as any).params);
+    const queryParams = this._route.snapshot.queryParams;
+
+    this.pageParams = new PageParamsModel(queryParams);
 
     this._updateUrlParam(this.pageParams);
   }

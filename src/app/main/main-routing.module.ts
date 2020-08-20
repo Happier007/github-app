@@ -10,7 +10,7 @@ import { MainComponent } from './main.component';
 
 import {
   GistDetailComponent,
-  GistsListComponent, ProfileComponent,
+  GistsTableComponent, ProfileComponent,
   ReposListComponent, UsersListComponent
 } from './components';
 
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'gists',
-        component: GistsListComponent
+        component: GistsTableComponent
       },
       {
         path: 'gist/:id',

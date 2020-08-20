@@ -71,11 +71,11 @@ export class UserModel {
     this.publicRepos = data.publicRepos || void 0;
     this.receivedEventsUrl = data.receivedEventsUrl || void 0;
     this.reposUrl = data.reposUrl || void 0;
-    this.siteAdmin = data.siteAdmin || !!data.siteAdmin;
+    this.siteAdmin = !!data.siteAdmin;
     this.starredUrl = data.starredUrl || void 0;
     this.subscriptionsUrl = data.subscriptionsUrl || void 0;
     this.totalPrivateRepos = data.totalPrivateRepos || void 0;
-    this.twoFactorAuthentication = data.twoFactorAuthentication || !!data.twoFactorAuthentication;
+    this.twoFactorAuthentication = !!data.twoFactorAuthentication;
     this.type = data.type || void 0;
     this.updatedAt = data.updatedAt || void 0;
     this.url = data.url || void 0;

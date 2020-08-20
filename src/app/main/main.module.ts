@@ -19,12 +19,11 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 
 import * as mainComponents from './components';
-import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
     MainComponent,
-    mainComponents.GistsListComponent,
+    mainComponents.GistsTableComponent,
     mainComponents.GistDetailComponent,
     mainComponents.UsersListComponent,
     mainComponents.ReposListComponent,
@@ -36,8 +35,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MaterialModule,
     SharedModule,
     MainRoutingModule,
-    NavBarModule,
-    MatExpansionModule
+    NavBarModule
   ],
 })
 export class MainModule {

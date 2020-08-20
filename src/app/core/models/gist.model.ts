@@ -35,6 +35,6 @@ export class GistModel {
     this.user = data.user || void 0;
     this.commentsUrl = data.commentsUrl || void 0;
     this.owner = data.owner && new OwnerModel(data.owner) || void 0;
-    this.truncated = data.truncated || !!data.truncated;
+    this.truncated = !!data.truncated;
   }
 }
