@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,7 +10,14 @@ import { Subject } from 'rxjs';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 import { IClient } from '@core/interfaces';
-import { UserAuthApiService } from '@core/services';
+
+import {
+  UserAuthApiService,
+  UserService
+} from '@core/services';
+
+// SHARED
+import { LoaderService } from '@shared/services';
 
 // ENVIRONMENT
 import { environment } from '@environments/environment';
@@ -18,11 +25,13 @@ import { environment } from '@environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
   public username = new FormControl('', Validators.required);
+  public isLoading: boolean;
 
   private _clientParams: IClient = {
     clientId: environment.clientId,
@@ -34,11 +43,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _userAuthApiService: UserAuthApiService) {
-  }
+    private _cdRef: ChangeDetectorRef,
+    private _loaderService: LoaderService,
+    private _userAuthApiService: UserAuthApiService,
+    private _userService: UserService) {}
 
   public ngOnInit(): void {
     this._authenticateUser();
+
+    this._loadProgress();
   }
 
   public ngOnDestroy(): void {
@@ -72,17 +85,26 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
       .subscribe({
           next: (user: UserModel) => {
-            localStorage.setItem('access-token', accessToken);
-            this._userAuthApiService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user, accessToken);
 
             this._router.navigate(['/']);
           },
-          error: () => {
-          },
+          error: () => {},
           complete: () => {
           }
         }
       );
     }
+  }
+
+  private _loadProgress(): void {
+    this._loaderService.isLoading
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((loadStatus: boolean) => {
+      this.isLoading = loadStatus;
+      this._cdRef.detectChanges();
+    });
   }
 }

@@ -5,9 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 // CORE
 import { AuthGuard } from '@core/guards';
 
-// AUTH
-import { LoginComponent } from '../auth/components';
-
 // CURRENT
 import { MainComponent } from './main.component';
 
@@ -20,6 +17,7 @@ import {
 const routes: Routes = [
   {
     path: '', component: MainComponent,
+
     children: [
       {
         path: 'repos',
@@ -41,12 +39,7 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
-      },
-      {
-        path: 'auth',
-        component: LoginComponent
       }
-
     ]
   },
 ];

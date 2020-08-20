@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // CURRENT
-import { UserAuthApiService } from '@core/services';
+import {
+  UserAuthApiService,
+  UserService
+} from '@core/services';
+
 import { INTERCEPTORS } from './interseptors';
 
 @NgModule({
@@ -13,6 +17,7 @@ import { INTERCEPTORS } from './interseptors';
   ],
   providers: [
     UserAuthApiService,
+    UserService,
     INTERCEPTORS
   ]
 })

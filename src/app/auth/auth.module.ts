@@ -11,6 +11,9 @@ import { MaterialModule } from '../material';
 // SHARED
 import { SharedModule } from '../shared';
 
+// SUB-MODULES
+import { NavBarModule } from '../sub-modules';
+
 // CURRENT
 import { LoginComponent } from './components';
 
@@ -22,7 +25,8 @@ import { LoginComponent } from './components';
     CommonModule,
     CoreModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    NavBarModule
   ],
 })
 export class AuthModule {

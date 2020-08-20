@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 // RXJS
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // CORE
@@ -17,19 +17,9 @@ import { environment } from '@environments/environment';
 @Injectable()
 export class UserAuthApiService {
 
-  public authorizedUser$ = new Subject<any>();
-
   constructor(
     private _http: HttpClient,
     private _router: Router) {
-  }
-
-  public saveAuthenticatedUser(user: UserModel): void {
-    this.authorizedUser$.next(user);
-  }
-
-  public removeAuthenticatedUser(): void {
-    this.authorizedUser$.next(null);
   }
 
   /**
