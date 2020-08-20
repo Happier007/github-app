@@ -10,9 +10,13 @@ import { PageEvent } from '@angular/material/paginator';
 
 // CORE
 import { GitApiService } from '@core/services';
-import { PageParamsModel } from '@core/models';
-import { IGist } from '../../../../core/interfaces/gist.interface';
 import { COUNT_GISTS } from '@core/utils';
+
+import {
+  GistModel,
+  PageParamsModel,
+} from '@core/models';
+
 
 @Component({
   selector: 'app-gists-list',
@@ -21,7 +25,7 @@ import { COUNT_GISTS } from '@core/utils';
 })
 export class GistsListComponent implements OnInit {
 
-  public gists$: Observable<IGist[]>;
+  public gists$: Observable<GistModel[]>;
   public countGists = COUNT_GISTS;
   public displayedColumns: string[] = ['description', 'login'];
   public pageParams: PageParamsModel = new PageParamsModel();
@@ -50,7 +54,7 @@ export class GistsListComponent implements OnInit {
     this.fetchGists(this.pageParams);
   }
 
-  public selectRow(row: IGist): void {
+  public selectRow(row: GistModel): void {
     this._router.navigate(['/gist', row.id]);
   }
 

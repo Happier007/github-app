@@ -8,9 +8,7 @@ import { Observable } from 'rxjs';
 
 // CORE
 import { GitApiService } from '@core/services';
-
-import { IGist } from '../../../../core/interfaces/gist.interface';
-
+import { GistModel } from '@core/models';
 
 @Component({
   selector: 'app-gist-detail',
@@ -19,7 +17,7 @@ import { IGist } from '../../../../core/interfaces/gist.interface';
 })
 export class GistDetailComponent implements OnInit {
 
-  public gist$ = new Observable<IGist>();
+  public gist$ = new Observable<GistModel>();
 
   constructor(
     private _location: Location,
