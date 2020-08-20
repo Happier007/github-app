@@ -5,24 +5,26 @@
 
       <h3>{{gist.owner.login}} / {{gist.description || '---' | ellipsis: 50 }}</h3>
 
-      <mat-accordion *ngFor="let file of gist.files | keyvalue;trackBy: trackByFn">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-accordion *ngFor="let file of gist.files | keyvalue;trackBy: trackByFn">
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
 
-            <mat-panel-title fxLayout="row" fxLayoutGap="10px">
-              <span>{{file.value.filename}}</span>
-              <span *ngIf="file.value.language">({{file.value.language}})</span>
-            </mat-panel-title>
+              <mat-panel-title fxLayout="row" fxLayoutGap="10px">
+                <span>{{file.value.filename}}</span>
+                <span *ngIf="file.value.language">({{file.value.language}})</span>
+              </mat-panel-title>
 
-          </mat-expansion-panel-header>
+            </mat-expansion-panel-header>
 
-          <pre>
+            <pre>
             <code>{{file.value.content}}</code>
           </pre>
 
-        </mat-expansion-panel>
-      </mat-accordion>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
 
     </div>
 
