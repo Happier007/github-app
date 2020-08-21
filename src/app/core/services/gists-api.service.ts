@@ -25,7 +25,7 @@ export class GistsApiService extends BaseApiService {
    * @return Observable<IGist[]>
    **/
   public getGists(urlParams: PageParamsModel): Observable<GistModel[]> {
-    return this._http.get<GistModel[]>(`${this._gitApiUrl}/gists/public`, {params: urlParams as any})
+    return this._http.get<GistModel[]>(`${this._apiUrl}/gists/public`, {params: urlParams as any})
     .pipe(
       map((gists: GistModel[]) => gists.map((gist: GistModel) => gist && new GistModel(gist)))
     );
@@ -37,7 +37,7 @@ export class GistsApiService extends BaseApiService {
    * @return Observable<GistModel>
    **/
   public gistById(idGist: string): Observable<GistModel> {
-    return this._http.get<GistModel>(`${this._gitApiUrl}/gists/${idGist}`)
+    return this._http.get<GistModel>(`${this._apiUrl}/gists/${idGist}`)
     .pipe(
       map((gist: GistModel) => gist && new GistModel(gist))
     );

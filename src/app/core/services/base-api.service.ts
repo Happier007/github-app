@@ -7,11 +7,9 @@ import { environment } from '@environments/environment';
 @Injectable()
 export class BaseApiService {
 
-  protected _url: string = environment.gitUrl;
-  protected _gitApiUrl: string = environment.gitApiUrl;
+  protected _apiUrl: string;
 
   constructor() {
-    this._url = environment.gitUrl;
-    this._gitApiUrl = environment.gitApiUrl;
+    this._apiUrl = environment.apiUrl;
   }
 }
