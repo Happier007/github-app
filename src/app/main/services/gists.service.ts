@@ -1,9 +1,9 @@
 // ANGULAR
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // RXJS
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
@@ -11,17 +11,34 @@ import { GistsApiService } from '@core/services';
 
 // MATERIAL
 import { PageEvent } from '@angular/material/paginator';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class GistsService {
 
+  public gistsSearchEvent = new EventEmitter<void>();
+
+  private _gists$: GistModel[] = [];
+  private _gistsSearchSubject$ = new Subject<void>();
   private _pageParams: PageParamsModel = new PageParamsModel(this._route.snapshot.queryParams);
-  private _gists$: Observable<GistModel[]> = this._gistsApiService.publicGists(this._pageParams);
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private _gistsApiService: GistsApiService) {
+    this.fetchGists();
+    this._updateRouteParam(this._pageParams);
+  }
+
+  public get page(): PageParamsModel {
+    return this._pageParams;
+  }
+  public get gists(): GistModel[] {
+    return this._gists$;
+  }
+
+  public getGists(): void {
+    this._gistsSearchSubject$.next();
   }
 
   public pageEvent(event?: PageEvent | object): void {
@@ -29,21 +46,19 @@ export class GistsService {
 
     this._updateRouteParam(this._pageParams);
 
-    this.fetchGists();
+    this.getGists();
   }
 
   public fetchGists(): void {
-    this._gists$ = this._gistsApiService.publicGists(this._pageParams);
-  }
+    this._gistsSearchSubject$
+    .pipe(
+      switchMap(() => this._gistsApiService.publicGists(this._pageParams))
+    )
+    .subscribe((gists: GistModel[]) => {
+      this._gists$ = gists.slice();
 
-  public get page(): PageParamsModel {
-    this._updateRouteParam(this._pageParams);
-
-    return this._pageParams;
-  }
-
-  public get gists(): Observable<GistModel[]> {
-    return this._gists$;
+      this.gistsSearchEvent.emit();
+    });
   }
 
   private _updateRouteParam(pageParams: PageParamsModel): void {
