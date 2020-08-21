@@ -22,7 +22,7 @@ export class UserService {
   }
 
   public removeAuthenticatedUser(): void {
-    localStorage.removeItem('access-token')
+    localStorage.removeItem('access-token');
     this._authorizedUser$.next(null);
   }
 }

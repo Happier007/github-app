@@ -1,5 +1,11 @@
 // ANGULAR
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -11,7 +17,6 @@ import {
   UserAuthApiService,
   UserService
 } from '@core/services';
-
 import { UserModel } from '@core/models';
 
 // SHARED

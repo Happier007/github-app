@@ -26,7 +26,7 @@ export class GistDetailComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.fetchGist();
+    this.fetchGistById();
   }
 
   public goBack(): void {
@@ -37,10 +37,10 @@ export class GistDetailComponent implements OnInit {
     return index;
   }
 
-  private fetchGist(): void {
-    const idGist = this._route.snapshot.paramMap.get('id');
-    if (idGist) {
-      this.gist$ = this._gistsApiService.gistById(idGist);
+  private fetchGistById(): void {
+    const id = this._route.snapshot.paramMap.get('id');
+    if (id) {
+      this.gist$ = this._gistsApiService.publicGistById(id);
     }
   }
 }

@@ -17,8 +17,7 @@ import { NavBarModule } from '../sub-modules';
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { PaginationService } from './services/pagination.service';
-
+import { GistsService } from './services';
 import * as mainComponents from './components';
 
 @NgModule({
@@ -39,7 +38,7 @@ import * as mainComponents from './components';
     NavBarModule
   ],
   providers: [
-    PaginationService
+    GistsService
   ]
 })
 export class MainModule {

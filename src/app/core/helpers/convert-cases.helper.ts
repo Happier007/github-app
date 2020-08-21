@@ -1,6 +1,8 @@
+// ANGULAR
+import { HttpParams, HttpRequest } from '@angular/common/http';
+
 // CORE
 import { CAMEL_CASE, SNAKE_CASE } from '@core/utils';
-import { HttpParams, HttpRequest } from '@angular/common/http';
 
 export function snakeToCamel(response: object | any[]): object | null {
 

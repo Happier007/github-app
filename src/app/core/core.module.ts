@@ -8,7 +8,6 @@ import {
   UserAuthApiService,
   UserService
 } from '@core/services';
-
 import { INTERCEPTORS } from './interseptors';
 
 @NgModule({

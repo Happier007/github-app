@@ -2,7 +2,7 @@
 
     <div fxLayout="column" fxLayoutGap="15px">
         <div *ngIf="(gist$ | async) as gist">
-            <h3>{{gist.owner.login}} / {{gist.description ? (gist.description | ellipsis: 50) : '---'}}</h3>
+            <h3>{{gist.owner?.login}} / {{gist.description ? (gist.description | ellipsis: 50) : '---'}}</h3>
 
             <div fxLayout="column" fxLayoutGap="10px">
 
