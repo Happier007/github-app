@@ -27,7 +27,7 @@ export class GistModel {
     this.nodeId = data.nodeId || void 0;
     this.gitPullUrl = data.gitPullUrl || void 0;
     this.htmlUrl = data.htmlUrl || void 0;
-    this.files = data.files && new FileModel(data.files) || void 0;
+    this.files = data.files && this._setFiles(data.files) || void 0;
     this.createdAt = data.createdAt || void 0;
     this.updatedAt = data.updatedAt || void 0;
     this.description = data.description || void 0;
@@ -36,5 +36,16 @@ export class GistModel {
     this.commentsUrl = data.commentsUrl || void 0;
     this.owner = data.owner && new OwnerModel(data.owner) || void 0;
     this.truncated = !!data.truncated;
+  }
+
+  private _setFiles(files): any {
+    const keysFilesField = Object.keys(files);
+    const modifiedFiles: any = {};
+
+    keysFilesField.forEach((k) => {
+      modifiedFiles[k] = files[k] && new FileModel(files[k]);
+    });
+
+    return modifiedFiles;
   }
 }

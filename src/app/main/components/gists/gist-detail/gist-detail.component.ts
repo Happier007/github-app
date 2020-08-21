@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 // CORE
-import { GitApiService } from '@core/services';
+import { GistsApiService } from '@core/services';
 import { GistModel } from '@core/models';
 
 @Component({
@@ -22,7 +22,7 @@ export class GistDetailComponent implements OnInit {
   constructor(
     private _location: Location,
     private _route: ActivatedRoute,
-    private _gitApiService: GitApiService) {
+    private _gistsApiService: GistsApiService) {
   }
 
   public ngOnInit(): void {
@@ -40,7 +40,7 @@ export class GistDetailComponent implements OnInit {
   private fetchGist(): void {
     const idGist = this._route.snapshot.paramMap.get('id');
     if (idGist) {
-      this.gist$ = this._gitApiService.gistById(idGist);
+      this.gist$ = this._gistsApiService.gistById(idGist);
     }
   }
 }

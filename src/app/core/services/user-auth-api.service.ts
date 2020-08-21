@@ -10,16 +10,16 @@ import { map } from 'rxjs/operators';
 // CORE
 import { UserModel, TokenModel } from '@core/models';
 import { IClient } from '@core/interfaces';
-
-// ENVIRONMENT
-import { environment } from '@environments/environment';
+import { BaseApiService } from './base-api.service';
 
 @Injectable()
-export class UserAuthApiService {
+export class UserAuthApiService extends BaseApiService {
 
   constructor(
     private _http: HttpClient,
-    private _router: Router) {
+    private _router: Router
+  ) {
+    super();
   }
 
   /**
@@ -28,7 +28,7 @@ export class UserAuthApiService {
    * @return void
    **/
   public authentication(queryParams: IClient): void {
-    window.location.href = `${environment.gitUrl}/login/oauth/authorize?client_id=${queryParams.clientId}&redirect_uri=${queryParams.redirectUri}&login=${queryParams.login}`;
+    window.location.href = `${this._gitApiUrl}/login/oauth/authorize?client_id=${queryParams.clientId}&redirect_uri=${queryParams.redirectUri}&login=${queryParams.login}`;
   }
 
   /**
@@ -56,7 +56,7 @@ export class UserAuthApiService {
       Authorization: `token ${token}`
     };
 
-    return this._http.get<UserModel>(`${environment.gitApiUrl}/user`, {headers})
+    return this._http.get<UserModel>(`${this._gitApiUrl}/user`, {headers})
     .pipe(
       map((user: UserModel) => user && new UserModel(user))
     );

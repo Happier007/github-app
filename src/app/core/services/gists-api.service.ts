@@ -4,18 +4,19 @@ import { HttpClient } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
-
-// ENVIRONMENT
-import { environment } from '@environments/environment';
-import { map } from 'rxjs/operators';
+import { BaseApiService } from './base-api.service';
 
 @Injectable()
-export class GitApiService {
+export class GistsApiService extends BaseApiService {
 
-  constructor(private _http: HttpClient) {
+  constructor(
+    private _http: HttpClient
+  ) {
+    super();
   }
 
   /**
@@ -24,9 +25,9 @@ export class GitApiService {
    * @return Observable<IGist[]>
    **/
   public getGists(urlParams: PageParamsModel): Observable<GistModel[]> {
-    return this._http.get<GistModel[]>(`${environment.gitApiUrl}/gists/public`, {params: urlParams as any})
+    return this._http.get<GistModel[]>(`${this._gitApiUrl}/gists/public`, {params: urlParams as any})
     .pipe(
-      map((gists: GistModel[]) => gists.map((gist: GistModel) => new GistModel(gist)))
+      map((gists: GistModel[]) => gists.map((gist: GistModel) => gist && new GistModel(gist)))
     );
   }
 
@@ -36,7 +37,7 @@ export class GitApiService {
    * @return Observable<GistModel>
    **/
   public gistById(idGist: string): Observable<GistModel> {
-    return this._http.get<GistModel>(`${environment.gitApiUrl}/gists/${idGist}`)
+    return this._http.get<GistModel>(`${this._gitApiUrl}/gists/${idGist}`)
     .pipe(
       map((gist: GistModel) => gist && new GistModel(gist))
     );

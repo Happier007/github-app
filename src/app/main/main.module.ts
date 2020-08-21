@@ -17,6 +17,7 @@ import { NavBarModule } from '../sub-modules';
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
+import { PaginationService } from './services/pagination.service';
 
 import * as mainComponents from './components';
 
@@ -37,6 +38,9 @@ import * as mainComponents from './components';
     MainRoutingModule,
     NavBarModule
   ],
+  providers: [
+    PaginationService
+  ]
 })
 export class MainModule {
 }

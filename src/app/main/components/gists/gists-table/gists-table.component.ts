@@ -9,13 +9,18 @@ import { Observable } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 // CORE
-import { GitApiService } from '@core/services';
-import { COUNT_GISTS } from '@core/utils';
+import { GistsApiService } from '@core/services';
+
+import {
+  COUNT_GISTS,
+  PAGE_SIZE_OPTIONS
+} from '@core/utils';
 
 import {
   GistModel,
   PageParamsModel,
 } from '@core/models';
+import { PaginationService } from '../../../services/pagination.service';
 
 
 @Component({
@@ -27,31 +32,24 @@ export class GistsTableComponent implements OnInit {
 
   public gists$: Observable<GistModel[]>;
   public countGists = COUNT_GISTS;
+  public pageSizeOption = PAGE_SIZE_OPTIONS;
   public displayedColumns: string[] = ['description', 'login'];
   public pageParams: PageParamsModel = new PageParamsModel();
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _gitApiService: GitApiService) {
+    private _gistsApiService: GistsApiService,
+    private _paginationService: PaginationService) {
   }
 
   public ngOnInit(): void {
     this._initPageParams();
-
-    this.fetchGists(new PageParamsModel());
-  }
-
-  public fetchGists(pageParams): void {
-    this.gists$ = this._gitApiService.getGists(pageParams);
   }
 
   public pageEventGists(event: PageEvent): void {
-    this.pageParams = new PageParamsModel(event);
-
-    this._updateUrlParam(this.pageParams);
-
-    this.fetchGists(this.pageParams);
+    this.pageParams = this._paginationService.updatePageParams(event);
+    this._fetchGists(this.pageParams);
   }
 
   public selectRow(row: GistModel): void {
@@ -60,18 +58,11 @@ export class GistsTableComponent implements OnInit {
 
   private _initPageParams(): void {
     const queryParams = this._route.snapshot.queryParams;
-
-    this.pageParams = new PageParamsModel(queryParams);
-
-    this._updateUrlParam(this.pageParams);
+    this.pageParams = this._paginationService.updatePageParams(queryParams);
+    this._fetchGists(new PageParamsModel());
   }
 
-  private _updateUrlParam(pageParams: PageParamsModel): void {
-    this._router.navigate([], {
-      queryParams: {
-        page: this.pageParams.page,
-        per_page: this.pageParams.perPage,
-      }
-    });
+  private _fetchGists(pageParams: PageParamsModel): void {
+    this.gists$ = this._gistsApiService.getGists(pageParams);
   }
 }

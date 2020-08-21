@@ -11,3 +11,5 @@ export const MESSAGE_TYPE = {
 
 export const COUNT_GISTS = 3000;
 
+export const PAGE_SIZE_OPTIONS = [5, 10, 20];
+

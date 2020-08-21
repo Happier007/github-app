@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // CURRENT
 import {
-  GitApiService,
+  GistsApiService,
   UserAuthApiService,
   UserService
 } from '@core/services';
@@ -17,7 +17,7 @@ import { INTERCEPTORS } from './interseptors';
     CommonModule
   ],
   providers: [
-    GitApiService,
+    GistsApiService,
     UserAuthApiService,
     UserService,
     INTERCEPTORS
