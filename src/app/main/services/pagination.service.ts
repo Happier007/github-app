@@ -18,7 +18,9 @@ export class PaginationService {
 
   public updatePageParams(event: PageEvent | object): PageParamsModel {
     const pageParams = new PageParamsModel(event);
+
     this._updateRouteParam(pageParams);
+
     return pageParams;
   }
 

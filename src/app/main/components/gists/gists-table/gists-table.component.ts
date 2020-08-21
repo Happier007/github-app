@@ -49,6 +49,7 @@ export class GistsTableComponent implements OnInit {
 
   public pageEventGists(event: PageEvent): void {
     this.pageParams = this._paginationService.updatePageParams(event);
+
     this._fetchGists(this.pageParams);
   }
 
@@ -58,7 +59,9 @@ export class GistsTableComponent implements OnInit {
 
   private _initPageParams(): void {
     const queryParams = this._route.snapshot.queryParams;
+
     this.pageParams = this._paginationService.updatePageParams(queryParams);
+
     this._fetchGists(new PageParamsModel());
   }
 
