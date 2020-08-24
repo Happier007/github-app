@@ -1,16 +1,16 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
-// RXJS
-import { Observable } from 'rxjs';
-// MATERIAL
-import { PageEvent } from '@angular/material/paginator';
+
 // CORE
 import { COUNT_GISTS, PAGE_SIZE_OPTIONS } from '@core/utils';
-
 import { GistModel, PageParamsModel, } from '@core/models';
+
+// MATERIAL
+import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 // CURRENT
 import { GistsService } from '../../../services';
-import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({

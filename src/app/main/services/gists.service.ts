@@ -3,7 +3,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // RXJS
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
@@ -11,7 +12,7 @@ import { GistsApiService } from '@core/services';
 
 // MATERIAL
 import { PageEvent } from '@angular/material/paginator';
-import { switchMap } from 'rxjs/operators';
+
 
 @Injectable()
 export class GistsService {
