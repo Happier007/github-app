@@ -18,16 +18,16 @@ import { NavBarModule } from '../sub-modules';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { GistsService } from './services';
-import * as mainComponents from './components';
+import * as сomponents from './components';
 
 @NgModule({
   declarations: [
     MainComponent,
-    mainComponents.GistsTableComponent,
-    mainComponents.GistDetailComponent,
-    mainComponents.UsersListComponent,
-    mainComponents.ReposListComponent,
-    mainComponents.ProfileComponent,
+    сomponents.GistsTableComponent,
+    сomponents.GistDetailComponent,
+    сomponents.UsersListComponent,
+    сomponents.ReposListComponent,
+    сomponents.ProfileComponent,
   ],
   imports: [
     CommonModule,
