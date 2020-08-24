@@ -28,7 +28,8 @@ export class GistsApiService extends BaseApiService {
     return this._http.get<GistModel[]>(`${this._apiUrl}/gists/public`, {params: urlParams as any})
     .pipe(
       map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => gist && new GistModel(gist))
-      .filter((gist: GistModel) => gist !== undefined))
+        .filter(Boolean)
+      )
     );
   }
 
