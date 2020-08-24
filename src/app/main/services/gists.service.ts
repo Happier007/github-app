@@ -1,10 +1,10 @@
 // ANGULAR
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // RXJS
 import { Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
@@ -15,13 +15,14 @@ import { PageEvent } from '@angular/material/paginator';
 
 
 @Injectable()
-export class GistsService {
+export class GistsService implements OnDestroy {
 
   public gistsSearchEvent = new EventEmitter<void>();
 
   private _gists$: GistModel[] = [];
   private _gistsSearchSubject$ = new Subject<void>();
   private _pageParams: PageParamsModel = new PageParamsModel(this._route.snapshot.queryParams);
+  private _destroyed$ = new Subject<void>();
 
   constructor(
     private _router: Router,
@@ -31,9 +32,15 @@ export class GistsService {
     this._updateRouteParam(this._pageParams);
   }
 
+  public ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
+
   public get page(): PageParamsModel {
     return this._pageParams;
   }
+
   public get gists(): GistModel[] {
     return this._gists$;
   }
@@ -53,7 +60,8 @@ export class GistsService {
   private _fetchGists(): void {
     this._gistsSearchSubject$
     .pipe(
-      switchMap(() => this._gistsApiService.publicGists(this._pageParams))
+      switchMap(() => this._gistsApiService.publicGists(this._pageParams)),
+      takeUntil(this._destroyed$)
     )
     .subscribe((gists: GistModel[]) => {
       this._gists$ = gists.slice();

@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 // CORE
 import { COUNT_GISTS, PAGE_SIZE_OPTIONS } from '@core/utils';
@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 // CURRENT
 import { GistsService } from '../../../services';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -18,7 +20,7 @@ import { GistsService } from '../../../services';
   templateUrl: './gists-table.component.html',
   styleUrls: ['./gists-table.component.scss'],
 })
-export class GistsTableComponent implements OnInit {
+export class GistsTableComponent implements OnInit, OnDestroy {
 
   public pageParams: PageParamsModel = new PageParamsModel();
   public gists: GistModel[] = [];
@@ -29,13 +31,17 @@ export class GistsTableComponent implements OnInit {
   public pageSizeOption = PAGE_SIZE_OPTIONS;
   public displayedColumns: string[] = ['description', 'login'];
 
+  private _destroyed$ = new Subject<void>();
+
   constructor(
     private _gistsService: GistsService
-  ) {}
+  ) {
+  }
 
   public get getGistList(): GistModel[] {
     return this._gistsService.gists;
   }
+
   public get page(): PageParamsModel {
     return this._gistsService.page;
   }
@@ -46,17 +52,24 @@ export class GistsTableComponent implements OnInit {
     this._subSearchEvent();
   }
 
+  public ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
+
   public pageEventGists(event: PageEvent): void {
     this._gistsService.pageEvent(event);
   }
 
   private _subSearchEvent(): void {
     this._gistsService.gistsSearchEvent
-      .pipe()
-      .subscribe(() => {
-        this.dataSource.data = this.getGistList.slice();
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe(() => {
+      this.dataSource.data = this.getGistList.slice();
 
-        this.pageParams = this.page;
-      });
+      this.pageParams = this.page;
+    });
   }
 }
