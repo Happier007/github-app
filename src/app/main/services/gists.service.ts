@@ -26,7 +26,7 @@ export class GistsService {
     private _router: Router,
     private _route: ActivatedRoute,
     private _gistsApiService: GistsApiService) {
-    this.fetchGists();
+    this._fetchGists();
     this._updateRouteParam(this._pageParams);
   }
 
@@ -49,7 +49,7 @@ export class GistsService {
     this.getGists();
   }
 
-  public fetchGists(): void {
+  private _fetchGists(): void {
     this._gistsSearchSubject$
     .pipe(
       switchMap(() => this._gistsApiService.publicGists(this._pageParams))
