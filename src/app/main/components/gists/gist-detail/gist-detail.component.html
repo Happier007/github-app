@@ -13,7 +13,7 @@
 
                             <mat-panel-title fxLayout="row" fxLayoutGap="10px">
                                 <span>{{file.value?.filename}}</span>
-                                <span *ngIf="file.value.language">({{file.value?.language}})</span>
+                                <span *ngIf="file.value && file.value.language">({{file.value.language}})</span>
                             </mat-panel-title>
 
                         </mat-expansion-panel-header>
