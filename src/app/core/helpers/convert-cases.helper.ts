@@ -36,28 +36,12 @@ export function camelToSnake(request: HttpRequest<any>): HttpRequest<any> | null
 
   if (request !== null) {
 
-    let modifyRequest = request;
+    const params = (request.method === 'GET') ? camelToSnakeForGET(request.params) : request.params;
 
-    switch (request.method) {
-      case 'POST': {
-
-        modifyRequest = request.clone({
-          body: camelToSnakeForPOST(request.body)
-        });
-
-        break;
-      }
-
-      case 'GET': {
-
-        modifyRequest = request.clone({
-          params: camelToSnakeForGET(request.params)
-        });
-
-        break;
-      }
-    }
-    return modifyRequest;
+    return request.clone({
+      params: params as any,
+      body: camelToSnakeForPOST(request.body)
+    });
   }
 
   return request;
@@ -86,25 +70,28 @@ function camelToSnakeForGET(urlParams: HttpParams): HttpParams | null {
 
 function camelToSnakeForPOST(bodyParams: object): object | null {
 
-  const bodyParamsKeys = Object.keys(bodyParams);
+  if (bodyParams !== null) {
 
-  bodyParamsKeys.forEach((key: string) => {
+    const bodyParamsKeys = Object.keys(bodyParams);
 
-    if (typeof bodyParams[key] === 'object') {
-      if (Array.isArray(bodyParams[key])) {
-        bodyParams[key].map(k => camelToSnakeForPOST(k));
-      } else {
-        camelToSnakeForPOST(bodyParams[key]);
+    bodyParamsKeys.forEach((key: string) => {
+
+      if (typeof bodyParams[key] === 'object') {
+        if (Array.isArray(bodyParams[key])) {
+          bodyParams[key].map(k => camelToSnakeForPOST(k));
+        } else {
+          camelToSnakeForPOST(bodyParams[key]);
+        }
       }
-    }
 
-    const modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
+      const modifiedKey = key.replace(SNAKE_CASE, replacement => '_' + replacement[0].toLowerCase());
 
-    if (modifiedKey !== key) {
-      bodyParams[modifiedKey] = bodyParams[key];
-      delete bodyParams[key];
-    }
-  });
+      if (modifiedKey !== key) {
+        bodyParams[modifiedKey] = bodyParams[key];
+        delete bodyParams[key];
+      }
+    });
+  }
 
   return bodyParams;
 }

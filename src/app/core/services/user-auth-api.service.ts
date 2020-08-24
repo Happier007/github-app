@@ -28,7 +28,7 @@ export class UserAuthApiService extends BaseApiService {
    * @return void
    **/
   public authentication(queryParams: IClient): void {
-    window.location.href = `${this._apiUrl}/login/oauth/authorize?client_id=${queryParams.clientId}&redirect_uri=${queryParams.redirectUri}&login=${queryParams.login}`;
+    window.location.href = `${this._authUrl}/login/oauth/authorize?client_id=${queryParams.clientId}&redirect_uri=${queryParams.redirectUri}&login=${queryParams.login}`;
   }
 
   /**
@@ -56,6 +56,7 @@ export class UserAuthApiService extends BaseApiService {
       Authorization: `token ${token}`
     };
 
+    debugger
     return this._http.get<UserModel>(`${this._apiUrl}/user`, {headers})
     .pipe(
       map((user: UserModel) => user && new UserModel(user))
