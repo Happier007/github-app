@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
@@ -27,7 +27,8 @@ export class GistsApiService extends BaseApiService {
   public publicGists(urlParams: PageParamsModel): Observable<GistModel[]> {
     return this._http.get<GistModel[]>(`${this._apiUrl}/gists/public`, {params: urlParams as any})
     .pipe(
-      map((gists: GistModel[]) => gists.map((gist: GistModel) => gist && new GistModel(gist)))
+      map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => gist && new GistModel(gist))
+      .filter((gist: GistModel) => gist !== undefined))
     );
   }
 
