@@ -1,6 +1,7 @@
 // ANGULAR
 import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
 
 // RXJS
 import { Subject } from 'rxjs';
@@ -9,9 +10,6 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
 import { GistsApiService } from '@core/services';
-
-// MATERIAL
-import { PageEvent } from '@angular/material/paginator';
 
 
 @Injectable()

@@ -1,18 +1,18 @@
 // ANGULAR
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
-// CORE
-import { COUNT_GISTS, PAGE_SIZE_OPTIONS } from '@core/utils';
-import { GistModel, PageParamsModel, } from '@core/models';
-
-// MATERIAL
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-// CURRENT
-import { GistsService } from '../../../services';
+// RXJS
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+// CORE
+import { COUNT_GISTS, PAGE_SIZE_OPTIONS } from '@core/utils';
+import { GistModel, PageParamsModel } from '@core/models';
+
+// CURRENT
+import { GistsService } from '../../../services';
 
 
 @Component({
