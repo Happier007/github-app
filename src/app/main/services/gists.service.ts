@@ -17,7 +17,7 @@ export class GistsService implements OnDestroy {
 
   public gistsSearchEvent = new EventEmitter<void>();
 
-  private _gists$: GistModel[] = [];
+  private _gists: GistModel[] = [];
   private _gistsSearchSubject$ = new Subject<void>();
   private _pageParams: PageParamsModel = new PageParamsModel(this._route.snapshot.queryParams);
   private _destroyed$ = new Subject<void>();
@@ -40,7 +40,7 @@ export class GistsService implements OnDestroy {
   }
 
   public get gists(): GistModel[] {
-    return this._gists$;
+    return this._gists;
   }
 
   public getGists(): void {
@@ -62,7 +62,7 @@ export class GistsService implements OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe((gists: GistModel[]) => {
-      this._gists$ = gists.slice();
+      this._gists = gists.slice();
 
       this.gistsSearchEvent.emit();
     });
