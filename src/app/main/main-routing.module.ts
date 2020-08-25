@@ -7,11 +7,12 @@ import { AuthGuard } from '@core/guards';
 
 // CURRENT
 import { MainComponent } from './main.component';
-
 import {
   GistDetailComponent,
-  GistsTableComponent, ProfileComponent,
-  ReposListComponent, UsersListComponent
+  GistsTableComponent,
+  ProfileComponent,
+  ReposListComponent,
+  UsersListComponent
 } from './components';
 
 const routes: Routes = [
