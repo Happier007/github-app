@@ -27,7 +27,7 @@ export class GistModel {
     this.nodeId = data.nodeId || void 0;
     this.gitPullUrl = data.gitPullUrl || void 0;
     this.htmlUrl = data.htmlUrl || void 0;
-    this.files = data.files && this._setFiles(data.files) || void 0;
+    this.files = data.files && this._getFiles(data.files) || void 0;
     this.createdAt = data.createdAt || void 0;
     this.updatedAt = data.updatedAt || void 0;
     this.description = data.description || void 0;
@@ -38,7 +38,7 @@ export class GistModel {
     this.truncated = !!data.truncated;
   }
 
-  private _setFiles(files): any {
+  private _getFiles(files): any {
     const keysFilesField = Object.keys(files);
     const modifiedFiles: any = {};
 
