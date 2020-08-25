@@ -1,5 +1,11 @@
 // ANGULAR
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 // RXJS
@@ -11,7 +17,6 @@ import {
   UserAuthApiService,
   UserService
 } from '@core/services';
-
 import { UserModel } from '@core/models';
 
 // SHARED
@@ -63,7 +68,7 @@ export class MainComponent implements OnInit, OnDestroy {
       )
       .subscribe({
           next: (user: UserModel) => {
-            this._userService.saveAuthenticatedUser(user);
+            this._userService.saveAuthenticatedUser(user, accessToken);
           },
           error: () => {
             this._userService.removeAuthenticatedUser();

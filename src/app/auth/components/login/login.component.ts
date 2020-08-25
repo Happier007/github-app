@@ -1,5 +1,11 @@
 // ANGULAR
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -46,7 +52,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _cdRef: ChangeDetectorRef,
     private _loaderService: LoaderService,
     private _userAuthApiService: UserAuthApiService,
-    private _userService: UserService) {}
+    private _userService: UserService) {
+  }
 
   public ngOnInit(): void {
     this._authenticateUser();
@@ -89,7 +96,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             this._router.navigate(['/']);
           },
-          error: () => {},
+          error: () => {
+          },
           complete: () => {
           }
         }

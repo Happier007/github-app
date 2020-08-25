@@ -1,5 +1,11 @@
 // ANGULAR
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 // RXJS
@@ -14,21 +20,17 @@ export class ChangeCaseInterceptor implements HttpInterceptor {
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const snakeCaseBody = camelToSnake(req.body);
+    const modifyRequest = camelToSnake(req);
 
-    const modifyRequest = req.clone({
-      body: snakeCaseBody
-    });
-
-    return next.handle(modifyRequest)
+    return next.handle(modifyRequest as HttpRequest<any>)
     .pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
 
-          const camelCaseBody = snakeToCamel(event.body);
+          const camelCaseResponse = snakeToCamel(event.body);
 
           return event.clone({
-            body: camelCaseBody
+            body: camelCaseResponse
           });
         }
       })

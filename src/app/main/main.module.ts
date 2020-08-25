@@ -17,17 +17,17 @@ import { NavBarModule } from '../sub-modules';
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-
-import * as mainComponents from './components';
+import { GistsService } from './services';
+import * as сomponents from './components';
 
 @NgModule({
   declarations: [
     MainComponent,
-    mainComponents.GistsListComponent,
-    mainComponents.GistDetailComponent,
-    mainComponents.UsersListComponent,
-    mainComponents.ReposListComponent,
-    mainComponents.ProfileComponent,
+    сomponents.GistsTableComponent,
+    сomponents.GistDetailComponent,
+    сomponents.UsersListComponent,
+    сomponents.ReposListComponent,
+    сomponents.ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +37,9 @@ import * as mainComponents from './components';
     MainRoutingModule,
     NavBarModule
   ],
+  providers: [
+    GistsService
+  ]
 })
 export class MainModule {
 }

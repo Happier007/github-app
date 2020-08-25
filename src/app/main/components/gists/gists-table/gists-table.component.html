@@ -1,0 +1,36 @@
+<div class="m-20">
+
+    <h3>Public gists</h3>
+
+    <mat-table [dataSource]="dataSource">
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>
+                Description
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let element">
+                {{element.description ? (element.description | ellipsis: 50) : '---' }}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Login Column -->
+        <ng-container matColumnDef="login">
+            <mat-header-cell *matHeaderCellDef>Owner</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.owner?.login}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 [routerLink]="['/gist', row.id]">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="countGists"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="pageSizeOption"
+                   (page)="pageEventGists($event)">
+    </mat-paginator>
+</div>

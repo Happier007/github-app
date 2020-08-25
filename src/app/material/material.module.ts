@@ -13,6 +13,11 @@ import {
   MatCardModule,
   MatProgressBarModule,
   MatSnackBarModule,
+  MatTabsModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatExpansionModule
 } from '@angular/material';
 
 const MODULES = [
@@ -26,6 +31,11 @@ const MODULES = [
   MatCardModule,
   MatProgressBarModule,
   MatSnackBarModule,
+  MatTabsModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatExpansionModule
 ];
 
 @NgModule({

@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReposListComponent implements OnInit {
 
-  constructor() {
+  constructor() { }
+
+  ngOnInit() {
   }
 
-  public ngOnInit(): void {
-  }
 }
