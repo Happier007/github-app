@@ -1,7 +1,7 @@
 export class PageParamsModel {
   public page: number;
   public perPage: number;
-  public q?: string;
+  public q: string;
 
   constructor(data: any = {}) {
     this.page = data.pageIndex || data.page || 0;
