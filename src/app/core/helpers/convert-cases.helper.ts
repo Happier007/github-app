@@ -38,7 +38,7 @@ export function camelToSnake(request: HttpRequest<any>): HttpRequest<any> | null
     return request;
   }
 
-  const queryParams = (request.method === 'GET') ? camelToSnakeForGET(request.params) : request.params;
+  const queryParams = (request.method === 'GET') ? camelToSnakeForGET(request.params as HttpParams) : request.params;
 
   return request.clone({
     params: queryParams as any,

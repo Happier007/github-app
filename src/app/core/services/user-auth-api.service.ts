@@ -56,7 +56,6 @@ export class UserAuthApiService extends BaseApiService {
       Authorization: `token ${token}`
     };
 
-    debugger
     return this._http.get<UserModel>(`${this._apiUrl}/user`, {headers})
     .pipe(
       map((user: UserModel) => user && new UserModel(user))
