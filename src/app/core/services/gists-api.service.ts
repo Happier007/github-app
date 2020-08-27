@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 // CORE
 import { GistModel, PageParamsModel } from '@core/models';
