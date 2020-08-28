@@ -4,27 +4,33 @@ import { HttpClient } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // CORE
-import { GistModel, PageParamsModel } from '@core/models';
+import { PageParamsModel, ProjectModel } from '@core/models';
+import { BaseApiService } from './base-api.service';
 
-// ENVIRONMENT
-import { environment } from '@environments/environment';
 
 @Injectable()
-export class ProjectsApiService {
+export class ProjectsApiService extends BaseApiService {
 
   constructor(private _http: HttpClient) {
+    super();
   }
 
-  public getUserProjects(username: string, queryParams: PageParamsModel): Observable<any[]> {
-    return this._http.get<GistModel[]>(`${environment.gitApiUrl}/users/${username}/projects`,
+  public getUserProjects(username: string, queryParams: PageParamsModel): Observable<ProjectModel[]> {
+    const headers = {
+      Accept: 'application/vnd.github.inertia-preview+json'
+    };
+
+    return this._http.get<ProjectModel[]>(`${this._apiUrl}/users/${username}/projects`,
       {
+        headers,
         params: queryParams as any
-      });
-    // .pipe(
-    //   map((gists: GistModel[]) => gists.map((gist: GistModel) => new GistModel(gist)))
-    // );
+      })
+    .pipe(
+      map((projects: ProjectModel[]) => projects && projects.map((project: ProjectModel) => new ProjectModel(project))
+      .filter(Boolean))
+    );
   }
-
 }
