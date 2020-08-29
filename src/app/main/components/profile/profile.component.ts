@@ -1,59 +1,33 @@
 // ANGULAR
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 // RXJS
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 // CORE
-import { GistsApiService, UserService } from '@core/services';
-import { GistModel, PageParamsModel, UserModel } from '@core/models';
+import { UserService, ProjectsApiService } from '@core/services';
+import { UserModel } from '@core/models';
 
-// MATERIAL
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
 
-  public user: UserModel;
-  public gists$: Observable<GistModel[]>;
-  public projects$: Observable<any>;
-  public pageParamsGists: PageParamsModel = new PageParamsModel();
-
-  private _destroyed$ = new Subject<void>();
+  public user$: Observable<UserModel>;
 
   constructor(
     private _userService: UserService,
-    private _gistsApiService: GistsApiService) {
+    private _projectsApiService: ProjectsApiService) {
   }
 
   public ngOnInit(): void {
     this._loadUser();
   }
 
-  public ngOnDestroy(): void {
-    this._destroyed$.next();
-    this._destroyed$.complete();
-  }
-
-  public pageEventGists($event: PageEvent): void {
-
-  }
-
   private _loadUser(): void {
-    this._userService.authorizedUser
-    .pipe(
-      takeUntil(this._destroyed$)
-    ).subscribe((user: UserModel) => {
-      if (user) {
-        this.user = user;
-        this.gists$ = this._gistsApiService.getUserGists(user.login, new PageParamsModel());
-        this.projects$ = this._(user.login, new PageParamsModel());
-      }
-    });
+    this.user$ = this._userService.authorizedUser;
   }
 }

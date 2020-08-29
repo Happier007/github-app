@@ -1,6 +1,6 @@
 <div class="m-20">
 
-    <div *ngIf="user">
+    <div *ngIf="user$ | async as user">
 
         <div fxLayout="column" fxLayoutGap="50px">
             <!-- bio -->
@@ -18,22 +18,27 @@
                         </div>
 
                         <div fxLayout="column" fxLayoutGap="5px">
+
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                                 <mat-icon>perm_identity</mat-icon>
                                 {{user.id}}
                             </div>
+
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                                 <mat-icon>date_range</mat-icon>
                                 {{user.createdAt | date: 'dd/MM/yyyy'}}
                             </div>
+
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                                 <mat-icon>location_on</mat-icon>
                                 {{user.location}}
                             </div>
+
                             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                                 <mat-icon>link</mat-icon>
                                 {{user.location}}
                             </div>
+
                             <div *ngIf="user.email" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                                 <mat-icon>mail_outline</mat-icon>
                                 {{user.email}}
@@ -47,35 +52,45 @@
             <!--  docs          -->
             <div>
                 <mat-tab-group>
-                    <mat-tab>
-                        <ng-template matTabLabel>
 
+                    <!-- OVERVIEW -->
+                    <mat-tab label="OVERVIEW">
+                        <app-user-overview [user]="user"></app-user-overview>
+                    </mat-tab>
+
+                    <!-- GISTS -->
+                    <mat-tab label="GISTS">
+
+                        <ng-template matTabLabel>
                             <span matBadge="{{user.publicGists}}"
                                   matBadgeOverlap="false"
                                   matBadgeColor="warn">
-                                Gists
+                                GISTS
                             </span>
-
                         </ng-template>
 
-                        <mat-list [ngClass]="{tabsHeight: user.publicGists>0}">
-
-                            <a mat-list-item *ngFor="let gist of gists$ | async"
-                               [href]=gist.htmlUrl target="_blank">
-                                <mat-icon mat-list-icon>folder_special</mat-icon>
-                                <h4 mat-line>{{gist.description || '---'}}</h4>
-                            </a>
-
-                        </mat-list>
-
-                        <mat-paginator [length]="user.publicGists"
-                                       [pageIndex]="pageParamsGists.page"
-                                       [pageSize]="pageParamsGists.perPage"
-                                       [pageSizeOptions]="[5, 10, 20]"
-                                       (page)="pageEventGists($event)">
-                        </mat-paginator>
-
+                        <app-user-gists [user]="user"></app-user-gists>
                     </mat-tab>
+
+                    <!-- REPOS -->
+                    <mat-tab label="REPOS">
+
+                        <ng-template matTabLabel>
+                            <span matBadge="{{user.publicRepos}}"
+                                  matBadgeOverlap="false"
+                                  matBadgeColor="warn">
+                                REPOS
+                            </span>
+                        </ng-template>
+
+                        <app-user-repos [user]="user"></app-user-repos>
+                    </mat-tab>
+
+                    <!-- PROJECTS -->
+                    <mat-tab label="PROJECTS">
+                        <app-user-projects [user]="user"></app-user-projects>
+                    </mat-tab>
+
                 </mat-tab-group>
             </div>
 
