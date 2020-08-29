@@ -1,0 +1,20 @@
+<ng-container *ngIf="(repos$ | async) as repos">
+
+    <mat-list>
+
+        <a *ngFor="let repo of repos" [href]=repo.htmlUrl
+           target="_blank" mat-list-item>
+            <mat-icon mat-list-icon>folder_special</mat-icon>
+            <h4 mat-line>{{repo.name}}</h4>
+        </a>
+
+    </mat-list>
+
+    <mat-paginator [length]="user.publicGists"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="pageSizeOption"
+                   (page)="pageEvent($event)">
+    </mat-paginator>
+
+</ng-container>
