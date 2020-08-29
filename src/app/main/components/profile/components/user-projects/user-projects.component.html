@@ -1,0 +1,20 @@
+<ng-container *ngIf="(projects$ | async) as projects">
+
+    <mat-list>
+
+        <a *ngFor="let project of projects" [href]=project.htmlUrl
+           target="_blank" mat-list-item>
+            <mat-icon mat-list-icon>folder_special</mat-icon>
+            <h4 mat-line>{{project.name}}</h4>
+        </a>
+
+    </mat-list>
+
+    <mat-paginator [length]="4"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="pageSizeOption"
+                   (page)="pageEvent($event)">
+    </mat-paginator>
+
+</ng-container>
