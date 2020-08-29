@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 // CURRENT
 import {
   GistsApiService,
+  ProjectsApiService,
+  ReposApiService,
+  StatisticsApiService,
   UserAuthApiService,
   UserService
 } from '@core/services';
@@ -16,7 +19,10 @@ import { INTERCEPTORS } from './interseptors';
     CommonModule
   ],
   providers: [
+    ProjectsApiService,
     GistsApiService,
+    ReposApiService,
+    StatisticsApiService,
     UserAuthApiService,
     UserService,
     INTERCEPTORS

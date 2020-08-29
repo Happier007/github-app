@@ -18,16 +18,22 @@ import { NavBarModule } from '../sub-modules';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { GistsService } from './services';
-import * as сomponents from './components';
+import * as components from './components';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
     MainComponent,
-    сomponents.GistsTableComponent,
-    сomponents.GistDetailComponent,
-    сomponents.UsersListComponent,
-    сomponents.ReposListComponent,
-    сomponents.ProfileComponent,
+    components.GistsTableComponent,
+    components.GistDetailComponent,
+    components.UsersListComponent,
+    components.ReposListComponent,
+    components.ProfileComponent,
+    components.UserGistsComponent,
+    components.UserReposComponent,
+    components.UserProjectsComponent,
+    components.UserOverviewComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +41,8 @@ import * as сomponents from './components';
     MaterialModule,
     SharedModule,
     MainRoutingModule,
-    NavBarModule
+    NavBarModule,
+    MatTooltipModule
   ],
   providers: [
     GistsService

@@ -14,7 +14,9 @@ import { FlexModule } from '@angular/flex-layout';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 
 @NgModule({
-  declarations: [EllipsisPipe],
+  declarations: [
+    EllipsisPipe,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -25,7 +27,7 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
   exports: [
     ReactiveFormsModule,
     FlexModule,
-    EllipsisPipe
+    EllipsisPipe,
   ]
 })
 export class SharedModule {
