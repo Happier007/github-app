@@ -1,18 +1,15 @@
-<!--<pre>{{activity$ | async | json }}</pre>-->
-<section *ngIf="commentsActivity$ | async as commentsActivity"
-         class="commitsCalendar">
+<section *ngIf="commentsActivityAllRepos" class="commitsCalendar">
 
     <div fxLayout="row" fxLayoutGap="5px">
 
-        <div *ngFor="let activityWeek of commentsActivity; let idx = index;"
+        <div *ngFor="let activityWeek of commentsActivityAllRepos; let idx = index;"
              class="week" fxLayout="column" fxLayoutGap="4px"
              [ngClass]="{'first': !idx}">
 
-            <div *ngIf="(idx>0 && commentsActivity[idx].week.getMonth() !== commentsActivity[idx-1].week.getMonth()) || !idx"
+            <div *ngIf="(idx>0 && commentsActivityAllRepos[idx].week.getMonth() !== commentsActivityAllRepos[idx-1].week.getMonth()) || !idx"
                  class="legeng-month">
                 {{activityWeek.week | date: 'MMM'}}
             </div>
-
 
             <div *ngFor="let activityday of activityWeek.days"
                  class="day pointer"
@@ -20,7 +17,7 @@
                              'green-2': activityday === 2,
                              'green-3': activityday === 3,
                              'green-4': activityday >= 4}"
-                 matTooltip="{{activityday > 0 ? activityday : 'No'}} contribution on {{activityWeek.week | date: 'mediumDate'}}"
+                 matTooltip="{{activityday > 0 ? activityday : 'No'}} contribution on {{activityWeek.week  | date: 'mediumDate'}}"
                  [matTooltipPosition]="'above'">
             </div>
 
