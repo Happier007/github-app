@@ -55,8 +55,7 @@ export class GistsApiService extends BaseApiService {
         params: queryParams as any
       })
     .pipe(
-      map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => new GistModel(gist))
-      .filter(Boolean))
+      map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => new GistModel(gist)))
     );
   }
 }

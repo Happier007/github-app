@@ -28,9 +28,7 @@ export class ReposApiService extends BaseApiService {
         params: queryParams as any
       })
     .pipe(
-      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => new RepoModel(repo))
-      .filter(Boolean)
-      )
+      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => new RepoModel(repo)))
     );
   }
 }
