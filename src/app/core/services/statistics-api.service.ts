@@ -33,8 +33,8 @@ export class StatisticsApiService extends BaseApiService {
             headers,
           });
       })),
-      switchMap((value: any) => {
-        return forkJoin(value);
+      switchMap((requestList: Observable<any>[]) => {
+        return forkJoin(requestList);
       }),
       map((commentsActivities: any[]) => commentsActivities
       .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
