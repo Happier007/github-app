@@ -17,6 +17,11 @@ export class ReposApiService extends BaseApiService {
     super();
   }
 
+  /**
+   * List repositories for a user - https://developer.github.com/v3/repos/#list-repositories-for-a-user
+   * @urlParams <string>, <PageParamsModel>
+   * @return Observable<RepoModel[]>
+   **/
   public getUserRepos(username: string, queryParams: PageParamsModel): Observable<RepoModel[]> {
     return this._http.get<RepoModel[]>(`${this._apiUrl}/users/${username}/repos`,
       {
@@ -24,7 +29,8 @@ export class ReposApiService extends BaseApiService {
       })
     .pipe(
       map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => new RepoModel(repo))
-      .filter(Boolean))
+      .filter(Boolean)
+      )
     );
   }
 }

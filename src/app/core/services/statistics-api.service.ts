@@ -20,6 +20,12 @@ export class StatisticsApiService extends BaseApiService {
     super();
   }
 
+
+  /**
+   * Get the last year of commit activity - https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
+   * @urlParams <string>
+   * @return Observable<CommentsActivityModel[]>
+   **/
   public getUserCommitActivity(username: string): Observable<CommentsActivityModel[]> {
     const headers = {
       Accept: 'application/vnd.github.inertia-preview+json'

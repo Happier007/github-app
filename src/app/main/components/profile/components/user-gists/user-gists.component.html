@@ -2,7 +2,7 @@
 
     <mat-list>
 
-        <a *ngFor="let gist of gists" [href]=gist.htmlUrl
+        <a *ngFor="let gist of gists" [href]="gist.htmlUrl"
            target="_blank" mat-list-item>
             <mat-icon mat-list-icon>folder_special</mat-icon>
             <h4 mat-line>{{gist.description || '---'}}</h4>

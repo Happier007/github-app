@@ -2,7 +2,7 @@
 
     <mat-list>
 
-        <a *ngFor="let project of projects" [href]=project.htmlUrl
+        <a *ngFor="let project of projects" [href]="project.htmlUrl"
            target="_blank" mat-list-item>
             <mat-icon mat-list-icon>folder_special</mat-icon>
             <h4 mat-line>{{project.name}}</h4>

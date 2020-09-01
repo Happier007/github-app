@@ -28,7 +28,6 @@ export class GistsApiService extends BaseApiService {
     return this._http.get<GistModel[]>(`${this._apiUrl}/gists/public`, {params: urlParams as any})
     .pipe(
       map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => gist && new GistModel(gist))
-        .filter(Boolean)
       )
     );
   }
@@ -45,6 +44,11 @@ export class GistsApiService extends BaseApiService {
     );
   }
 
+  /**
+   * List gists for a user- https://developer.github.com/v3/gists/#list-gists-for-a-user
+   * @urlParams <string>, <PageParamsModel>
+   * @return Observable<GistModel[]>
+   **/
   public getUserGists(username: string, queryParams: PageParamsModel): Observable<GistModel[]> {
     return this._http.get<GistModel[]>(`${this._apiUrl}/users/${username}/gists`,
       {

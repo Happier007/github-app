@@ -29,8 +29,7 @@ export class ProjectsApiService extends BaseApiService {
         params: queryParams as any
       })
     .pipe(
-      map((projects: ProjectModel[]) => projects && projects.map((project: ProjectModel) => new ProjectModel(project))
-      .filter(Boolean))
+      map((projects: ProjectModel[]) => projects && projects.map((project: ProjectModel) => new ProjectModel(project)))
     );
   }
 }
