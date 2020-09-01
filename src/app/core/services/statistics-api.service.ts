@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // RXJS
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 // CORE
-import { PageParamsModel, RepoModel } from '@core/models';
+import { CommentsActivityModel, PageParamsModel, RepoModel } from '@core/models';
 import { BaseApiService } from './base-api.service';
 import { ReposApiService } from './repos-api.service';
 
@@ -20,7 +20,7 @@ export class StatisticsApiService extends BaseApiService {
     super();
   }
 
-  public getUserCommitActivity(username: string): any {
+  public getUserCommitActivity(username: string): Observable<CommentsActivityModel[]> {
     const headers = {
       Accept: 'application/vnd.github.inertia-preview+json'
     };
@@ -36,7 +36,10 @@ export class StatisticsApiService extends BaseApiService {
       switchMap((value: any) => {
         return forkJoin(value);
       }),
-      map(items => items.reduce((acc, cur) => [...acc, ...cur], [])),
+      map((commentsActivities: any[]) => commentsActivities
+      .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
+        return [...accCommentsActivity, ...curCommentsActivity];
+      }, [])),
     );
   }
 }

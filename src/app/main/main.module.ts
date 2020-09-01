@@ -1,6 +1,7 @@
 // ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // CORE
 import { CoreModule } from '../core';
@@ -17,9 +18,8 @@ import { NavBarModule } from '../sub-modules';
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { GistsService } from './services';
+import { GistsService, UserCommitsActivityService } from './services';
 import * as components from './components';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -45,7 +45,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule
   ],
   providers: [
-    GistsService
+    GistsService,
+    UserCommitsActivityService
   ]
 })
 export class MainModule {

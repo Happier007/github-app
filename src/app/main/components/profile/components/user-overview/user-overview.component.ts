@@ -9,6 +9,9 @@ import { takeUntil } from 'rxjs/operators';
 import { StatisticsApiService } from '@core/services';
 import { CommentsActivityModel, UserModel } from '@core/models';
 
+// MAIN
+import { UserCommitsActivityService } from '../../../../services';
+
 
 @Component({
   selector: 'app-user-overview',
@@ -23,7 +26,8 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
 
   private _destroyed$ = new Subject<void>();
 
-  constructor(private _statisticsApiService: StatisticsApiService) {
+  constructor(private _statisticsApiService: StatisticsApiService,
+              private _userCommitsActivityService: UserCommitsActivityService) {
   }
 
   public ngOnInit(): void {
@@ -42,40 +46,8 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     )
     .subscribe((commentsActivities: CommentsActivityModel[]) => {
 
-      const commentsActivitiesByWeek = this._groupByWeek(commentsActivities, x => x.week);
-
-      const weekKeys = Object.keys(commentsActivitiesByWeek);
-
-      weekKeys.forEach((prop: string) => {
-
-        const resultWeekActivity: CommentsActivityModel = {
-          week: new Date(prop * 1000),
-          days: this._sumCommitsWeekAllRepos(commentsActivitiesByWeek[prop])
-        };
-
-        this.commentsActivityAllRepos.push(resultWeekActivity);
-      });
-
+      this.commentsActivityAllRepos = this._userCommitsActivityService.sumCommitsAllRepos(commentsActivities);
     });
-  }
-
-  // lodash
-  private _groupByWeek(xs: CommentsActivityModel[], f: object): any[] {
-    return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), []);
-  }
-
-  private _sumCommitsWeekAllRepos(commentsActivities: CommentsActivityModel[]): number[] {
-    const result = [];
-
-    commentsActivities.forEach((commentsActivityWeek: CommentsActivityModel) => result.push(commentsActivityWeek.days));
-
-    return result.reduce((accWeek: number[], currentWeek: number[]) => {
-      return this._sumCommits(accWeek, currentWeek);
-    });
-  }
-
-  private _sumCommits(a: number[], b: number[]): number[] {
-    return a.map((item: number, idx: number) => item + (b[idx] || 0));
   }
 }
 
