@@ -55,40 +55,38 @@
 
                     <!-- OVERVIEW -->
                     <mat-tab label="OVERVIEW">
-                        <app-user-overview [user]="user"></app-user-overview>
+                        <ng-template matTabContent>
+
+                            <app-user-overview [user]="user"></app-user-overview>
+
+                        </ng-template>
                     </mat-tab>
 
                     <!-- GISTS -->
                     <mat-tab label="GISTS">
+                        <ng-template matTabContent>
 
-                        <ng-template matTabLabel>
-                            <span matBadge="{{user.publicGists}}"
-                                  matBadgeOverlap="false"
-                                  matBadgeColor="warn">
-                                GISTS
-                            </span>
+                            <app-user-gists [user]="user"></app-user-gists>
+
                         </ng-template>
-
-                        <app-user-gists [user]="user"></app-user-gists>
                     </mat-tab>
 
                     <!-- REPOS -->
                     <mat-tab label="REPOS">
+                        <ng-template matTabContent>
 
-                        <ng-template matTabLabel>
-                            <span matBadge="{{user.publicRepos}}"
-                                  matBadgeOverlap="false"
-                                  matBadgeColor="warn">
-                                REPOS
-                            </span>
+                            <app-user-repos [user]="user"></app-user-repos>
+
                         </ng-template>
-
-                        <app-user-repos [user]="user"></app-user-repos>
                     </mat-tab>
 
                     <!-- PROJECTS -->
                     <mat-tab label="PROJECTS">
-                        <app-user-projects [user]="user"></app-user-projects>
+                        <ng-template matTabContent>
+
+                            <app-user-projects [user]="user"></app-user-projects>
+
+                        </ng-template>
                     </mat-tab>
 
                 </mat-tab-group>
