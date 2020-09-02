@@ -8,4 +8,4 @@ export * from './owner.model';
 export * from './repo.model';
 export * from './creator.model';
 export * from './project.model';
-export * from './commentsActivity.model';
+export * from './commitsActivity.model';

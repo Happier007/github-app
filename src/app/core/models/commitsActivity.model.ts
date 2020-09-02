@@ -1,4 +1,4 @@
-export class CommentsActivityModel {
+export class CommitsActivityModel {
   public days: number[];
   public week: Date;
 

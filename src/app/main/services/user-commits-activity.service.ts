@@ -6,7 +6,7 @@ import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, Subject } from 'rxjs';
 
 // CORE
-import { CommentsActivityModel, PageParamsModel, RepoModel, UserModel } from '@core/models';
+import { CommitsActivityModel, PageParamsModel, RepoModel, UserModel } from '@core/models';
 import { groupByProperty } from '@core/helpers';
 import { ReposApiService, StatisticsApiService } from '@core/services';
 
@@ -16,7 +16,7 @@ export class UserCommitsActivityService implements OnDestroy {
 
   public commentsActivitySearchEvent = new EventEmitter<void>();
   private _user: UserModel;
-  private _commentsActivityAllRepos: CommentsActivityModel[] = [];
+  private _commentsActivityAllRepos: CommitsActivityModel[] = [];
 
   private _statisticSubjectSearch = new Subject<void>();
   private _destroyed$ = new Subject<void>();
@@ -27,7 +27,7 @@ export class UserCommitsActivityService implements OnDestroy {
     this._fetchStatistic();
   }
 
-  public get getCommentsActivity(): CommentsActivityModel[] {
+  public get getCommentsActivity(): CommitsActivityModel[] {
     return this._commentsActivityAllRepos;
   }
 
@@ -55,21 +55,21 @@ export class UserCommitsActivityService implements OnDestroy {
         return forkJoin(requestList);
       }),
       map((commentsActivities: any[]) => commentsActivities
-      .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
+      .reduce((accCommentsActivity: CommitsActivityModel[], curCommentsActivity: CommitsActivityModel[]) => {
         return [...accCommentsActivity, ...curCommentsActivity];
       }, [])),
       takeUntil(this._destroyed$)
     )
-    .subscribe((commentsActivities: CommentsActivityModel[]) => {
+    .subscribe((commentsActivities: CommitsActivityModel[]) => {
       this._commentsActivityAllRepos = this._sumCommitsAllRepos(commentsActivities);
 
       this.commentsActivitySearchEvent.emit();
     });
   }
 
-  private _sumCommitsAllRepos(commentsActivities: CommentsActivityModel[]): CommentsActivityModel[] {
+  private _sumCommitsAllRepos(commentsActivities: CommitsActivityModel[]): CommitsActivityModel[] {
 
-    const commentsActivityAllRepos: CommentsActivityModel[] = [];
+    const commentsActivityAllRepos: CommitsActivityModel[] = [];
 
     const commentsActivitiesByWeek = groupByProperty(commentsActivities, x => x.week);
 
@@ -79,7 +79,7 @@ export class UserCommitsActivityService implements OnDestroy {
 
       const sumCommitsDays = this._sumCommitsWeekAllRepos(commentsActivitiesByWeek[prop]);
 
-      const resultWeekActivity: CommentsActivityModel = {
+      const resultWeekActivity: CommitsActivityModel = {
         week: new Date(+prop * 1000),
         days: sumCommitsDays
       };
@@ -90,10 +90,10 @@ export class UserCommitsActivityService implements OnDestroy {
     return commentsActivityAllRepos;
   }
 
-  private _sumCommitsWeekAllRepos(commentsActivities: CommentsActivityModel[]): number[] {
+  private _sumCommitsWeekAllRepos(commentsActivities: CommitsActivityModel[]): number[] {
     const result = [];
 
-    commentsActivities.forEach((commentsActivityWeek: CommentsActivityModel) => result.push(commentsActivityWeek.days));
+    commentsActivities.forEach((commentsActivityWeek: CommitsActivityModel) => result.push(commentsActivityWeek.days));
 
     return result.reduce((accWeek: number[], currentWeek: number[]) => {
       return this._sumCommits(accWeek, currentWeek);

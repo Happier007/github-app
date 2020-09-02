@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // CORE
-import { CommentsActivityModel } from '@core/models';
+import { CommitsActivityModel } from '@core/models';
 import { BaseApiService } from './base-api.service';
 
 
@@ -20,13 +20,13 @@ export class StatisticsApiService extends BaseApiService {
   /**
    * Get the last year of commit activity - https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
    * @urlParams <string>
-   * @return Observable<CommentsActivityModel[]>
+   * @return Observable<CommitsActivityModel[]>
    **/
-  public getUserCommitsActivity(username: string, repo: string): Observable<CommentsActivityModel[]> {
+  public getUserCommitsActivity(username: string, repo: string): Observable<CommitsActivityModel[]> {
     const headers = {
       Accept: 'application/vnd.github.inertia-preview+json'
     };
-    return this._http.get<CommentsActivityModel[]>(`${this._apiUrl}/repos/${username}/${repo}/stats/commit_activity`,
+    return this._http.get<CommitsActivityModel[]>(`${this._apiUrl}/repos/${username}/${repo}/stats/commit_activity`,
       {
         headers,
       }

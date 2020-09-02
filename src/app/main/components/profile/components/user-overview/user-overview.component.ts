@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 
 // CORE
 import { StatisticsApiService } from '@core/services';
-import { CommentsActivityModel, UserModel } from '@core/models';
+import { CommitsActivityModel, UserModel } from '@core/models';
 
 // MAIN
 import { UserCommitsActivityService } from '../../../../services';
@@ -25,7 +25,7 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     this._userCommitsActivityService.user = user;
   }
 
-  public commentsActivityAllRepos: CommentsActivityModel[] = [];
+  public commentsActivityAllRepos: CommitsActivityModel[] = [];
 
   private _destroyed$ = new Subject<void>();
 
