@@ -49,7 +49,7 @@ export class UserCommitsActivityService implements OnDestroy {
     .pipe(
       switchMap(() => this._reposApiService.getUserRepos(this._user.login, new PageParamsModel())),
       map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => {
-        return this._statisticsApiService.getUserCommitActivity(this._user.login, repo.name);
+        return this._statisticsApiService.getUserCommitsActivity(this._user.login, repo.name);
       })),
       switchMap((requestList: Observable<any>[]) => {
         return forkJoin(requestList);

@@ -22,7 +22,7 @@ export class StatisticsApiService extends BaseApiService {
    * @urlParams <string>
    * @return Observable<CommentsActivityModel[]>
    **/
-  public getUserCommitActivity(username: string, repo: string): Observable<CommentsActivityModel[]> {
+  public getUserCommitsActivity(username: string, repo: string): Observable<CommentsActivityModel[]> {
     const headers = {
       Accept: 'application/vnd.github.inertia-preview+json'
     };
