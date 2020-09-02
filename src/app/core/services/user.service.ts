@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 // RXJS
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 // CORE
 import { UserModel } from '@core/models';
@@ -10,9 +10,9 @@ import { UserModel } from '@core/models';
 @Injectable()
 export class UserService {
 
-  private _authorizedUser$ = new Subject<UserModel>();
+  private _authorizedUser$ = new BehaviorSubject<UserModel>(null);
 
-  public get authorizedUser(): Subject<UserModel> {
+  public get authorizedUser(): BehaviorSubject<UserModel> {
     return this._authorizedUser$;
   }
 

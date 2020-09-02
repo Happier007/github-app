@@ -1,1 +1,99 @@
-<p>profile works!</p>
+<div class="m-20">
+
+    <div *ngIf="user$ | async as user">
+
+        <div fxLayout="column" fxLayoutGap="50px">
+            <!-- bio -->
+            <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex="20">
+                    <img class="ava" src="{{user.avatarUrl}}" alt="User">
+                </div>
+
+                <div fxFlex="50">
+                    <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-between start">
+
+                        <div fxLayout="column">
+                            <mat-card-title>{{user.login}}</mat-card-title>
+                            <mat-card-subtitle>{{user.htmlUrl}}</mat-card-subtitle>
+                        </div>
+
+                        <div fxLayout="column" fxLayoutGap="5px">
+
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                                <mat-icon>perm_identity</mat-icon>
+                                {{user.id}}
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                                <mat-icon>date_range</mat-icon>
+                                {{user.createdAt | date: 'dd/MM/yyyy'}}
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                                <mat-icon>location_on</mat-icon>
+                                {{user.location}}
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                                <mat-icon>link</mat-icon>
+                                {{user.location}}
+                            </div>
+
+                            <div *ngIf="user.email" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                                <mat-icon>mail_outline</mat-icon>
+                                {{user.email}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--  docs          -->
+            <div>
+                <mat-tab-group>
+
+                    <!-- OVERVIEW -->
+                    <mat-tab label="OVERVIEW">
+                        <ng-template matTabContent>
+
+                            <app-user-overview [user]="user"></app-user-overview>
+
+                        </ng-template>
+                    </mat-tab>
+
+                    <!-- GISTS -->
+                    <mat-tab label="GISTS">
+                        <ng-template matTabContent>
+
+                            <app-user-gists [user]="user"></app-user-gists>
+
+                        </ng-template>
+                    </mat-tab>
+
+                    <!-- REPOS -->
+                    <mat-tab label="REPOS">
+                        <ng-template matTabContent>
+
+                            <app-user-repos [user]="user"></app-user-repos>
+
+                        </ng-template>
+                    </mat-tab>
+
+                    <!-- PROJECTS -->
+                    <mat-tab label="PROJECTS">
+                        <ng-template matTabContent>
+
+                            <app-user-projects [user]="user"></app-user-projects>
+
+                        </ng-template>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

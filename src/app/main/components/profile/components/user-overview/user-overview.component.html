@@ -1,0 +1,26 @@
+<section *ngIf="commitsActivityAllRepos" class="commitsCalendar">
+    <div fxLayout="row" fxLayoutGap="5px">
+
+        <div *ngFor="let activityWeek of commitsActivityAllRepos; let idx = index;"
+             class="week" fxLayout="column" fxLayoutGap="4px"
+             [ngClass]="{'first': !idx}">
+
+            <div *ngIf="(idx>0 && commitsActivityAllRepos[idx].week.getMonth() !== commitsActivityAllRepos[idx-1].week.getMonth()) || !idx"
+                 class="legeng-month">
+                {{activityWeek.week | date: 'MMM'}}
+            </div>
+
+            <div *ngFor="let activityday of activityWeek.days"
+                 class="day pointer"
+                 [ngClass]="{'green-1': activityday === 1,
+                             'green-2': activityday === 2,
+                             'green-3': activityday === 3,
+                             'green-4': activityday >= 4}"
+                 matTooltip="{{activityday > 0 ? activityday : 'No'}} contribution on {{activityWeek.week  | date: 'mediumDate'}}"
+                 [matTooltipPosition]="'above'">
+            </div>
+
+        </div>
+
+    </div>
+</section>

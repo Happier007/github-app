@@ -1,0 +1,20 @@
+<ng-container *ngIf="(gists$ | async) as gists">
+
+    <mat-list>
+
+        <a *ngFor="let gist of gists" [href]="gist.htmlUrl"
+           target="_blank" mat-list-item>
+            <mat-icon mat-list-icon>folder_special</mat-icon>
+            <h4 mat-line>{{gist.description || '---'}}</h4>
+        </a>
+
+    </mat-list>
+
+    <mat-paginator [length]="user.publicGists"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="pageSizeOption"
+                   (page)="pageEvent($event)">
+    </mat-paginator>
+
+</ng-container>
