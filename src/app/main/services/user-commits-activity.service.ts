@@ -2,13 +2,13 @@
 import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 
 // RXJS
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { forkJoin, Observable, Subject } from 'rxjs';
 
 // CORE
-import { CommentsActivityModel, UserModel } from '@core/models';
+import { CommentsActivityModel, PageParamsModel, RepoModel, UserModel } from '@core/models';
 import { groupByProperty } from '@core/helpers';
-import { StatisticsApiService } from '@core/services';
+import { ReposApiService, StatisticsApiService } from '@core/services';
 
 
 @Injectable()
@@ -22,8 +22,9 @@ export class UserCommitsActivityService implements OnDestroy {
   private _destroyed$ = new Subject<void>();
 
   constructor(
-    private _statisticsApiService: StatisticsApiService) {
-    this._startFetchStatistic();
+    private _statisticsApiService: StatisticsApiService,
+    private _reposApiService: ReposApiService) {
+    this._fetchStatistic();
   }
 
   public get getCommentsActivity(): CommentsActivityModel[] {
@@ -43,19 +44,16 @@ export class UserCommitsActivityService implements OnDestroy {
     this._statisticSubjectSearch.next();
   }
 
-  private _startFetchStatistic(): void {
+  private _fetchStatistic(): void {
     this._statisticSubjectSearch
     .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(
-      () => this._fetchStatistic()
-    );
-  }
-
-  private _fetchStatistic(): void {
-    this._statisticsApiService.getUserCommitActivity(this._user.login)
-    .pipe(
+      switchMap(() => this._reposApiService.getUserRepos(this._user.login, new PageParamsModel())),
+      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => {
+        return this._statisticsApiService.getUserCommitActivity(this._user.login, repo.name);
+      })),
+      switchMap((requestList: Observable<any>[]) => {
+        return forkJoin(requestList);
+      }),
       map((commentsActivities: any[]) => commentsActivities
       .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
         return [...accCommentsActivity, ...curCommentsActivity];
