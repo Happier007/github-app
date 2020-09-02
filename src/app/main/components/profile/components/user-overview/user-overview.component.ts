@@ -25,7 +25,7 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     this._userCommitsActivityService.user = user;
   }
 
-  public commentsActivityAllRepos: CommitsActivityModel[] = [];
+  public commitsActivityAllRepos: CommitsActivityModel[] = [];
 
   private _destroyed$ = new Subject<void>();
 
@@ -46,12 +46,12 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
   }
 
   private _subSearchEvent(): void {
-    this._userCommitsActivityService.commentsActivitySearchEvent
+    this._userCommitsActivityService.commitsActivitySearchEvent
     .pipe(
       takeUntil(this._destroyed$)
     )
     .subscribe(() => {
-      this.commentsActivityAllRepos = this._userCommitsActivityService.getCommentsActivity;
+      this.commitsActivityAllRepos = this._userCommitsActivityService.getCommitsActivity;
     });
   }
 }
