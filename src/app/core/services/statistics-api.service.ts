@@ -20,7 +20,6 @@ export class StatisticsApiService extends BaseApiService {
     super();
   }
 
-
   /**
    * Get the last year of commit activity - https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
    * @urlParams <string>
@@ -42,10 +41,6 @@ export class StatisticsApiService extends BaseApiService {
       switchMap((requestList: Observable<any>[]) => {
         return forkJoin(requestList);
       }),
-      map((commentsActivities: any[]) => commentsActivities
-      .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
-        return [...accCommentsActivity, ...curCommentsActivity];
-      }, [])),
     );
   }
 }

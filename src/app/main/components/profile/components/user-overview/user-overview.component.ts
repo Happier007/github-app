@@ -2,8 +2,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 // RXJS
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 // CORE
 import { StatisticsApiService } from '@core/services';
@@ -16,22 +16,28 @@ import { UserCommitsActivityService } from '../../../../services';
 @Component({
   selector: 'app-user-overview',
   templateUrl: './user-overview.component.html',
-  styleUrls: ['./user-overview.component.scss']
+  styleUrls: ['./user-overview.component.scss'],
 })
 export class UserOverviewComponent implements OnInit, OnDestroy {
 
-  @Input() user: UserModel;
+  @Input()
+  public set user(user: UserModel) {
+    this._userCommitsActivityService.user = user;
+  }
 
   public commentsActivityAllRepos: CommentsActivityModel[] = [];
 
   private _destroyed$ = new Subject<void>();
 
-  constructor(private _statisticsApiService: StatisticsApiService,
-              private _userCommitsActivityService: UserCommitsActivityService) {
+  constructor(
+    private _statisticsApiService: StatisticsApiService,
+    private _userCommitsActivityService: UserCommitsActivityService) {
   }
 
   public ngOnInit(): void {
-    this._fetchStatistic();
+    this._userCommitsActivityService.getStatistic();
+
+    this._subSearchEvent();
   }
 
   public ngOnDestroy(): void {
@@ -39,14 +45,13 @@ export class UserOverviewComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
-  private _fetchStatistic(): void {
-    this._statisticsApiService.getUserCommitActivity(this.user.login)
+  private _subSearchEvent(): void {
+    this._userCommitsActivityService.commentsActivitySearchEvent
     .pipe(
       takeUntil(this._destroyed$)
     )
-    .subscribe((commentsActivities: CommentsActivityModel[]) => {
-
-      this.commentsActivityAllRepos = this._userCommitsActivityService.sumCommitsAllRepos(commentsActivities);
+    .subscribe(() => {
+      this.commentsActivityAllRepos = this._userCommitsActivityService.getCommentsActivity;
     });
   }
 }

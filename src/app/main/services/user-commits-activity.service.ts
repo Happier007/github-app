@@ -1,15 +1,75 @@
 // ANGULAR
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
+
+// RXJS
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 // CORE
-import { CommentsActivityModel } from '@core/models';
+import { CommentsActivityModel, UserModel } from '@core/models';
 import { groupByProperty } from '@core/helpers';
+import { StatisticsApiService } from '@core/services';
 
 
 @Injectable()
-export class UserCommitsActivityService {
+export class UserCommitsActivityService implements OnDestroy {
 
-  public sumCommitsAllRepos(commentsActivities: CommentsActivityModel[]): CommentsActivityModel[] {
+  public commentsActivitySearchEvent = new EventEmitter<void>();
+  private _user: UserModel;
+  private _commentsActivityAllRepos: CommentsActivityModel[] = [];
+
+  private _statisticSubjectSearch = new Subject<void>();
+  private _destroyed$ = new Subject<void>();
+
+  constructor(
+    private _statisticsApiService: StatisticsApiService) {
+    this._startFetchStatistic();
+  }
+
+  public get getCommentsActivity(): CommentsActivityModel[] {
+    return this._commentsActivityAllRepos;
+  }
+
+  public set user(user: UserModel) {
+    this._user = user;
+  }
+
+  public ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
+
+  public getStatistic() {
+    this._statisticSubjectSearch.next();
+  }
+
+  private _startFetchStatistic(): void {
+    this._statisticSubjectSearch
+    .pipe(
+      takeUntil(this._destroyed$)
+    )
+    .subscribe(
+      () => this._fetchStatistic()
+    );
+  }
+
+  private _fetchStatistic(): void {
+    this._statisticsApiService.getUserCommitActivity(this._user.login)
+    .pipe(
+      map((commentsActivities: any[]) => commentsActivities
+      .reduce((accCommentsActivity: CommentsActivityModel[], curCommentsActivity: CommentsActivityModel[]) => {
+        return [...accCommentsActivity, ...curCommentsActivity];
+      }, [])),
+      takeUntil(this._destroyed$)
+    )
+    .subscribe((commentsActivities: CommentsActivityModel[]) => {
+      this._commentsActivityAllRepos = this._sumCommitsAllRepos(commentsActivities);
+
+      this.commentsActivitySearchEvent.emit();
+    });
+  }
+
+  private _sumCommitsAllRepos(commentsActivities: CommentsActivityModel[]): CommentsActivityModel[] {
 
     const commentsActivityAllRepos: CommentsActivityModel[] = [];
 
@@ -30,7 +90,6 @@ export class UserCommitsActivityService {
     });
 
     return commentsActivityAllRepos;
-
   }
 
   private _sumCommitsWeekAllRepos(commentsActivities: CommentsActivityModel[]): number[] {
