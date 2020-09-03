@@ -11,7 +11,7 @@ import {
   GistDetailComponent,
   GistsTableComponent,
   ProfileComponent,
-  ReposListComponent,
+  ReposTableComponent,
   UsersListComponent
 } from './components';
 
@@ -22,7 +22,7 @@ const routes: Routes = [
     children: [
       {
         path: 'repos',
-        component: ReposListComponent
+        component: ReposTableComponent
       },
       {
         path: 'users',

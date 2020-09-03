@@ -22,7 +22,7 @@ export class GistsApiService extends BaseApiService {
   /**
    * get public gists - https://developer.github.com/v3/gists/#list-public-gists
    * @urlParams <PageParamsModel>
-   * @return Observable<IGist[]>
+   * @return Observable<GistModel[]>
    **/
   public publicGists(urlParams: PageParamsModel): Observable<GistModel[]> {
     return this._http.get<GistModel[]>(`${this._apiUrl}/gists/public`, {params: urlParams as any})

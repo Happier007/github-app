@@ -18,7 +18,12 @@ import { NavBarModule } from '../sub-modules';
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { GistsService, UserCommitsActivityService } from './services';
+import {
+  GistsService,
+  UserCommitsActivityService,
+  ReposService,
+  SearchReposService
+} from './services';
 import * as components from './components';
 
 
@@ -28,12 +33,13 @@ import * as components from './components';
     components.GistsTableComponent,
     components.GistDetailComponent,
     components.UsersListComponent,
-    components.ReposListComponent,
+    components.ReposTableComponent,
     components.ProfileComponent,
     components.UserGistsComponent,
     components.UserReposComponent,
     components.UserProjectsComponent,
     components.UserOverviewComponent,
+    components.SearchReposComponent,
   ],
   imports: [
     CommonModule,
@@ -42,11 +48,13 @@ import * as components from './components';
     SharedModule,
     MainRoutingModule,
     NavBarModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [
     GistsService,
-    UserCommitsActivityService
+    UserCommitsActivityService,
+    ReposService,
+    SearchReposService
   ]
 })
 export class MainModule {
