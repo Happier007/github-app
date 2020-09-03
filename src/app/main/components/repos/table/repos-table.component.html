@@ -20,7 +20,7 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"
-                 [routerLink]="['/gist', row.id]">
+                 [routerLink]="['/repos', row.owner?.login, row.name]">
         </mat-row>
     </mat-table>
 

@@ -8,3 +8,4 @@ export * from './profile/components/user-repos/user-repos.component';
 export * from './profile/components/user-projects/user-projects.component';
 export * from './profile/components/user-overview/user-overview.component';
 export * from './repos/search/search-repos.component';
+export * from './repos/detail/repos-detail.component';

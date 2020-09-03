@@ -11,6 +11,7 @@ import {
   GistDetailComponent,
   GistsTableComponent,
   ProfileComponent,
+  ReposDetailComponent,
   ReposTableComponent,
   UsersListComponent
 } from './components';
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'repos',
         component: ReposTableComponent
+      },
+      {
+        path: 'repos/:username/:reponame',
+        component: ReposDetailComponent
       },
       {
         path: 'users',

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 
 // CORE
-import { RepoModel, PageParamsModel, GistModel } from '@core/models';
+import { RepoModel, PageParamsModel } from '@core/models';
 import { BaseApiService } from './base-api.service';
 
 @Injectable()
@@ -27,6 +27,25 @@ export class ReposApiService extends BaseApiService {
     .pipe(
       map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => repo && new RepoModel(repo))
       )
+    );
+  }
+
+  /**
+   * Get a repository - https://developer.github.com/v3/repos/#get-a-repository
+   * @urlParams <string>
+   * @return Observable<RepoModel>
+   **/
+  public publicRepoByName(username: string, reponame: string): Observable<RepoModel> {
+    const headers = {
+      Accept: 'application/vnd.github.nebula-preview+json'
+    };
+
+    return this._http.get<RepoModel>(`${this._apiUrl}/repos/${username}/${reponame}`,
+      {
+        headers
+      })
+    .pipe(
+      map((gist: RepoModel) => gist && new RepoModel(gist))
     );
   }
 

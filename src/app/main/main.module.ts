@@ -40,6 +40,7 @@ import * as components from './components';
     components.UserProjectsComponent,
     components.UserOverviewComponent,
     components.SearchReposComponent,
+    components.ReposDetailComponent,
   ],
   imports: [
     CommonModule,
