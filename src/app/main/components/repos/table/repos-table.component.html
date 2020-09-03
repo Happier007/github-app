@@ -1,0 +1,33 @@
+<div class="m-20">
+
+    <h3>Public repositories</h3>
+
+    <app-search-repos></app-search-repos>
+
+    <mat-table #table [dataSource]="dataSource">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>
+                Name
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let element">
+                {{element.name ? (element.name | ellipsis: 50) : '---' }}
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 [routerLink]="['/gist', row.id]">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="countRepos"
+                   [pageIndex]="pageParams.page"
+                   [pageSize]="pageParams.perPage"
+                   [pageSizeOptions]="pageSizeOption"
+                   (page)="pageEventRepos($event)">
+    </mat-paginator>
+</div>
