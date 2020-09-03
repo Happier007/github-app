@@ -55,7 +55,7 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     this._reposService.pageEvent(event);
   }
 
-  private _subSearchEvent() {
+  private _subSearchEvent(): void {
     this._reposService.reposSearchEvent
     .pipe(
       takeUntil(this._destroyed$)
@@ -68,7 +68,7 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _subChipsEvent() {
+  private _subChipsEvent(): void {
     this._searchReposService.reposChipsEvent
     .pipe(
       takeUntil(this._destroyed$)

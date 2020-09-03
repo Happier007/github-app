@@ -1,9 +1,15 @@
+// ANGULAR
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { GistModel, RepoModel } from '@core/models';
-import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { GistsApiService, ReposApiService } from '@core/services';
+import { Location } from '@angular/common';
+
+// RXJS
+import { Observable } from 'rxjs';
+
+// CORE
+import { RepoModel } from '@core/models';
+import { ReposApiService } from '@core/services';
+
 
 @Component({
   selector: 'app-repos-detail',
@@ -28,13 +34,10 @@ export class ReposDetailComponent implements OnInit {
     this._location.back();
   }
 
-  public trackByFn(index: number): number {
-    return index;
-  }
-
   private fetchRepoByName(): void {
     const userName = this._route.snapshot.paramMap.get('username');
     const repoName = this._route.snapshot.paramMap.get('reponame');
+
     if (userName && repoName) {
       this.repos$ = this._reposApiService.publicRepoByName(userName, repoName);
     }

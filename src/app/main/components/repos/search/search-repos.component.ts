@@ -42,7 +42,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
   constructor(private _searchReposService: SearchReposService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this._subSearchEvent();
 
     this.repoName.valueChanges

@@ -67,8 +67,7 @@ export class ReposService implements OnDestroy {
       this._updateRouteParam(this._pageParams);
     });
   }
-
-
+  
   private _updateRouteParam(pageParams: PageParamsModel): void {
     this._router.navigate([], {
       queryParams: {
