@@ -1,15 +1,19 @@
 // ANGULAR
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { PageEvent } from '@angular/material/paginator';
 
 // RXJS
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // CORE
-import { COUNT_GISTS, PAGE_SIZE_OPTIONS } from '@core/utils';
-import { PageParamsModel } from '@core/models';
+import { COUNT_REPOS } from '@core/utils';
+import { PageParamsSinceModel } from '@core/models';
 
 // MAIN
 import { ReposService, SearchReposService } from '../../../services';
@@ -24,11 +28,10 @@ export class ReposTableComponent implements OnInit, OnDestroy {
 
   @ViewChild('table', {static: false}) table: MatTable<Element>;
 
-  public pageParams: PageParamsModel = new PageParamsModel();
+  public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
   public dataSource = new MatTableDataSource([]);
 
-  public countRepos = COUNT_GISTS;
-  public pageSizeOption = PAGE_SIZE_OPTIONS;
+  public countRepos = COUNT_REPOS;
   public displayedColumns: string[] = ['name'];
 
   private _destroyed$ = new Subject<void>();
@@ -51,8 +54,8 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
-  public pageEventRepos(event: PageEvent): void {
-    this._reposService.pageEvent(event);
+  public pageEventRepos(since: number): void {
+    this._reposService.pageEvent(since);
   }
 
   private _subSearchEvent(): void {
@@ -79,7 +82,7 @@ export class ReposTableComponent implements OnInit, OnDestroy {
 
       if (!!reposChips.length) {
         this.dataSource.data = reposChips;
-        this.pageParams = new PageParamsModel();
+        this.pageParams = new PageParamsSinceModel();
       } else {
         this._reposService.getRepos();
       }

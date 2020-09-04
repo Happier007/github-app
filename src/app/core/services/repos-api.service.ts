@@ -9,6 +9,7 @@ import { map, pluck } from 'rxjs/operators';
 // CORE
 import { RepoModel, PageParamsModel } from '@core/models';
 import { BaseApiService } from './base-api.service';
+import { PageParamsSinceModel } from '../models/pageParamsSince.model';
 
 @Injectable()
 export class ReposApiService extends BaseApiService {
@@ -22,12 +23,8 @@ export class ReposApiService extends BaseApiService {
    * @urlParams <PageParamsModel>
    * @return Observable<RepoModel[]>
    **/
-  public publicRepos(urlParams: PageParamsModel): Observable<RepoModel[]> {
-    return this._http.get<RepoModel[]>(`${this._apiUrl}/repositories`, {params: urlParams as any})
-    .pipe(
-      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => repo && new RepoModel(repo))
-      )
-    );
+  public publicRepos(urlParams: PageParamsSinceModel): any {
+    return this._http.get<RepoModel[]>(`${this._apiUrl}/repositories`, {params: urlParams as any, observe: 'response'});
   }
 
   /**

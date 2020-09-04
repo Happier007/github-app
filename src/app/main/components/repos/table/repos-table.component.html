@@ -24,10 +24,6 @@
         </mat-row>
     </mat-table>
 
-    <mat-paginator [length]="countRepos"
-                   [pageIndex]="pageParams.page"
-                   [pageSize]="pageParams.perPage"
-                   [pageSizeOptions]="pageSizeOption"
-                   (page)="pageEventRepos($event)">
-    </mat-paginator>
+    <app-pagination [since]="pageParams.since" (changePageEvent)="pageEventRepos($event)"></app-pagination>
+
 </div>

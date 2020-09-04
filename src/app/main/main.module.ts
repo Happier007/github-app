@@ -13,7 +13,10 @@ import { MaterialModule } from '../material';
 import { SharedModule } from '../shared';
 
 // SUB-MODULES
-import { NavBarModule } from '../sub-modules';
+import {
+  NavBarModule,
+  PaginationModule
+} from '../sub-modules';
 
 // CURRENT
 import { MainRoutingModule } from './main-routing.module';
@@ -49,6 +52,7 @@ import * as components from './components';
     SharedModule,
     MainRoutingModule,
     NavBarModule,
+    PaginationModule,
     MatTooltipModule,
   ],
   providers: [

@@ -11,7 +11,11 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 // RXJS
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil
+} from 'rxjs/operators';
 
 // CORE
 import { RepoModel } from '@core/models';

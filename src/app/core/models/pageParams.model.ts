@@ -1,6 +1,7 @@
 export class PageParamsModel {
   public page: number;
   public perPage: number;
+  public
   public q: string;
 
   constructor(data: any = {}) {

@@ -1,24 +1,29 @@
 // ANGULAR
 import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
 
 // RXJS
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 // CORE
-import { PageParamsModel, RepoModel } from '@core/models';
+import {
+  RepoModel,
+  PageParamsSinceModel
+} from '@core/models';
 import { ReposApiService } from '@core/services';
+import { SINCE_PAGINATION } from '@core/utils';
 
 
 @Injectable()
 export class ReposService implements OnDestroy {
 
   public reposSearchEvent = new EventEmitter<void>();
+  public nextPaginationId = 0;
 
   private _repos: RepoModel[] = [];
-  private _pageParams: PageParamsModel = new PageParamsModel(this._route.snapshot.queryParams);
+
+  private _pageParams: PageParamsSinceModel = new PageParamsSinceModel(this._route.snapshot.queryParams);
   private _reposSearchSubject = new Subject<void>();
 
   private _destroyed$ = new Subject<void>();
@@ -34,7 +39,7 @@ export class ReposService implements OnDestroy {
     return this._repos;
   }
 
-  public getPage(): PageParamsModel {
+  public getPage(): PageParamsSinceModel {
     return this._pageParams;
   }
 
@@ -47,32 +52,41 @@ export class ReposService implements OnDestroy {
     this._destroyed$.complete();
   }
 
-  public pageEvent(event?: PageEvent | object): void {
-    this._pageParams = new PageParamsModel(event);
+  public pageEvent(since: number): void {
+    this.nextPaginationId = this._pageParams.since = since;
 
     this.getRepos();
   }
 
   private _fetchRepos(): void {
+
     this._reposSearchSubject
     .pipe(
       switchMap(() => this._reposApiService.publicRepos(this._pageParams)),
       takeUntil(this._destroyed$)
     )
-    .subscribe((repos: RepoModel[]) => {
-      this._repos = repos;
+    .subscribe((res: any) => {
+      const nextPageLink = res.headers.get('link').match(SINCE_PAGINATION);
+
+      const prevPaginationId = !!this.nextPaginationId ? this.nextPaginationId : this._pageParams.since;
+      this.nextPaginationId = nextPageLink.length ? nextPageLink[1] : this.nextPaginationId;
+
+      this._repos = res.body.map((gist: any) => gist && new RepoModel(gist));
+
+      this._updateRouteParam(prevPaginationId, this.nextPaginationId);
 
       this.reposSearchEvent.emit();
-
-      this._updateRouteParam(this._pageParams);
     });
   }
-  
-  private _updateRouteParam(pageParams: PageParamsModel): void {
+
+  private _updateRouteParam(prev: number, next: number): void {
+    const newPage: PageParamsSinceModel = {since: this.nextPaginationId};
+
+    this._pageParams = new PageParamsSinceModel(newPage);
+
     this._router.navigate([], {
       queryParams: {
-        page: pageParams.page,
-        per_page: pageParams.perPage,
+        since: prev
       }
     });
   }
