@@ -13,7 +13,7 @@ import { UserPublicModel } from '@core/models';
 // MAIN
 import { SearchUsersService } from '../../../services';
 
-// lodash
+// LODASH
 import isEqual from 'lodash/isEqual';
 
 @Component({

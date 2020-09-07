@@ -4,6 +4,7 @@ export * from './repos/table/repos-table.component';
 export * from './profile/profile.component';
 export * from './users/table/users-table.component';
 export * from './users/detail/users-detail.component';
+export * from './users/search/search-users.component';
 export * from './profile/components/user-gists/user-gists.component';
 export * from './profile/components/user-repos/user-repos.component';
 export * from './profile/components/user-projects/user-projects.component';
