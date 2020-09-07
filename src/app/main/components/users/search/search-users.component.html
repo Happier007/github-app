@@ -1,0 +1,28 @@
+<div fxLayout="row">
+    <mat-form-field fxFlex="37%" fxFlexOffset="20px">
+
+        <mat-chip-list #chipList aria-label="User selection">
+            <mat-chip *ngFor="let user of usersChips"
+                      (removed)="removeChips(user)">
+                {{user.login}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+
+            <input placeholder="User ..."
+                   #userNameInput
+                   [formControl]="userName"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="chipList"
+                   [matChipInputAddOnBlur]=true>
+        </mat-chip-list>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addChips($event)">
+            <mat-option *ngFor="let user of usersList$ | async" [value]="user">
+                {{user.login}}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-icon matSuffix>search</mat-icon>
+
+    </mat-form-field>
+</div>

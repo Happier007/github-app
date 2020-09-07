@@ -30,6 +30,8 @@ import {
   SearchUsersService
 } from './services';
 import * as components from './components';
+import { SearchUsersComponent } from './components/users/search/search-users.component';
+import { UsersDetailComponent } from './components/users/detail/users-detail.component';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import * as components from './components';
     components.UserOverviewComponent,
     components.SearchReposComponent,
     components.ReposDetailComponent,
+    SearchUsersComponent,
+    UsersDetailComponent,
   ],
   imports: [
     CommonModule,

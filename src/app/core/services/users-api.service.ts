@@ -34,6 +34,7 @@ export class UsersApiService extends BaseApiService {
    * @return Observable<UserPublicModel>
    **/
   public usersByName(queryParams: PageParamsModel): Observable<UserPublicModel[]> {
+    debugger
     return this._http.get<UserPublicModel[]>(`${this._apiUrl}/search/users`,
       {
         params: queryParams as any
