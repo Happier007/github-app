@@ -28,13 +28,25 @@ export class UsersApiService extends BaseApiService {
     });
   }
 
+
+    /**
+   * Get a user - https://developer.github.com/v3/users/#get-a-user
+   * @urlParams <string>
+   * @return Observable<UserPublicModel[]>
+   **/
+  public getUser(name: string): Observable<UserPublicModel> {
+    return this._http.get<UserPublicModel>(`${this._apiUrl}/users/${name}`)
+    .pipe(
+      map((user: UserPublicModel) => user && new UserPublicModel(user))
+    );
+  }
+
   /**
    * Get user by name - https://developer.github.com/v3/users/#get-a-user
    * @urlParams <string>
    * @return Observable<UserPublicModel>
    **/
-  public usersByName(queryParams: PageParamsModel): Observable<UserPublicModel[]> {
-    debugger
+  public searchUsersByName(queryParams: PageParamsModel): Observable<UserPublicModel[]> {
     return this._http.get<UserPublicModel[]>(`${this._apiUrl}/search/users`,
       {
         params: queryParams as any

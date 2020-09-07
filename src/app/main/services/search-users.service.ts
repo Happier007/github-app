@@ -36,10 +36,9 @@ export class SearchUsersService {
   }
 
   public fetchUserByName(name: string): Observable<UserPublicModel[]> {
-    debugger
     const queryParams = new PageParamsModel();
     queryParams.q = name;
 
-    return this._usersApiService.usersByName(queryParams);
+    return this._usersApiService.searchUsersByName(queryParams);
   }
 }

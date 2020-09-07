@@ -20,7 +20,7 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"
-                 [routerLink]="['/user', row.login]">
+                 [routerLink]="['/users', row.login]">
         </mat-row>
     </mat-table>
 

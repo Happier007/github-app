@@ -13,7 +13,8 @@ import {
   ProfileComponent,
   ReposDetailComponent,
   ReposTableComponent,
-  UsersTableComponent
+  UsersTableComponent,
+  UsersDetailComponent
 } from './components';
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersTableComponent
+      },
+      {
+        path: 'users/:username',
+        component: UsersDetailComponent
       },
       {
         path: 'gists',
