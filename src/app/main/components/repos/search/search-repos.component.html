@@ -3,12 +3,12 @@
 
         <mat-chip-list #chipList aria-label="User selection">
             <mat-chip *ngFor="let repo of reposChips"
-                      (removed)="removeChips(repo)">
+                      (removed)="removeRepo(repo)">
                 {{repo.name}}
                 <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
 
-            <input placeholder="User ..."
+            <input placeholder="Repository ..."
                    #repoNameInput
                    [formControl]="repoName"
                    [matAutocomplete]="auto"
@@ -16,7 +16,7 @@
                    [matChipInputAddOnBlur]=true>
         </mat-chip-list>
 
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addChips($event)">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectRepo($event)">
             <mat-option *ngFor="let repo of reposList$ | async" [value]="repo">
                 {{repo.name}}
             </mat-option>

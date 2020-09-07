@@ -19,17 +19,17 @@ export class SearchReposService {
   constructor(private _reposApiService: ReposApiService) {
   }
 
-  public get reposChips() {
+  public get reposSelected() {
     return this._reposChipsList;
   }
 
-  public addRepoToChips(repo: RepoModel): void {
+  public selectRepo(repo: RepoModel): void {
     this._reposChipsList.push(repo);
 
     this.reposChipsEvent.emit();
   }
 
-  public removeRepoFromChips(repo: RepoModel): void {
+  public removeSelectedRepo(repo: RepoModel): void {
     this._reposChipsList = this._reposChipsList.filter((item: RepoModel) => item !== repo);
 
     this.reposChipsEvent.emit();

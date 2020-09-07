@@ -27,14 +27,14 @@ export class ReposDetailComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.fetchRepoByName();
+    this._fetchRepoByName();
   }
 
   public goBack(): void {
     this._location.back();
   }
 
-  private fetchRepoByName(): void {
+  private _fetchRepoByName(): void {
     const userName = this._route.snapshot.paramMap.get('username');
     const repoName = this._route.snapshot.paramMap.get('reponame');
 

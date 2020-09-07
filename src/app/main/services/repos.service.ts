@@ -35,11 +35,11 @@ export class ReposService implements OnDestroy {
     this._fetchRepos();
   }
 
-  public repos(): RepoModel[] {
+  public get repos(): RepoModel[] {
     return this._repos;
   }
 
-  public getPage(): PageParamsSinceModel {
+  public get getPage(): PageParamsSinceModel {
     return this._pageParams;
   }
 

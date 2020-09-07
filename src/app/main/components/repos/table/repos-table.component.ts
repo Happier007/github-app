@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 
 // CORE
 import { COUNT_REPOS } from '@core/utils';
-import { PageParamsSinceModel } from '@core/models';
+import { PageParamsSinceModel, RepoModel } from '@core/models';
 
 // MAIN
 import { ReposService, SearchReposService } from '../../../services';
@@ -26,12 +26,11 @@ import { ReposService, SearchReposService } from '../../../services';
 })
 export class ReposTableComponent implements OnInit, OnDestroy {
 
-  @ViewChild('table', {static: false}) table: MatTable<Element>;
+  @ViewChild('table', {static: false}) public table: MatTable<Element>;
 
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
-  public dataSource = new MatTableDataSource([]);
+  public dataSource =  new MatTableDataSource<RepoModel>([]);
 
-  public countRepos = COUNT_REPOS;
   public displayedColumns: string[] = ['name'];
 
   private _destroyed$ = new Subject<void>();
@@ -65,8 +64,8 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     )
     .subscribe(
       () => {
-        this.dataSource.data = this._reposService.repos();
-        this.pageParams = this._reposService.getPage();
+        this.dataSource.data = this._reposService.repos;
+        this.pageParams = this._reposService.getPage;
       }
     );
   }

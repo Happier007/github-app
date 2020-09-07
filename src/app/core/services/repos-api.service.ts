@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 
 // CORE
-import { RepoModel, PageParamsModel } from '@core/models';
+import {
+  RepoModel,
+  PageParamsModel,
+  PageParamsSinceModel
+} from '@core/models';
 import { BaseApiService } from './base-api.service';
-import { PageParamsSinceModel } from '../models/pageParamsSince.model';
 
 @Injectable()
 export class ReposApiService extends BaseApiService {

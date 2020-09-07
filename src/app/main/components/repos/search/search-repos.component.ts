@@ -34,7 +34,7 @@ import isEqual from 'lodash/isEqual';
 })
 export class SearchReposComponent implements OnInit, OnDestroy {
 
-  @ViewChild('repoNameInput', {static: false}) repoNameInput: ElementRef<HTMLInputElement>;
+  @ViewChild('repoNameInput', {static: false}) public repoNameInput: ElementRef<HTMLInputElement>;
 
   public repoName = new FormControl('', Validators.required);
 
@@ -49,15 +49,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this._subSearchEvent();
 
-    this.repoName.valueChanges
-    .pipe(
-      debounceTime(250),
-      distinctUntilChanged(isEqual),
-      takeUntil(this._destroyed$),
-    ).subscribe(() => {
-
-      this.reposList$ = this._searchReposService.fetchReposByName(this.repoName.value);
-    });
+    this._changeRepoName();
   }
 
   public ngOnDestroy(): void {
@@ -65,14 +57,14 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
-  public addChips(event: MatAutocompleteSelectedEvent): void {
-    this._searchReposService.addRepoToChips(event.option.value);
+  public selectRepo(event: MatAutocompleteSelectedEvent): void {
+    this._searchReposService.selectRepo(event.option.value);
 
     this.repoNameInput.nativeElement.value = '';
   }
 
-  public removeChips(repo: RepoModel): void {
-    this._searchReposService.removeRepoFromChips(repo);
+  public removeRepo(repo: RepoModel): void {
+    this._searchReposService.removeSelectedRepo(repo);
   }
 
   private _subSearchEvent(): void {
@@ -81,7 +73,19 @@ export class SearchReposComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe(() => {
-      this.reposChips = this._searchReposService.reposChips;
+      this.reposChips = this._searchReposService.reposSelected;
+    });
+  }
+
+  private _changeRepoName(): void {
+    this.repoName.valueChanges
+    .pipe(
+      debounceTime(250),
+      distinctUntilChanged(isEqual),
+      takeUntil(this._destroyed$),
+    ).subscribe((name: string) => {
+
+      this.reposList$ = this._searchReposService.fetchReposByName(name);
     });
   }
 }
