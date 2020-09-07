@@ -13,7 +13,7 @@ import {
   ProfileComponent,
   ReposDetailComponent,
   ReposTableComponent,
-  UsersListComponent
+  UsersTableComponent
 } from './components';
 
 const routes: Routes = [
@@ -31,7 +31,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersListComponent
+        component: UsersTableComponent
       },
       {
         path: 'gists',

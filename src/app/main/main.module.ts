@@ -25,7 +25,9 @@ import {
   GistsService,
   UserCommitsActivityService,
   ReposService,
-  SearchReposService
+  SearchReposService,
+  UsersListService,
+  SearchUsersService
 } from './services';
 import * as components from './components';
 
@@ -35,7 +37,7 @@ import * as components from './components';
     MainComponent,
     components.GistsTableComponent,
     components.GistDetailComponent,
-    components.UsersListComponent,
+    components.UsersTableComponent,
     components.ReposTableComponent,
     components.ProfileComponent,
     components.UserGistsComponent,
@@ -59,7 +61,10 @@ import * as components from './components';
     GistsService,
     UserCommitsActivityService,
     ReposService,
-    SearchReposService
+    SearchReposService,
+    UsersListService,
+    SearchUsersService
+
   ]
 })
 export class MainModule {

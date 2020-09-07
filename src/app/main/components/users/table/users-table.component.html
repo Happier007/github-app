@@ -1,0 +1,29 @@
+<div class="m-20">
+
+    <h3>Users</h3>
+
+    <app-search-repos></app-search-repos>
+
+    <mat-table #table [dataSource]="dataSource">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="login">
+            <mat-header-cell *matHeaderCellDef>
+                Login
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let element">
+                {{element.login}}
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 [routerLink]="['/user', row.login]">
+        </mat-row>
+    </mat-table>
+
+    <app-pagination [since]="pageParams.since" (changePageEvent)="pageEventUsers($event)"></app-pagination>
+
+</div>

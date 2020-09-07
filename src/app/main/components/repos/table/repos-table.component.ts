@@ -31,7 +31,6 @@ export class ReposTableComponent implements OnInit, OnDestroy {
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
   public dataSource = new MatTableDataSource([]);
 
-  public countRepos = COUNT_REPOS;
   public displayedColumns: string[] = ['name'];
 
   private _destroyed$ = new Subject<void>();
