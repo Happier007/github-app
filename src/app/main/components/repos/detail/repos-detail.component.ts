@@ -18,7 +18,7 @@ import { ReposApiService } from '@core/services';
 })
 export class ReposDetailComponent implements OnInit {
 
-  public repos$ = new Observable<RepoModel>();
+  public repo$ = new Observable<RepoModel>();
 
   constructor(
     private _location: Location,
@@ -39,7 +39,7 @@ export class ReposDetailComponent implements OnInit {
     const repoName = this._route.snapshot.paramMap.get('reponame');
 
     if (userName && repoName) {
-      this.repos$ = this._reposApiService.publicRepoByName(userName, repoName);
+      this.repo$ = this._reposApiService.publicRepoByName(userName, repoName);
     }
   }
 }

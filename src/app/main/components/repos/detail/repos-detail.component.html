@@ -2,7 +2,7 @@
 
     <div fxLayout="column" fxLayoutGap="15px">
 
-        <div *ngIf="(repos$ | async) as repo">
+        <div *ngIf="(repo$ | async) as repo">
             <h3>{{repo.owner?.login}} / {{repo.name}}</h3>
 
             <b>Description</b>

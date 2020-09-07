@@ -77,7 +77,7 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     )
     .subscribe(() => {
 
-      const reposChips = this._searchReposService.reposChips;
+      const reposChips = this._searchReposService.reposSelected;
 
       if (!!reposChips.length) {
         this.dataSource.data = reposChips;
