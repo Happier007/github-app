@@ -30,6 +30,7 @@ import {
   SearchUsersService
 } from './services';
 import * as components from './components';
+import { UserAuthorizedProfileResolver, UserProfileResolver } from '../core/resolvers';
 
 
 @NgModule({
@@ -65,8 +66,9 @@ import * as components from './components';
     ReposService,
     SearchReposService,
     UsersListService,
-    SearchUsersService
-
+    SearchUsersService,
+    UserProfileResolver,
+    UserAuthorizedProfileResolver
   ]
 })
 export class MainModule {

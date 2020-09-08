@@ -40,5 +40,4 @@ export class UsersDetailComponent implements OnInit {
       this.user$ = this._usersApiService.getUser(userName);
     }
   }
-
 }
