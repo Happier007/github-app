@@ -7,10 +7,11 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 // RXJS
 import { Observable, Subject } from 'rxjs';
+import { isObject } from 'rxjs/internal-compatibility';
+
 import {
   debounceTime,
   distinctUntilChanged,
@@ -36,7 +37,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
 
   @ViewChild('repoNameInput', {static: false}) public repoNameInput: ElementRef<HTMLInputElement>;
 
-  public repoName = new FormControl('', Validators.required);
+  public repoNameCtrl = new FormControl('', Validators.required);
 
   public reposChips: RepoModel[] = [];
   public reposList$: Observable<RepoModel[]> = new Observable<RepoModel[]>();
@@ -49,18 +50,12 @@ export class SearchReposComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this._subSearchEvent();
 
-    this._changeRepoName();
+    this._subRepoNameCtrlChanged();
   }
 
   public ngOnDestroy(): void {
     this._destroyed$.next();
     this._destroyed$.complete();
-  }
-
-  public selectRepo(event: MatAutocompleteSelectedEvent): void {
-    this._searchReposService.selectRepo(event.option.value);
-
-    this.repoNameInput.nativeElement.value = '';
   }
 
   public removeRepo(repo: RepoModel): void {
@@ -77,15 +72,21 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _changeRepoName(): void {
-    this.repoName.valueChanges
+  private _subRepoNameCtrlChanged(): void {
+    this.repoNameCtrl.valueChanges
     .pipe(
       debounceTime(250),
       distinctUntilChanged(isEqual),
       takeUntil(this._destroyed$),
-    ).subscribe((name: string) => {
+    ).subscribe((repo: any) => {
 
-      this.reposList$ = this._searchReposService.fetchReposByName(name);
+      if (isObject(repo)) {
+        this._searchReposService.selectRepo(repo);
+
+        this.repoNameInput.nativeElement.value = '';
+      } else if (repo) {
+        this.reposList$ = this._searchReposService.fetchReposByName(repo);
+      }
     });
   }
 }

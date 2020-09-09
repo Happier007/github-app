@@ -10,13 +10,12 @@
 
             <input placeholder="Repository ..."
                    #repoNameInput
-                   [formControl]="repoName"
+                   [formControl]="repoNameCtrl"
                    [matAutocomplete]="auto"
-                   [matChipInputFor]="chipList"
-                   [matChipInputAddOnBlur]=true>
+                   [matChipInputFor]="chipList">
         </mat-chip-list>
 
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectRepo($event)">
+        <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let repo of reposList$ | async" [value]="repo">
                 {{repo.name}}
             </mat-option>
