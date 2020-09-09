@@ -19,6 +19,8 @@ export class SearchReposService {
   constructor(private _reposApiService: ReposApiService) {
   }
 
+
+  // убрать евенты чипсов и заинжектить таблицу
   public get reposSelected() {
     return this._reposChipsList;
   }

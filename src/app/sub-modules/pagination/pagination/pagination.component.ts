@@ -22,8 +22,10 @@ export class PaginationComponent implements OnChanges {
   constructor() {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.since = changes.since.currentValue;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.since) {
+      this.since = changes.since.currentValue;
+    }
   }
 
   public nextPage(): void {
