@@ -1,15 +1,17 @@
 <div fxLayout="row">
-    <mat-form-field fxFlex="37%" fxFlexOffset="20px">
+    <mat-form-field fxFlex="37%" fxFlexOffset="20px" appearance="fill">
+
+        <mat-label>Repository ...</mat-label>
 
         <mat-chip-list #chipList aria-label="User selection">
-            <mat-chip *ngFor="let repo of reposChips"
+
+            <mat-chip *ngFor="let repo of reposSelected; trackBy: trackByFn"
                       (removed)="removeRepo(repo)">
                 {{repo.name}}
                 <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
 
-            <input placeholder="Repository ..."
-                   #repoNameInput
+            <input #repoNameInput
                    [formControl]="repoNameCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="chipList">
@@ -21,7 +23,8 @@
             </mat-option>
         </mat-autocomplete>
 
-        <mat-icon matSuffix>search</mat-icon>
+        <mat-icon class="pointer" (click)="selectRepos()" matSuffix>search</mat-icon>
 
+        <mat-hint>Click on search icon to refresh the table</mat-hint>
     </mat-form-field>
 </div>

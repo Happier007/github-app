@@ -19,20 +19,13 @@ export class SearchReposService {
   constructor(private _reposApiService: ReposApiService) {
   }
 
-
   // убрать евенты чипсов и заинжектить таблицу
   public get reposSelected() {
     return this._reposChipsList;
   }
 
-  public selectRepo(repo: RepoModel): void {
-    this._reposChipsList.push(repo);
-
-    this.reposChipsEvent.emit();
-  }
-
-  public removeSelectedRepo(repo: RepoModel): void {
-    this._reposChipsList = this._reposChipsList.filter((item: RepoModel) => item !== repo);
+  public updateSelectedRepos(repos: RepoModel[]): void {
+    this._reposChipsList = repos;
 
     this.reposChipsEvent.emit();
   }

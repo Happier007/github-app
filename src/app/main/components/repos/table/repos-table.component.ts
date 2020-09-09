@@ -22,11 +22,9 @@ import { ReposTableService, SearchReposService } from '../../../services';
 @Component({
   selector: 'app-repos-table',
   templateUrl: './repos-table.component.html',
-  styleUrls: ['./repos-table.component.scss']
+  styleUrls: ['./repos-table.component.scss'],
 })
 export class ReposTableComponent implements OnInit, OnDestroy {
-
-  @ViewChild('table', {static: false}) public table: MatTable<Element>;
 
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
   public dataSource =  new MatTableDataSource<RepoModel>([]);
@@ -36,12 +34,12 @@ export class ReposTableComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject<void>();
 
   constructor(
-    private _reposService: ReposTableService,
+    private _reposTableService: ReposTableService,
     private _searchReposService: SearchReposService) {
   }
 
   public ngOnInit(): void {
-    this._reposService.getRepos();
+    this._reposTableService.getRepos();
 
     this._subSearchEvent();
 
@@ -54,18 +52,18 @@ export class ReposTableComponent implements OnInit, OnDestroy {
   }
 
   public pageEventRepos(since: number): void {
-    this._reposService.pageEvent(since);
+    this._reposTableService.pageEvent(since);
   }
 
   private _subSearchEvent(): void {
-    this._reposService.reposSearchEvent
+    this._reposTableService.reposSearchEvent
     .pipe(
       takeUntil(this._destroyed$)
     )
     .subscribe(
       () => {
-        this.dataSource.data = this._reposService.repos;
-        this.pageParams = this._reposService.getPage;
+        this.dataSource.data = this._reposTableService.repos;
+        this.pageParams = this._reposTableService.getPage;
       }
     );
   }
@@ -83,10 +81,8 @@ export class ReposTableComponent implements OnInit, OnDestroy {
         this.dataSource.data = reposChips;
         this.pageParams = new PageParamsSinceModel();
       } else {
-        this._reposService.getRepos();
+        this._reposTableService.getRepos();
       }
-
-      this.table.renderRows();
     });
   }
 }

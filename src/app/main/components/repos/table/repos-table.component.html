@@ -4,7 +4,7 @@
 
     <app-search-repos></app-search-repos>
 
-    <mat-table #table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource">
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -22,6 +22,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"
                  [routerLink]="['/repos', row.owner?.login, row.name]">
         </mat-row>
+
     </mat-table>
 
     <app-pagination [since]="pageParams.since" (changePageEvent)="pageEventRepos($event)"></app-pagination>

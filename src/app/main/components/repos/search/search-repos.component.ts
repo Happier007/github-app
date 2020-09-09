@@ -1,5 +1,7 @@
 // ANGULAR
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -7,23 +9,15 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-
 // RXJS
 import { Observable, Subject } from 'rxjs';
 import { isObject } from 'rxjs/internal-compatibility';
 
-import {
-  debounceTime,
-  distinctUntilChanged,
-  takeUntil
-} from 'rxjs/operators';
-
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 // CORE
 import { RepoModel } from '@core/models';
-
 // CURRENT
 import { SearchReposService } from '../../../services';
-
 // lodash
 import isEqual from 'lodash/isEqual';
 
@@ -31,20 +25,23 @@ import isEqual from 'lodash/isEqual';
 @Component({
   selector: 'app-search-repos',
   templateUrl: './search-repos.component.html',
-  styleUrls: ['./search-repos.component.scss']
+  styleUrls: ['./search-repos.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchReposComponent implements OnInit, OnDestroy {
 
   @ViewChild('repoNameInput', {static: false}) public repoNameInput: ElementRef<HTMLInputElement>;
 
-  public repoNameCtrl = new FormControl('', Validators.required);
+  public repoNameCtrl = new FormControl('', [Validators.required]);
 
-  public reposChips: RepoModel[] = [];
+  public reposSelected: RepoModel[] = [];
   public reposList$: Observable<RepoModel[]> = new Observable<RepoModel[]>();
 
   private _destroyed$ = new Subject<void>();
 
-  constructor(private _searchReposService: SearchReposService) {
+  constructor(
+    private _cdRef: ChangeDetectorRef,
+    private _searchReposService: SearchReposService) {
   }
 
   public ngOnInit(): void {
@@ -58,8 +55,16 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
+  public selectRepos(): void {
+    this._searchReposService.updateSelectedRepos(this.reposSelected);
+  }
+
   public removeRepo(repo: RepoModel): void {
-    this._searchReposService.removeSelectedRepo(repo);
+    this.reposSelected = this.reposSelected.filter((item: RepoModel) => item !== repo);
+  }
+
+  public trackByFn(index: number): number {
+    return index;
   }
 
   private _subSearchEvent(): void {
@@ -68,7 +73,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe(() => {
-      this.reposChips = this._searchReposService.reposSelected;
+      this.reposSelected = this._searchReposService.reposSelected;
     });
   }
 
@@ -81,7 +86,9 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     ).subscribe((repo: any) => {
 
       if (isObject(repo)) {
-        this._searchReposService.selectRepo(repo);
+
+        this.reposSelected.push(repo);
+        this._cdRef.detectChanges();
 
         this.repoNameInput.nativeElement.value = '';
       } else if (repo) {
