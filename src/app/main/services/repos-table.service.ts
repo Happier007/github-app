@@ -19,8 +19,8 @@ import { SINCE_PAGINATION } from '@core/utils';
 export class ReposTableService implements OnDestroy {
 
   public reposSearchEvent = new EventEmitter<void>();
-  public nextPaginationId = 0;
 
+  private _nextPaginationId = 0;
   private _repos: RepoModel[] = [];
 
   private _pageParams: PageParamsSinceModel = new PageParamsSinceModel(this._route.snapshot.queryParams);
@@ -53,13 +53,12 @@ export class ReposTableService implements OnDestroy {
   }
 
   public pageEvent(since: number): void {
-    this.nextPaginationId = this._pageParams.since = since;
+    this._nextPaginationId = this._pageParams.since = since;
 
     this.getRepos();
   }
 
   private _fetchRepos(): void {
-
     this._reposSearchSubject
     .pipe(
       switchMap(() => this._reposApiService.publicRepos(this._pageParams)),
@@ -68,8 +67,8 @@ export class ReposTableService implements OnDestroy {
     .subscribe((res: any) => {
       const nextPageLink = res.headers.get('link').match(SINCE_PAGINATION);
 
-      const prevPaginationId = !!this.nextPaginationId ? this.nextPaginationId : this._pageParams.since;
-      this.nextPaginationId = nextPageLink.length ? nextPageLink[1] : this.nextPaginationId;
+      const prevPaginationId = !!this._nextPaginationId ? this._nextPaginationId : this._pageParams.since;
+      this._nextPaginationId = nextPageLink.length ? nextPageLink[1] : this._nextPaginationId;
 
       this._repos = res.body.map((gist: any) => gist && new RepoModel(gist));
 
@@ -80,7 +79,7 @@ export class ReposTableService implements OnDestroy {
   }
 
   private _updateRouteParam(prev: number): void {
-    const newPage: PageParamsSinceModel = {since: this.nextPaginationId};
+    const newPage: PageParamsSinceModel = {since: this._nextPaginationId};
 
     this._pageParams = new PageParamsSinceModel(newPage);
 
