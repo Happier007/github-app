@@ -9,15 +9,18 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+
 // RXJS
 import { Observable, Subject } from 'rxjs';
 import { isObject } from 'rxjs/internal-compatibility';
-
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+
 // CORE
 import { RepoModel } from '@core/models';
+
 // CURRENT
 import { SearchReposService } from '../../../services';
+
 // lodash
 import isEqual from 'lodash/isEqual';
 
