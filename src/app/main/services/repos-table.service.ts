@@ -16,7 +16,7 @@ import { SINCE_PAGINATION } from '@core/utils';
 
 
 @Injectable()
-export class ReposService implements OnDestroy {
+export class ReposTableService implements OnDestroy {
 
   public reposSearchEvent = new EventEmitter<void>();
   public nextPaginationId = 0;
@@ -73,13 +73,13 @@ export class ReposService implements OnDestroy {
 
       this._repos = res.body.map((gist: any) => gist && new RepoModel(gist));
 
-      this._updateRouteParam(prevPaginationId, this.nextPaginationId);
+      this._updateRouteParam(prevPaginationId);
 
       this.reposSearchEvent.emit();
     });
   }
 
-  private _updateRouteParam(prev: number, next: number): void {
+  private _updateRouteParam(prev: number): void {
     const newPage: PageParamsSinceModel = {since: this.nextPaginationId};
 
     this._pageParams = new PageParamsSinceModel(newPage);

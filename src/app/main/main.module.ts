@@ -24,7 +24,7 @@ import { MainComponent } from './main.component';
 import {
   GistsService,
   UserCommitsActivityService,
-  ReposService,
+  ReposTableService,
   SearchReposService
 } from './services';
 import * as components from './components';
@@ -58,7 +58,7 @@ import * as components from './components';
   providers: [
     GistsService,
     UserCommitsActivityService,
-    ReposService,
+    ReposTableService,
     SearchReposService
   ]
 })

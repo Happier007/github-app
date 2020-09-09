@@ -16,7 +16,7 @@ import { COUNT_REPOS } from '@core/utils';
 import { PageParamsSinceModel, RepoModel } from '@core/models';
 
 // MAIN
-import { ReposService, SearchReposService } from '../../../services';
+import { ReposTableService, SearchReposService } from '../../../services';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class ReposTableComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject<void>();
 
   constructor(
-    private _reposService: ReposService,
+    private _reposService: ReposTableService,
     private _searchReposService: SearchReposService) {
   }
 
