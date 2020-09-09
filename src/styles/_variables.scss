@@ -2,6 +2,10 @@
     margin: 20px;
 }
 
+.ml-15 {
+    margin-left: 15px;
+}
+
 .mt-20 {
     margin-top: 20px;
 }
@@ -17,4 +21,9 @@
 mat-row:hover {
     background: whitesmoke !important;
     cursor: pointer;
+}
+
+mat-progress-bar{
+    position: absolute !important;
+    top: 0;
 }

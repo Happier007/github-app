@@ -1,4 +1,10 @@
-<div class="m-20">
+<button mat-icon-button color="primary"
+        (click)="goBack()">
+    <mat-icon>navigate_before</mat-icon>
+    <span>back</span>
+</button>
+
+<div class="ml-15">
 
     <div fxLayout="column" fxLayoutGap="15px">
         <div *ngIf="(gist$ | async) as gist">
@@ -25,15 +31,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-
         </div>
-
-        <a class="back pointer" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
-           (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-            <span>go home</span>
-        </a>
-
     </div>
 
 
