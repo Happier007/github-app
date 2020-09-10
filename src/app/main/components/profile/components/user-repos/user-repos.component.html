@@ -2,7 +2,7 @@
 
     <mat-list>
 
-        <a *ngFor="let repo of repos" [href]="repo.htmlUrl"
+        <a class="list-item" *ngFor="let repo of repos" [href]="repo.htmlUrl"
            target="_blank" mat-list-item>
             <mat-icon mat-list-icon>folder_special</mat-icon>
             <h4 mat-line>{{repo.name}}</h4>
