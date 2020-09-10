@@ -3,16 +3,14 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild
 } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import {  MatTableDataSource } from '@angular/material/table';
 
 // RXJS
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 // CORE
-import { COUNT_REPOS } from '@core/utils';
 import { PageParamsSinceModel, RepoModel } from '@core/models';
 
 // MAIN

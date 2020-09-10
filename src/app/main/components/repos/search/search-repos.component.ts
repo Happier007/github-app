@@ -21,9 +21,6 @@ import { RepoModel } from '@core/models';
 // CURRENT
 import { SearchReposService } from '../../../services';
 
-// lodash
-import isEqual from 'lodash/isEqual';
-
 
 @Component({
   selector: 'app-search-repos',
@@ -84,7 +81,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     this.repoNameCtrl.valueChanges
     .pipe(
       debounceTime(250),
-      distinctUntilChanged(isEqual),
+      distinctUntilChanged(),
       takeUntil(this._destroyed$),
     ).subscribe((repo: any) => {
 
@@ -94,6 +91,7 @@ export class SearchReposComponent implements OnInit, OnDestroy {
         this._cdRef.detectChanges();
 
         this.repoNameInput.nativeElement.value = '';
+        this.reposList$ = new Observable<RepoModel[]>();
       } else if (repo) {
         this.reposList$ = this._searchReposService.fetchReposByName(repo);
       }

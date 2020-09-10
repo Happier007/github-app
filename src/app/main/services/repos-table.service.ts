@@ -9,21 +9,21 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 // CORE
 import {
   RepoModel,
-  PageParamsSinceModel
+  PageParamsSinceModel,
+  PaginationModel
 } from '@core/models';
 import { ReposApiService } from '@core/services';
-import { SINCE_PAGINATION } from '@core/utils';
+import { getPaginationParams } from '@core/helpers';
 
 
 @Injectable()
 export class ReposTableService implements OnDestroy {
 
   public reposSearchEvent = new EventEmitter<void>();
-
-  private _nextPaginationId = 0;
-  private _repos: RepoModel[] = [];
+  public pagination: PaginationModel = new PaginationModel();
 
   private _pageParams: PageParamsSinceModel = new PageParamsSinceModel(this._route.snapshot.queryParams);
+  private _repos: RepoModel[] = [];
   private _reposSearchSubject = new Subject<void>();
 
   private _destroyed$ = new Subject<void>();
@@ -53,7 +53,7 @@ export class ReposTableService implements OnDestroy {
   }
 
   public pageEvent(since: number): void {
-    this._nextPaginationId = this._pageParams.since = since;
+    this.pagination.nextPaginationId = this._pageParams.since = since;
 
     this.getRepos();
   }
@@ -65,27 +65,25 @@ export class ReposTableService implements OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe((res: any) => {
-      const nextPageLink = res.headers.get('link').match(SINCE_PAGINATION);
-
-      const prevPaginationId = !!this._nextPaginationId ? this._nextPaginationId : this._pageParams.since;
-      this._nextPaginationId = nextPageLink.length ? nextPageLink[1] : this._nextPaginationId;
 
       this._repos = res.body.map((gist: any) => gist && new RepoModel(gist));
 
-      this._updateRouteParam(prevPaginationId);
+      getPaginationParams(res.headers, this.pagination, this._pageParams.since);
+
+      this._updateRouteParam();
 
       this.reposSearchEvent.emit();
     });
   }
 
-  private _updateRouteParam(prev: number): void {
-    const newPage: PageParamsSinceModel = {since: this._nextPaginationId};
+  private _updateRouteParam(): void {
+    const newPage: PageParamsSinceModel = {since: this.pagination.nextPaginationId};
 
     this._pageParams = new PageParamsSinceModel(newPage);
 
     this._router.navigate([], {
       queryParams: {
-        since: prev
+        since: this.pagination.prevPaginationId
       }
     });
   }
