@@ -3,7 +3,7 @@
 
         <mat-label>Repository ...</mat-label>
 
-        <mat-chip-list #chipList aria-label="User selection">
+        <mat-chip-list [formControl]="repoNameCtrl" #chipList aria-label="User selection">
 
             <mat-chip *ngFor="let repo of reposSelected; trackBy: trackByFn"
                       (removed)="removeRepo(repo)">
@@ -25,7 +25,10 @@
 
         <mat-icon class="pointer" (click)="selectRepos()" matSuffix>search</mat-icon>
 
+        <mat-error *ngIf="repoNameCtrl.invalid || repoNameCtrl.touched">Select a repository from the list</mat-error>
+
         <mat-hint>Click on search icon to refresh the table</mat-hint>
 
     </mat-form-field>
+
 </div>

@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {  MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 // RXJS
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { PageParamsSinceModel, RepoModel } from '@core/models';
 
 // MAIN
-import { ReposTableService, SearchReposService } from '../../../services';
+import { ReposTableService } from '../../../services';
 
 
 @Component({
@@ -25,23 +25,19 @@ import { ReposTableService, SearchReposService } from '../../../services';
 export class ReposTableComponent implements OnInit, OnDestroy {
 
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
-  public dataSource =  new MatTableDataSource<RepoModel>([]);
+  public dataSource = new MatTableDataSource<RepoModel>([]);
 
   public displayedColumns: string[] = ['name'];
 
   private _destroyed$ = new Subject<void>();
 
-  constructor(
-    private _reposTableService: ReposTableService,
-    private _searchReposService: SearchReposService) {
+  constructor(private _reposTableService: ReposTableService) {
   }
 
   public ngOnInit(): void {
     this._reposTableService.getRepos();
 
     this._subSearchEvent();
-
-    this._subChipsEvent();
   }
 
   public ngOnDestroy(): void {
@@ -53,6 +49,16 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     this._reposTableService.pageEvent(since);
   }
 
+  public reposSelected(repos: RepoModel[]): void {
+    if (!!repos.length) {
+      this.dataSource.data = repos;
+
+      this.pageParams = new PageParamsSinceModel();
+    } else {
+      this._reposTableService.getRepos();
+    }
+  }
+
   private _subSearchEvent(): void {
     this._reposTableService.reposSearchEvent
     .pipe(
@@ -61,26 +67,9 @@ export class ReposTableComponent implements OnInit, OnDestroy {
     .subscribe(
       () => {
         this.dataSource.data = this._reposTableService.repos;
+
         this.pageParams = this._reposTableService.getPage;
       }
     );
-  }
-
-  private _subChipsEvent(): void {
-    this._searchReposService.reposChipsEvent
-    .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(() => {
-
-      const reposChips = this._searchReposService.reposSelected;
-
-      if (!!reposChips.length) {
-        this.dataSource.data = reposChips;
-        this.pageParams = new PageParamsSinceModel();
-      } else {
-        this._reposTableService.getRepos();
-      }
-    });
   }
 }

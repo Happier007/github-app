@@ -4,22 +4,26 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 // RXJS
 import { Observable, Subject } from 'rxjs';
-import { isObject } from 'rxjs/internal-compatibility';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil
+} from 'rxjs/operators';
 
 // CORE
-import { RepoModel } from '@core/models';
-
-// CURRENT
-import { SearchReposService } from '../../../services';
+import { PageParamsModel, RepoModel } from '@core/models';
+import { ReposApiService } from '@core/services';
+import { CustomValidators } from '../../../../core/validators';
 
 
 @Component({
@@ -30,23 +34,21 @@ import { SearchReposService } from '../../../services';
 })
 export class SearchReposComponent implements OnInit, OnDestroy {
 
-  @ViewChild('repoNameInput', {static: false}) public repoNameInput: ElementRef<HTMLInputElement>;
+  @Output() public reposSelectedEvent = new EventEmitter<RepoModel[]>();
 
-  public repoNameCtrl = new FormControl('', [Validators.required]);
-
+  public repoNameCtrl = new FormControl('', [CustomValidators.objectType]);
   public reposSelected: RepoModel[] = [];
   public reposList$: Observable<RepoModel[]> = new Observable<RepoModel[]>();
 
+  @ViewChild('repoNameInput', {static: false}) private _repoNameInput: ElementRef<HTMLInputElement>
   private _destroyed$ = new Subject<void>();
 
   constructor(
     private _cdRef: ChangeDetectorRef,
-    private _searchReposService: SearchReposService) {
+    private _reposApiService: ReposApiService) {
   }
 
   public ngOnInit(): void {
-    this._subSearchEvent();
-
     this._subRepoNameCtrlChanged();
   }
 
@@ -56,7 +58,9 @@ export class SearchReposComponent implements OnInit, OnDestroy {
   }
 
   public selectRepos(): void {
-    this._searchReposService.updateSelectedRepos(this.reposSelected);
+    if (this.repoNameCtrl.valid) {
+      this.reposSelectedEvent.emit(this.reposSelected);
+    }
   }
 
   public removeRepo(repo: RepoModel): void {
@@ -67,16 +71,6 @@ export class SearchReposComponent implements OnInit, OnDestroy {
     return index;
   }
 
-  private _subSearchEvent(): void {
-    this._searchReposService.reposChipsEvent
-    .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(() => {
-      this.reposSelected = this._searchReposService.reposSelected;
-    });
-  }
-
   private _subRepoNameCtrlChanged(): void {
     this.repoNameCtrl.valueChanges
     .pipe(
@@ -85,16 +79,23 @@ export class SearchReposComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$),
     ).subscribe((repo: any) => {
 
-      if (isObject(repo)) {
-
+      if (repo instanceof RepoModel) {
         this.reposSelected.push(repo);
         this._cdRef.detectChanges();
 
-        this.repoNameInput.nativeElement.value = '';
+        this._repoNameInput.nativeElement.value = '';
+
         this.reposList$ = new Observable<RepoModel[]>();
       } else if (repo) {
-        this.reposList$ = this._searchReposService.fetchReposByName(repo);
+        this.reposList$ = this._fetchReposByName(repo);
       }
     });
+  }
+
+  private _fetchReposByName(name: string): Observable<RepoModel[]> {
+    const queryParams = new PageParamsModel();
+    queryParams.q = name;
+
+    return this._reposApiService.searchReposByName(queryParams);
   }
 }

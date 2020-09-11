@@ -2,7 +2,7 @@
 
     <h3>Public repositories</h3>
 
-    <app-search-repos></app-search-repos>
+    <app-search-repos (reposSelectedEvent)="reposSelected($event)"></app-search-repos>
 
     <mat-table [dataSource]="dataSource">
 
