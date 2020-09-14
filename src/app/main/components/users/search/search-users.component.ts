@@ -1,5 +1,14 @@
 // ANGULAR
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
@@ -8,45 +17,41 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 // CORE
-import { UserPublicModel } from '@core/models';
+import { PageParamsModel, RepoModel, UserPublicModel } from '@core/models';
 
 // MAIN
 import { SearchUsersService } from '../../../services';
 
 // LODASH
 import isEqual from 'lodash/isEqual';
+import { CustomValidators } from '../../../../core/validators';
+import { ReposApiService, UsersApiService } from '@core/services';
 
 @Component({
   selector: 'app-search-users',
   templateUrl: './search-users.component.html',
-  styleUrls: ['./search-users.component.scss']
+  styleUrls: ['./search-users.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchUsersComponent implements OnInit, OnDestroy {
 
-  @ViewChild('userNameInput', {static: false}) userNameInput: ElementRef<HTMLInputElement>;
+  @Output() public usersSelectedEvent = new EventEmitter<UserPublicModel[]>();
 
-  public userName = new FormControl('', Validators.required);
-
-  public usersChips: UserPublicModel[] = [];
+  public userNameCtrl = new FormControl('', [CustomValidators.objectType]);
+  public usersSelected: UserPublicModel[] = [];
   public usersList$: Observable<UserPublicModel[]> = new Observable<UserPublicModel[]>();
 
+  @ViewChild('userNameInput', {static: false}) private _userNameInput: ElementRef<HTMLInputElement>;
   private _destroyed$ = new Subject<void>();
 
-  constructor(private _searchUsersService: SearchUsersService) {
+  constructor(
+    private _cdRef: ChangeDetectorRef,
+    private _usersApiService: UsersApiService) {
   }
 
   public ngOnInit(): void {
-    this._subSearchEvent();
 
-    this.userName.valueChanges
-    .pipe(
-      debounceTime(250),
-      distinctUntilChanged(isEqual),
-      takeUntil(this._destroyed$),
-    ).subscribe(() => {
-
-      this.usersList$ = this._searchUsersService.fetchUserByName(this.userName.value);
-    });
+    this._subRepoNameCtrlChanged();
   }
 
   public ngOnDestroy(): void {
@@ -54,23 +59,46 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
     this._destroyed$.complete();
   }
 
-  public addChips(event: MatAutocompleteSelectedEvent): void {
-    this._searchUsersService.addUserToChips(event.option.value);
-
-    this.userNameInput.nativeElement.value = '';
+  public selectUsers(): void {
+    if (this.userNameCtrl.valid) {
+      this.usersSelectedEvent.emit(this.usersSelected);
+    }
   }
 
-  public removeChips(user: UserPublicModel): void {
-    this._searchUsersService.removeUserFromChips(user);
+  public removeUser(user: UserPublicModel): void {
+    this.usersSelected = this.usersSelected.filter((item: UserPublicModel) => item !== user);
   }
 
-  private _subSearchEvent(): void {
-    this._searchUsersService.usersChipsEvent
+  public trackByFn(index: number): number {
+    return index;
+  }
+
+  private _subRepoNameCtrlChanged(): void {
+    this.userNameCtrl.valueChanges
     .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(() => {
-      this.usersChips = this._searchUsersService.usersChips;
+      debounceTime(250),
+      distinctUntilChanged(isEqual),
+      takeUntil(this._destroyed$),
+    ).subscribe((user: any) => {
+
+      if (user instanceof UserPublicModel) {
+        this.usersSelected.push(user);
+        this._cdRef.detectChanges();
+
+        this._userNameInput.nativeElement.value = '';
+
+        this.usersList$ = new Observable<UserPublicModel[]>();
+      } else if (user) {
+        this.usersList$ = this._fetchUsersByName(user);
+      }
+
     });
+  }
+
+  private _fetchUsersByName(name: string): Observable<UserPublicModel[]> {
+    const queryParams = new PageParamsModel();
+    queryParams.q = name;
+
+    return this._usersApiService.searchUsersByName(queryParams);
   }
 }
