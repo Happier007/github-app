@@ -9,21 +9,21 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 // CORE
 import {
   PageParamsSinceModel,
+  PaginationModel,
   UserPublicModel
 } from '@core/models';
-import { SINCE_PAGINATION } from '@core/utils';
 import { UsersApiService } from '@core/services';
+import { getPaginationParams } from '@core/helpers';
 
 
 @Injectable()
-export class UsersListService implements OnDestroy {
+export class UsersTableService implements OnDestroy {
 
   public usersSearchEvent = new EventEmitter<void>();
-  public nextPaginationId = 0;
-
-  private _users: UserPublicModel[] = [];
+  public pagination: PaginationModel = new PaginationModel();
 
   private _pageParams: PageParamsSinceModel = new PageParamsSinceModel(this._route.snapshot.queryParams);
+  private _users: UserPublicModel[] = [];
   private _usersSearchSubject = new Subject<void>();
 
   private _destroyed$ = new Subject<void>();
@@ -35,11 +35,11 @@ export class UsersListService implements OnDestroy {
     this._fetchUsers();
   }
 
-  public users(): UserPublicModel[] {
+  public get users(): UserPublicModel[] {
     return this._users;
   }
 
-  public getPage(): PageParamsSinceModel {
+  public get getPage(): PageParamsSinceModel {
     return this._pageParams;
   }
 
@@ -53,7 +53,7 @@ export class UsersListService implements OnDestroy {
   }
 
   public pageEvent(since: number): void {
-    this.nextPaginationId = this._pageParams.since = since;
+    this.pagination.nextPaginationId = this._pageParams.since = since;
 
     this.getUsers();
   }
@@ -66,27 +66,25 @@ export class UsersListService implements OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe((res: any) => {
-      const nextPageLink = res.headers.get('link').match(SINCE_PAGINATION);
-
-      const prevPaginationId = !!this.nextPaginationId ? this.nextPaginationId : this._pageParams.since;
-      this.nextPaginationId = nextPageLink.length ? nextPageLink[1] : this.nextPaginationId;
-
       this._users = res.body.map((user: any) => user && new UserPublicModel(user));
 
-      this._updateRouteParam(prevPaginationId, this.nextPaginationId);
+      getPaginationParams(res.headers, this.pagination, this._pageParams.since);
+
+      this._updateRouteParam();
 
       this.usersSearchEvent.emit();
+
     });
   }
 
-  private _updateRouteParam(prev: number, next: number): void {
-    const newPage: PageParamsSinceModel = {since: this.nextPaginationId};
+  private _updateRouteParam(): void {
+    const newPage: PageParamsSinceModel = {since: this.pagination.nextPaginationId};
 
     this._pageParams = new PageParamsSinceModel(newPage);
 
     this._router.navigate([], {
       queryParams: {
-        since: prev
+        since: this.pagination.prevPaginationId
       }
     });
   }
