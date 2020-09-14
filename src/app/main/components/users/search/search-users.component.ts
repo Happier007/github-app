@@ -9,23 +9,19 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { FormControl } from '@angular/forms';
 
 // RXJS
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 // CORE
-import { PageParamsModel, RepoModel, UserPublicModel } from '@core/models';
+import { PageParamsModel, UserPublicModel } from '@core/models';
+import { UsersApiService } from '@core/services';
 
-// MAIN
-import { SearchUsersService } from '../../../services';
-
-// LODASH
-import isEqual from 'lodash/isEqual';
+// CURRENT
 import { CustomValidators } from '../../../../core/validators';
-import { ReposApiService, UsersApiService } from '@core/services';
+
 
 @Component({
   selector: 'app-search-users',
@@ -77,12 +73,13 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
     this.userNameCtrl.valueChanges
     .pipe(
       debounceTime(250),
-      distinctUntilChanged(isEqual),
+      distinctUntilChanged(),
       takeUntil(this._destroyed$),
     ).subscribe((user: any) => {
 
       if (user instanceof UserPublicModel) {
         this.usersSelected.push(user);
+
         this._cdRef.detectChanges();
 
         this._userNameInput.nativeElement.value = '';
@@ -91,7 +88,6 @@ export class SearchUsersComponent implements OnInit, OnDestroy {
       } else if (user) {
         this.usersList$ = this._fetchUsersByName(user);
       }
-
     });
   }
 

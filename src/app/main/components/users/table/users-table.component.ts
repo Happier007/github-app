@@ -1,14 +1,16 @@
 // ANGULAR
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 // RXJS
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // СORE
-import { PageParamsSinceModel, RepoModel, UserPublicModel } from '@core/models';
-import { UsersTableService, SearchUsersService } from '../../../services';
+import { PageParamsSinceModel, UserPublicModel } from '@core/models';
+
+// CURRENT
+import { UsersTableService } from '../../../services';
 
 
 @Component({
@@ -25,8 +27,7 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject<void>();
 
   constructor(
-    private _usersTableService: UsersTableService,
-    private _searchUsersService: SearchUsersService) {
+    private _usersTableService: UsersTableService) {
   }
 
   public ngOnInit(): void {

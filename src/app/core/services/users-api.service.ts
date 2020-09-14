@@ -2,11 +2,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// CURRENT
-import { PageParamsModel, PageParamsSinceModel, RepoModel, UserPublicModel } from '@core/models';
-import { BaseApiService } from './base-api.service';
+// RXJS
 import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
+
+// CORE
+import { PageParamsModel, PageParamsSinceModel, UserPublicModel } from '@core/models';
+import { BaseApiService } from './base-api.service';
 
 
 @Injectable()
@@ -27,7 +29,6 @@ export class UsersApiService extends BaseApiService {
       observe: 'response'
     });
   }
-
 
     /**
    * Get a user - https://developer.github.com/v3/users/#get-a-user

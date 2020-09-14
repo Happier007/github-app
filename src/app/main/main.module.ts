@@ -30,7 +30,6 @@ import {
   UserCommitsActivityService,
   ReposTableService,
   UsersTableService,
-  SearchUsersService
 } from './services';
 import * as components from './components';
 
@@ -50,7 +49,6 @@ import * as components from './components';
     components.SearchReposComponent,
     components.ReposDetailComponent,
     components.SearchUsersComponent,
-    components.UsersDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -67,7 +65,6 @@ import * as components from './components';
     UserCommitsActivityService,
     ReposTableService,
     UsersTableService,
-    SearchUsersService,
     UserProfileResolver,
     UserAuthorizedProfileResolver
   ]
