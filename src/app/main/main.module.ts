@@ -24,7 +24,10 @@ import { MainComponent } from './main.component';
 import {
   GistsService,
   UserCommitsActivityService,
-  ReposTableService
+  ReposService,
+  SearchReposService,
+  UsersListService,
+  SearchUsersService
 } from './services';
 import * as components from './components';
 
@@ -34,7 +37,7 @@ import * as components from './components';
     MainComponent,
     components.GistsTableComponent,
     components.GistDetailComponent,
-    components.UsersListComponent,
+    components.UsersTableComponent,
     components.ReposTableComponent,
     components.ProfileComponent,
     components.UserGistsComponent,
@@ -43,6 +46,8 @@ import * as components from './components';
     components.UserOverviewComponent,
     components.SearchReposComponent,
     components.ReposDetailComponent,
+    components.SearchUsersComponent,
+    components.UsersDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +62,12 @@ import * as components from './components';
   providers: [
     GistsService,
     UserCommitsActivityService,
-    ReposTableService,
+    ReposService,
+    SearchReposService,
+    UsersListService,
+    SearchUsersService,
+    UserProfileResolver,
+    UserAuthorizedProfileResolver
   ]
 })
 export class MainModule {

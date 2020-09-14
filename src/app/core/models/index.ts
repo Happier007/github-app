@@ -11,3 +11,4 @@ export * from './creator.model';
 export * from './project.model';
 export * from './commitsActivity.model';
 export * from './pagination.model';
+export * from './user-public.model';
