@@ -1,0 +1,30 @@
+<div class="m-20">
+
+    <h3>Public repositories</h3>
+
+    <app-search-repos (reposSelectedEvent)="reposSelected($event)"></app-search-repos>
+
+    <mat-table [dataSource]="dataSource">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>
+                Name
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let element">
+                {{element.name ? (element.name | ellipsis: 50) : '---' }}
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 [routerLink]="['/repos', row.owner?.login, row.name]">
+        </mat-row>
+
+    </mat-table>
+
+    <app-pagination [since]="pageParams.since" (changePageEvent)="pageEventRepos($event)"></app-pagination>
+
+</div>

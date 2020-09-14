@@ -25,7 +25,7 @@ export class GistsTableComponent implements OnInit, OnDestroy {
   public pageParams: PageParamsModel = new PageParamsModel();
   public gists: GistModel[] = [];
 
-  public dataSource = new MatTableDataSource([]);
+  public dataSource = new MatTableDataSource<GistModel>([]);
 
   public countGists = COUNT_GISTS;
   public pageSizeOption = PAGE_SIZE_OPTIONS;

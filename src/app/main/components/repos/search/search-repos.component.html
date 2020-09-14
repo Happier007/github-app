@@ -1,0 +1,34 @@
+<div fxLayout="row">
+    <mat-form-field fxFlex="37%" fxFlexOffset="20px" appearance="fill">
+
+        <mat-label>Repository ...</mat-label>
+
+        <mat-chip-list [formControl]="repoNameCtrl" #chipList aria-label="User selection">
+
+            <mat-chip *ngFor="let repo of reposSelected; trackBy: trackByFn"
+                      (removed)="removeRepo(repo)">
+                {{repo.name}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+
+            <input #repoNameInput
+                   [formControl]="repoNameCtrl"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="chipList">
+        </mat-chip-list>
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let repo of reposList$ | async" [value]="repo">
+                {{repo.name}}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-icon class="pointer" (click)="selectRepos()" matSuffix>search</mat-icon>
+
+        <mat-error *ngIf="repoNameCtrl.invalid || repoNameCtrl.touched">Select a repository from the list</mat-error>
+
+        <mat-hint>Click on search icon to refresh the table</mat-hint>
+
+    </mat-form-field>
+
+</div>

@@ -12,6 +12,7 @@ import { FlexModule } from '@angular/flex-layout';
 // CURRENT
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
+
 @NgModule({
   declarations: [
     NavBarComponent

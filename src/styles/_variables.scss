@@ -1,15 +1,33 @@
 .m-20 {
-  margin: 20px;
+    margin: 20px;
+}
+
+.ml-15 {
+    margin-left: 15px;
 }
 
 .mt-20 {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .m-40 {
-  margin: 40px;
+    margin: 40px;
 }
 
 .pointer {
-  cursor: pointer;
+    cursor: pointer;
+}
+
+.list-item{
+    text-decoration:  none;
+}
+
+mat-row:hover {
+    background: whitesmoke !important;
+    cursor: pointer;
+}
+
+mat-progress-bar{
+    position: absolute !important;
+    top: 0;
 }

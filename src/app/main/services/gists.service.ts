@@ -62,7 +62,7 @@ export class GistsService implements OnDestroy {
       takeUntil(this._destroyed$)
     )
     .subscribe((gists: GistModel[]) => {
-      this._gists = gists.slice();
+      this._gists = gists;
 
       this.gistsSearchEvent.emit();
     });
