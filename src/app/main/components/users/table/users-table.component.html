@@ -2,7 +2,7 @@
 
     <h3>Users</h3>
 
-    <app-search-users></app-search-users>
+    <app-search-users (usersSelectedEvent)="usersSelected($event)"></app-search-users>
 
     <mat-table #table [dataSource]="dataSource">
 

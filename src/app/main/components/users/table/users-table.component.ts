@@ -7,8 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // СORE
-import { PageParamsSinceModel } from '@core/models';
-import { UsersListService, SearchUsersService } from '../../../services';
+import { PageParamsSinceModel, RepoModel, UserPublicModel } from '@core/models';
+import { UsersTableService, SearchUsersService } from '../../../services';
 
 
 @Component({
@@ -18,26 +18,21 @@ import { UsersListService, SearchUsersService } from '../../../services';
 })
 export class UsersTableComponent implements OnInit, OnDestroy {
 
-  @ViewChild('table', {static: false}) table: MatTable<Element>;
-
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
-  public dataSource = new MatTableDataSource([]);
-
+  public dataSource = new MatTableDataSource<UserPublicModel>([]);
   public displayedColumns: string[] = ['login'];
 
   private _destroyed$ = new Subject<void>();
 
   constructor(
-    private _usersListService: UsersListService,
+    private _usersTableService: UsersTableService,
     private _searchUsersService: SearchUsersService) {
   }
 
   public ngOnInit(): void {
-    this._usersListService.getUsers();
+    this._usersTableService.getUsers();
 
     this._subSearchEvent();
-
-    this._subChipsEvent();
   }
 
   public ngOnDestroy(): void {
@@ -46,39 +41,30 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   }
 
   public pageEventUsers(since: number): void {
-    this._usersListService.pageEvent(since);
+    this._usersTableService.pageEvent(since);
+  }
+
+  public usersSelected(users: UserPublicModel[]): void {
+
+    if (!!users.length) {
+      this.dataSource.data = users;
+
+      this.pageParams = new PageParamsSinceModel();
+    } else {
+      this._usersTableService.getUsers();
+    }
   }
 
   private _subSearchEvent(): void {
-    this._usersListService.usersSearchEvent
+    this._usersTableService.usersSearchEvent
     .pipe(
       takeUntil(this._destroyed$)
     )
     .subscribe(
       () => {
-        this.dataSource.data = this._usersListService.users();
-        this.pageParams = this._usersListService.getPage();
+        this.dataSource.data = this._usersTableService.users;
+        this.pageParams = this._usersTableService.getPage;
       }
     );
-  }
-
-  private _subChipsEvent(): void {
-    this._searchUsersService.usersChipsEvent
-    .pipe(
-      takeUntil(this._destroyed$)
-    )
-    .subscribe(() => {
-
-      const usersChips = this._searchUsersService.usersChips;
-
-      if (!!usersChips.length) {
-        this.dataSource.data = usersChips;
-        this.pageParams = new PageParamsSinceModel();
-      } else {
-        this._usersListService.getUsers();
-      }
-
-      this.table.renderRows();
-    });
   }
 }
