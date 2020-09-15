@@ -20,7 +20,7 @@ import { PageParamsModel, UserPublicModel } from '@core/models';
 import { UsersApiService } from '@core/services';
 
 // CURRENT
-import { CustomValidators } from '../../../../core/validators';
+import { CustomValidators } from '@core/validators';
 
 
 @Component({

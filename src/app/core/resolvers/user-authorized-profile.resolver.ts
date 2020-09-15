@@ -17,7 +17,7 @@ export class UserAuthorizedProfileResolver implements Resolve<UserModel> {
   constructor(private _userService: UserService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserModel> | UserModel {
+  public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserModel> | UserModel {
     return this._userService.authorizedUser
     .pipe(
       first()
