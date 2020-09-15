@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 // CORE
 import { AuthGuard } from '@core/guards';
+import {
+  UserAuthorizedProfileResolver,
+  UserProfileResolver
+} from '../core/resolvers';
 
 // CURRENT
 import { MainComponent } from './main.component';
@@ -13,8 +17,9 @@ import {
   ProfileComponent,
   ReposDetailComponent,
   ReposTableComponent,
-  UsersListComponent
+  UsersTableComponent,
 } from './components';
+
 
 const routes: Routes = [
   {
@@ -31,7 +36,14 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersListComponent
+        component: UsersTableComponent
+      },
+      {
+        path: 'users/:username',
+        component: ProfileComponent,
+        resolve: {
+          user: UserProfileResolver
+        }
       },
       {
         path: 'gists',
@@ -44,6 +56,9 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+        resolve: {
+          user: UserAuthorizedProfileResolver
+        },
         canActivate: [AuthGuard],
       }
     ]

@@ -1,0 +1,33 @@
+<div fxLayout="row">
+    <mat-form-field fxFlex="37%" fxFlexOffset="20px" appearance="fill">
+
+        <mat-label>User ...</mat-label>
+
+        <mat-chip-list [formControl]="userNameCtrl" #chipList aria-label="User selection">
+
+            <mat-chip *ngFor="let user of usersSelected; trackBy: trackByFn"
+                      (removed)="removeUser(user)">
+                {{user.login}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+
+            <input #userNameInput
+                   [formControl]="userNameCtrl"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="chipList">
+        </mat-chip-list>
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let user of usersList$ | async" [value]="user">
+                {{user.login}}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-icon class="pointer" (click)="selectUsers()" matSuffix>search</mat-icon>
+
+        <mat-error *ngIf="userNameCtrl.invalid || userNameCtrl.touched">Select a repository from the list</mat-error>
+
+        <mat-hint>Click on search icon to refresh the table</mat-hint>
+
+    </mat-form-field>
+</div>

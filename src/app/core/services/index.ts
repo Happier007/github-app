@@ -6,3 +6,4 @@ export * from './gists-api.service';
 export * from './repos-api.service';
 export * from './projects-api.service';
 export * from './statistics-api.service';
+export * from './users-api.service';

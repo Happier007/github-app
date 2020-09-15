@@ -27,7 +27,9 @@ export class ReposApiService extends BaseApiService {
    * @return Observable<RepoModel[]>
    **/
   public publicRepos(urlParams: PageParamsSinceModel): any {
-    return this._http.get<RepoModel[]>(`${this._apiUrl}/repositories`, {params: urlParams as any, observe: 'response'});
+    return this._http.get<RepoModel[]>(`${this._apiUrl}/repositories`, {
+      params: urlParams as any, observe: 'response'
+    });
   }
 
   /**

@@ -5,6 +5,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 // CORE
 import { CoreModule } from '../core';
+import {
+  UserAuthorizedProfileResolver,
+  UserProfileResolver
+} from '../core/resolvers';
 
 // MATERIAL
 import { MaterialModule } from '../material';
@@ -24,7 +28,8 @@ import { MainComponent } from './main.component';
 import {
   GistsService,
   UserCommitsActivityService,
-  ReposTableService
+  ReposTableService,
+  UsersTableService,
 } from './services';
 import * as components from './components';
 
@@ -34,7 +39,7 @@ import * as components from './components';
     MainComponent,
     components.GistsTableComponent,
     components.GistDetailComponent,
-    components.UsersListComponent,
+    components.UsersTableComponent,
     components.ReposTableComponent,
     components.ProfileComponent,
     components.UserGistsComponent,
@@ -43,6 +48,7 @@ import * as components from './components';
     components.UserOverviewComponent,
     components.SearchReposComponent,
     components.ReposDetailComponent,
+    components.SearchUsersComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +64,9 @@ import * as components from './components';
     GistsService,
     UserCommitsActivityService,
     ReposTableService,
+    UsersTableService,
+    UserProfileResolver,
+    UserAuthorizedProfileResolver
   ]
 })
 export class MainModule {

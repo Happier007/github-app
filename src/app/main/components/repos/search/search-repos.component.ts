@@ -23,7 +23,7 @@ import {
 // CORE
 import { PageParamsModel, RepoModel } from '@core/models';
 import { ReposApiService } from '@core/services';
-import { CustomValidators } from '../../../../core/validators';
+import { CustomValidators } from '@core/validators';
 
 
 @Component({

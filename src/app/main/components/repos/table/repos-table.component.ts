@@ -26,7 +26,6 @@ export class ReposTableComponent implements OnInit, OnDestroy {
 
   public pageParams: PageParamsSinceModel = new PageParamsSinceModel();
   public dataSource = new MatTableDataSource<RepoModel>([]);
-
   public displayedColumns: string[] = ['name'];
 
   private _destroyed$ = new Subject<void>();

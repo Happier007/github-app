@@ -1,12 +1,9 @@
 // ANGULAR
 import { Component, OnInit } from '@angular/core';
-
-// RXJS
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 // CORE
-import { UserService, ProjectsApiService } from '@core/services';
-import { UserModel } from '@core/models';
+import { UserModel, UserPublicModel } from '@core/models';
 
 
 @Component({
@@ -16,11 +13,10 @@ import { UserModel } from '@core/models';
 })
 export class ProfileComponent implements OnInit {
 
-  public user$: Observable<UserModel>;
+  public user: UserPublicModel | UserModel;
 
   constructor(
-    private _userService: UserService,
-    private _projectsApiService: ProjectsApiService) {
+    private _route: ActivatedRoute) {
   }
 
   public ngOnInit(): void {
@@ -28,6 +24,10 @@ export class ProfileComponent implements OnInit {
   }
 
   private _loadUser(): void {
-    this.user$ = this._userService.authorizedUser;
+    this._route.data.subscribe(
+      (data: any) => {
+        this.user = data.user;
+      }
+    );
   }
 }

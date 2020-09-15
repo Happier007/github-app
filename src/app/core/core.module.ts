@@ -9,6 +9,7 @@ import {
   ReposApiService,
   StatisticsApiService,
   UserAuthApiService,
+  UsersApiService,
   UserService
 } from '@core/services';
 import { INTERCEPTORS } from './interseptors';
@@ -25,6 +26,7 @@ import { INTERCEPTORS } from './interseptors';
     StatisticsApiService,
     UserAuthApiService,
     UserService,
+    UsersApiService,
     INTERCEPTORS
   ]
 })
