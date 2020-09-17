@@ -16,7 +16,7 @@ export class UserProfileResolver implements Resolve<UserPublicModel> {
   constructor(private _usersApiService: UsersApiService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserPublicModel> | UserPublicModel {
+  public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserPublicModel> | UserPublicModel {
     return this._usersApiService.getUser(route.params.username);
   }
 }

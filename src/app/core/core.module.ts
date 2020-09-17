@@ -8,7 +8,8 @@ import {
   ProjectsApiService,
   ReposApiService,
   StatisticsApiService,
-  UserAuthApiService, UsersApiService,
+  UserAuthApiService,
+  UsersApiService,
   UserService
 } from '@core/services';
 import { INTERCEPTORS } from './interseptors';
