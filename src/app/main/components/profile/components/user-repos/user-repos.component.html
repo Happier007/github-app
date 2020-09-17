@@ -1,4 +1,4 @@
-<ng-container *ngIf="(repos$ | async) as repos">
+<ng-container *ngIf="repos">
 
     <mat-list>
 
@@ -10,7 +10,7 @@
 
     </mat-list>
 
-    <mat-paginator [length]="user.publicGists"
+    <mat-paginator [length]="user.publicRepos || reposCount"
                    [pageIndex]="pageParams.page"
                    [pageSize]="pageParams.perPage"
                    [pageSizeOptions]="pageSizeOption"

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // CORE
-import { PageParamsModel, ProjectModel } from '@core/models';
+import { ProjectModel } from '@core/models';
 import { BaseApiService } from './base-api.service';
 
 
@@ -18,15 +18,14 @@ export class ProjectsApiService extends BaseApiService {
     super();
   }
 
-  public getUserProjects(username: string, queryParams: PageParamsModel): Observable<ProjectModel[]> {
+  public getUserProjects(username: string): Observable<ProjectModel[]> {
     const headers = {
-      Accept: 'application/vnd.github.inertia-preview+json'
+      Accept: 'application/vnd.github.inertia-preview+json',
     };
 
     return this._http.get<ProjectModel[]>(`${this._apiUrl}/users/${username}/projects`,
       {
         headers,
-        params: queryParams as any
       })
     .pipe(
       map((projects: ProjectModel[]) => projects && projects.map((project: ProjectModel) => new ProjectModel(project)))

@@ -56,14 +56,11 @@ export class ReposApiService extends BaseApiService {
    * @urlParams <string>, <PageParamsModel>
    * @return Observable<RepoModel[]>
    **/
-  public getUserRepos(username: string, queryParams: PageParamsModel): Observable<RepoModel[]> {
+  public getUserRepos(username: string, queryParams: PageParamsModel): any {
     return this._http.get<RepoModel[]>(`${this._apiUrl}/users/${username}/repos`,
       {
-        params: queryParams as any
-      })
-    .pipe(
-      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => new RepoModel(repo)))
-    );
+        params: queryParams as any, observe: 'response'
+      });
   }
 
   public searchReposByName(queryParams: PageParamsModel): Observable<RepoModel[]> {

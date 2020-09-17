@@ -66,7 +66,7 @@ export class ReposTableService implements OnDestroy {
     )
     .subscribe((res: any) => {
 
-      this._repos = res.body.map((gist: any) => gist && new RepoModel(gist));
+      this._repos = res.body.map((repo: any) => repo && new RepoModel(repo));
 
       getPaginationParams(res.headers, this.pagination, this._pageParams.since);
 

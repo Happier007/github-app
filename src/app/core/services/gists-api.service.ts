@@ -49,13 +49,10 @@ export class GistsApiService extends BaseApiService {
    * @urlParams <string>, <PageParamsModel>
    * @return Observable<GistModel[]>
    **/
-  public getUserGists(username: string, queryParams: PageParamsModel): Observable<GistModel[]> {
+  public getUserGists(username: string, queryParams: PageParamsModel): any {
     return this._http.get<GistModel[]>(`${this._apiUrl}/users/${username}/gists`,
       {
-        params: queryParams as any
-      })
-    .pipe(
-      map((gists: GistModel[]) => gists && gists.map((gist: GistModel) => new GistModel(gist)))
-    );
+        params: queryParams as any, observe: 'response'
+      });
   }
 }
