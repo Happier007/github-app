@@ -1,6 +1,6 @@
 // ANGULAR
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
@@ -24,9 +24,9 @@ export class ReposApiService extends BaseApiService {
   /**
    * List public repositories - https://developer.github.com/v3/repos/#list-public-repositories
    * @urlParams <PageParamsModel>
-   * @return Observable<RepoModel[]>
+   * @return Observable<HttpResponse<RepoModel[]>>
    **/
-  public publicRepos(urlParams: PageParamsSinceModel): any {
+  public publicRepos(urlParams: PageParamsSinceModel): Observable<HttpResponse<RepoModel[]>> {
     return this._http.get<RepoModel[]>(`${this._apiUrl}/repositories`, {
       params: urlParams as any, observe: 'response'
     });
@@ -54,16 +54,13 @@ export class ReposApiService extends BaseApiService {
   /**
    * List repositories for a user - https://developer.github.com/v3/repos/#list-repositories-for-a-user
    * @urlParams <string>, <PageParamsModel>
-   * @return Observable<RepoModel[]>
+   * @return Observable<HttpResponse<RepoModel[]>>
    **/
-  public getUserRepos(username: string, queryParams: PageParamsModel): Observable<RepoModel[]> {
+  public getUserRepos(username: string, queryParams: PageParamsModel): Observable<HttpResponse<RepoModel[]>> {
     return this._http.get<RepoModel[]>(`${this._apiUrl}/users/${username}/repos`,
       {
-        params: queryParams as any
-      })
-    .pipe(
-      map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => new RepoModel(repo)))
-    );
+        params: queryParams as any, observe: 'response'
+      });
   }
 
   public searchReposByName(queryParams: PageParamsModel): Observable<RepoModel[]> {

@@ -1,4 +1,4 @@
-<ng-container *ngIf="(gists$ | async) as gists">
+<ng-container *ngIf="gists">
 
     <mat-list>
 
@@ -10,7 +10,7 @@
 
     </mat-list>
 
-    <mat-paginator [length]="user.publicGists"
+    <mat-paginator [length]="user.publicGists || gistsCount"
                    [pageIndex]="pageParams.page"
                    [pageSize]="pageParams.perPage"
                    [pageSizeOptions]="pageSizeOption"

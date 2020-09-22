@@ -4,6 +4,9 @@ export const SNAKE_CASE = /([A-Z])/g;
 
 export const SINCE_PAGINATION = /since=(\d+)/;
 
+export const PAGE_PAGINATION_LAST = /page=(\d+).+rel="last"/;
+export const PER_PAGE_PAGINATION_LAST = /per_page=(\d+).+rel="last"/;
+
 export const MESSAGE_TYPE = {
   error: 'error-snackbar',
   warning: 'warning-snackbar',

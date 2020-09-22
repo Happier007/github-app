@@ -2,7 +2,12 @@
 import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 
 // RXJS
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import {
+  map,
+  pluck,
+  switchMap,
+  takeUntil
+} from 'rxjs/operators';
 import { forkJoin, Observable, Subject } from 'rxjs';
 
 // CORE
@@ -48,6 +53,7 @@ export class UserCommitsActivityService implements OnDestroy {
     this._statisticSubjectSearch
     .pipe(
       switchMap(() => this._reposApiService.getUserRepos(this._user.login, new PageParamsModel())),
+      pluck('body'),
       map((repos: RepoModel[]) => repos && repos.map((repo: RepoModel) => {
         return this._statisticsApiService.getUserCommitsActivity(this._user.login, repo.name);
       })),
