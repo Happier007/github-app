@@ -1,6 +1,6 @@
 // ANGULAR
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 // RXJS
 import { Observable } from 'rxjs';
@@ -47,9 +47,9 @@ export class GistsApiService extends BaseApiService {
   /**
    * List gists for a user- https://developer.github.com/v3/gists/#list-gists-for-a-user
    * @urlParams <string>, <PageParamsModel>
-   * @return Observable<GistModel[]>
+   * @return Observable<HttpResponse<GistModel[]>>
    **/
-  public getUserGists(username: string, queryParams: PageParamsModel): any {
+  public getUserGists(username: string, queryParams: PageParamsModel): Observable<HttpResponse<GistModel[]>> {
     return this._http.get<GistModel[]>(`${this._apiUrl}/users/${username}/gists`,
       {
         params: queryParams as any, observe: 'response'
